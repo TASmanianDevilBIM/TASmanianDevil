@@ -75,9 +75,10 @@ namespace T3DFile
         /// <search>
         /// TAS, T3DDocument, tas, t3ddocument, save t3ddocument, savet3ddocument
         /// </search>
-        public static bool Save(T3DDocument T3DDocument, object FilePath)
+        public static T3DDocument Save(T3DDocument T3DDocument, object FilePath)
         {
-            return T3DDocument.pT3DDocument.Save(FilePath.ToString());
+            T3DDocument.pT3DDocument.Save(FilePath.ToString());
+            return T3DDocument;
         }
 
         /// <summary>
