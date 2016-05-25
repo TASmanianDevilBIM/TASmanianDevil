@@ -4,7 +4,7 @@ TASmanianDevil BIM is a free and open source plugin for Dynamo to help engineers
 
 [TASmanianDevil BIM introduction video.](https://youtu.be/Y6bUv8GEwXU)
 
-[What TASmanianDevil is about.](https://youtu.be/OVWb7SaXvtE)
+[TASmanianDevil BIM videos.](https://www.youtube.com/playlist?list=PLoHg9rXwbHvzEEoRiCwfKTUYzuL14ZtNq)
 
 Licence
 ========================================
