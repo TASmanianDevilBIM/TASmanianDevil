@@ -1,0 +1,132 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{51BBAC29-2C40-4404-8781-CB057CBABACE}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TASmanianDevil</RootNamespace>
+    <AssemblyName>TASmanianDevil</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugEngines>{351668CC-8477-4fbf-BFE3-5F1006E4DB1F}</DebugEngines>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <StartAction>Program</StartAction>
+    <StartProgram>C:\Program Files\Dynamo 0.9\DynamoSandbox.exe</StartProgram>
+    <DocumentationFile>bin\Debug\TASmanianDevil.xml</DocumentationFile>
+    <RegisterForComInterop>false</RegisterForComInterop>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="T3DFile\Building.cs" />
+    <Compile Include="T3DFile\Element.cs" />
+    <Compile Include="T3DFile\Window.cs" />
+    <Compile Include="T3DFile\ZoneSet.cs" />
+    <Compile Include="T3DFile\Zone.cs" />
+    <Compile Include="TBDFile\ApertureType.cs" />
+    <Compile Include="TBDFile\Building.cs" />
+    <Compile Include="TBDFile\Construction.cs" />
+    <Compile Include="TBDFile\DayType.cs" />
+    <Compile Include="TBDFile\BuildingElement.cs" />
+    <Compile Include="TBDFile\Emitter.cs" />
+    <Compile Include="TBDFile\IZAM.cs" />
+    <Compile Include="TBDFile\Material.cs" />
+    <Compile Include="TBDFile\Profile.cs" />
+    <Compile Include="TBDFile\Schedule.cs" />
+    <Compile Include="TBDFile\ZoneSurface.cs" />
+    <Compile Include="TBDFile\SurfaceOutputSpec.cs" />
+    <Compile Include="TBDFile\Thermostat.cs" />
+    <Compile Include="TBDFile\WeatherDay.cs" />
+    <Compile Include="TBDFile\HeatingDesignDay.cs" />
+    <Compile Include="TBDFile\CoolingDesignDay.cs" />
+    <Compile Include="TBDFile\DesignDay.cs" />
+    <Compile Include="TBDFile\InternalCondition.cs" />
+    <Compile Include="TBDFile\InternalGain.cs" />
+    <Compile Include="TBDFile\ZoneGroup.cs" />
+    <Compile Include="TSDFile\BuildingData.cs" />
+    <Compile Include="TSDFile\CoolingDesignData.cs" />
+    <Compile Include="Generic.cs" />
+    <Compile Include="TSDFile\HeatingDesignData.cs" />
+    <Compile Include="TSDFile\SimulationData.cs" />
+    <Compile Include="T3DFile\T3DDocument.cs" />
+    <Compile Include="TSDFile\SurfaceData.cs" />
+    <Compile Include="TSDFile\TSDDocument.cs" />
+    <Compile Include="TBDFile\TBDDocument.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TBDFile\Zone.cs" />
+    <Compile Include="TSDFile\ZoneData.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="stdole">
+      <Guid>{00020430-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="TAS3D">
+      <Guid>{C4AC86A0-5A0E-487B-A1A7-D18CC8E62FB3}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="TBD">
+      <Guid>{7032581B-CC62-41EF-8D6A-A013F577B10E}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="TSD">
+      <Guid>{9CBF095A-F83F-4B10-A35F-425D3073587D}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
