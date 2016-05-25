@@ -7,10 +7,8 @@ namespace Generic
     /// </summary>
     public static class Info
     {
-        private static string pVersion = "0.0.1";
-
         /// <summary>
-        /// Returns version of libary
+        /// Returns version of library
         /// </summary>
         /// <returns name="LibraryVersion">Library Version</returns>
         /// <search>
@@ -22,7 +20,19 @@ namespace Generic
         }
 
         /// <summary>
-        /// Returns authors of libary
+        /// Returns info about Tasmanian Devil
+        /// </summary>
+        /// <returns name="TasmanianDevil">TasmanianDevil Info</returns>
+        /// <search>
+        /// TASmanianDevil, TasmanianDevil, Info, info
+        /// </search>
+        public static string TasmanianDevil()
+        {
+            return "Facts/t ";
+        }
+
+        /// <summary>
+        /// Returns authors of library
         /// </summary>
         /// <returns name="LibraryVersion">Library authors</returns>
         /// <search>
