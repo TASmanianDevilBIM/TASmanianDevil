@@ -9,7 +9,7 @@ namespace T3DFile
     /// <summary>
     /// TAS T3D Building
     /// </summary>
-    public class 01|Building
+    public class Building
     {
         private TAS3D.Building pBuilding;
         

@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("BH_Dynamo_TAS")]
+[assembly: AssemblyTitle("TASManianDevil_BIM")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("BuroHappold")]
-[assembly: AssemblyProduct("BH_Dynamo_TAS")]
-[assembly: AssemblyCopyright("Copyright © BuroHappold 2016")]
+[assembly: AssemblyCompany("")]
+[assembly: AssemblyProduct("TASManianDevil")]
+[assembly: AssemblyCopyright("Copyright © Michal Dengusiak 2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
