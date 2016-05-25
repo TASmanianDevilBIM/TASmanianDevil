@@ -9,7 +9,7 @@ namespace T3DFile
     /// <summary>
     /// TAS T3D Building
     /// </summary>
-    public class Building
+    public class 01|Building
     {
         private TAS3D.Building pBuilding;
         
@@ -18,6 +18,7 @@ namespace T3DFile
             pBuilding = Building;
         }
 
+		// From here
         /// <summary>
         /// Gets TAS Building description
         /// </summary>
@@ -30,6 +31,7 @@ namespace T3DFile
         {
             return Building.pBuilding.description;
         }
+		// To here
 
         /// <summary>
         /// Sets TAS Building description
@@ -249,14 +251,14 @@ namespace T3DFile
         }
 
         /// <summary>
-        /// Gets TAS Building Widnows
+        /// Gets TAS Building Windows
         /// </summary>
         /// <param name="Building">TAS Building</param>
-        /// <returns name="Widnows">Building Widnows</returns>
+        /// <returns name="Windows">Building Windows</returns>
         /// <search>
-        /// TAS, Builidng, Widnows, Get Building Widnows, getbuildingwindows, widnows, GetWidnows, getwidnows
+        /// TAS, Builidng, Windows, Get Building Windows, getbuildingwindows, Windows, GetWindows, getWindows
         /// </search>
-        public static List<Window> Widnows(Building Building)
+        public static List<Window> Windows(Building Building)
         {
             List<Window> aWindowList = new List<Window>();
 
@@ -365,12 +367,12 @@ namespace T3DFile
         /// Gets TAS Building Name
         /// </summary>
         /// <param name="Building">TAS Building</param>
-        /// <param name="Name">Widnow Name</param>
+        /// <param name="Name">Windows Name</param>
         /// <param name="OpeningType">Opening Type</param>
-        /// <param name="Colour">Widnow Colour</param>
-        /// <param name="Height">Widnow Height</param>
-        /// <param name="Width">Widnow Width</param>
-        /// <param name="Level">Widnow Level</param>
+        /// <param name="Colour">Windows Colour</param>
+        /// <param name="Height">Windows Height</param>
+        /// <param name="Width">Windows Width</param>
+        /// <param name="Level">Windows Level</param>
         /// <returns name="Window">Building Window</returns>
         /// <search>
         /// TAS, Builidng, Name, AddWindow, Window, addwindow, Add Window
