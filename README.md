@@ -9,7 +9,7 @@ TASmanianDevil BIM is a free and open source plugin for Dynamo to help engineers
 
 Licence
 ========================================
-TASmanianDevil: A Dynamo Plugin for Thermal Analysis (GPL) started by Michal Dengusiak and Jakub Ziolkowski
+TASmanianDevil: A Dynamo Plugin for Thermal Analysis (GPL) started by Michal Dengusiak and joined by Jakub Ziolkowski
  
 Copyright (c) 2016, Michal Dengusiak
 
