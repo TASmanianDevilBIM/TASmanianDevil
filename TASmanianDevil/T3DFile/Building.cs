@@ -237,6 +237,25 @@ namespace T3DFile
         }
 
         /// <summary>
+        /// Gets TAS Building Name
+        /// </summary>
+        /// <param name="Building">TAS Building</param>
+        /// <param name="Name">Windows Name</param>
+        /// <param name="OpeningType">Opening Type</param>
+        /// <param name="Colour">Windows Colour</param>
+        /// <param name="Height">Windows Height</param>
+        /// <param name="Width">Windows Width</param>
+        /// <param name="Level">Windows Level</param>
+        /// <returns name="Window">Building Window</returns>
+        /// <search>
+        /// TAS, Builidng, Name, AddWindow, Window, addwindow, Add Window
+        /// </search>
+        public static Window AddWindow(Building Building, string Name, int OpeningType, uint Colour, double Height, double Width, double Level)
+        {
+            return new Window(Building.pBuilding.AddWindow(Name, OpeningType, Colour, Height, Width, Level));
+        }
+
+        /// <summary>
         /// Gets TAS Building Window
         /// </summary>
         /// <param name="Building">TAS Building</param>
@@ -304,20 +323,6 @@ namespace T3DFile
         }
 
         /// <summary>
-        /// Gets TAS Building Zone
-        /// </summary>
-        /// <param name="Building">TAS Building</param>
-        /// <param name="Index">TAS Building Zone Index</param>
-        /// <returns name="Zone">Building Zone</returns>
-        /// <search>
-        /// TAS, Builidng, Zone, Get Building Zone, getbuildingzone, zoneset, GetZone, getzone
-        /// </search>
-        public static Zone GetZone(Building Building, int Index)
-        {
-            return new Zone(Building.pBuilding.GetZone(Index));
-        }
-
-        /// <summary>
         /// Gets TAS Building Zone Sets
         /// </summary>
         /// <param name="Building">TAS Building</param>
@@ -339,6 +344,22 @@ namespace T3DFile
             }
             return aZoneSetList;
         }
+
+        /// <summary>
+        /// Gets TAS Building Zone
+        /// </summary>
+        /// <param name="Building">TAS Building</param>
+        /// <param name="Index">TAS Building Zone Index</param>
+        /// <returns name="Zone">Building Zone</returns>
+        /// <search>
+        /// TAS, Builidng, Zone, Get Building Zone, getbuildingzone, zoneset, GetZone, getzone
+        /// </search>
+        public static Zone GetZone(Building Building, int Index)
+        {
+            return new Zone(Building.pBuilding.GetZone(Index));
+        }
+
+        
 
         /// <summary>
         /// Gets TAS Building Zone Sets
@@ -363,23 +384,6 @@ namespace T3DFile
             return aZoneList;
         }
 
-        /// <summary>
-        /// Gets TAS Building Name
-        /// </summary>
-        /// <param name="Building">TAS Building</param>
-        /// <param name="Name">Windows Name</param>
-        /// <param name="OpeningType">Opening Type</param>
-        /// <param name="Colour">Windows Colour</param>
-        /// <param name="Height">Windows Height</param>
-        /// <param name="Width">Windows Width</param>
-        /// <param name="Level">Windows Level</param>
-        /// <returns name="Window">Building Window</returns>
-        /// <search>
-        /// TAS, Builidng, Name, AddWindow, Window, addwindow, Add Window
-        /// </search>
-        public static Window AddWindow(Building Building, string Name, int OpeningType, uint Colour, double Height, double Width, double Level)
-        {
-            return new Window(Building.pBuilding.AddWindow(Name, OpeningType, Colour, Height, Width, Level));
-        }
+        
     }
 }
