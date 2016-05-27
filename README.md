@@ -1,5 +1,6 @@
-TASmanianDevil BIM for Dynamo
-========================================
+﻿![Image](TD_Logo.png)
+
+
 TASmanianDevil BIM is a free and open source plugin for Dynamo to help engineers and designers using TAS to perform thermal and daylight simulation.
 
 [TASmanianDevil BIM introduction video.](https://youtu.be/Y6bUv8GEwXU)
