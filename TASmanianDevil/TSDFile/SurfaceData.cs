@@ -33,6 +33,7 @@ namespace TSDFile
 
         /// <summary>
         /// Gets Surface Data BEName
+        /// BE = Building Element
         /// </summary>
         /// <param name="SurfaceData">Surface Data</param>
         /// <returns name="BEName">Surface Data BEName</returns>
@@ -46,6 +47,7 @@ namespace TSDFile
 
         /// <summary>
         /// Gets Surface Data BEType
+        /// BE = Building Element
         /// </summary>
         /// <param name="SurfaceData">Surface Data</param>
         /// <returns name="BEType">Surface Data BEType</returns>

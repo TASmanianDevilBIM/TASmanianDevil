@@ -159,14 +159,14 @@ namespace TBDFile
         }
 
         /// <summary>
-        /// Internal Gain Freash Air Rate
+        /// Internal Gain Fresh Air Rate
         /// </summary>
         /// <param name="InternalGain">TAS Internal Gain</param>
-        /// <returns name="Rate">Freash Air Rate</returns>
+        /// <returns name="Rate">Fresh Air Rate</returns>
         /// <search>
-        /// TAS, Internal Gain, Freash Air Rate, InternalGain
+        /// TAS, Internal Gain, Fresh Air Rate, InternalGain
         /// </search>
-        public static float FreashAirRate(InternalGain InternalGain)
+        public static float FreshAirRate(InternalGain InternalGain)
         {
             return InternalGain.pInternalGain.freshAirRate;
         }
