@@ -106,6 +106,8 @@ namespace T3DFile
 
         /// <summary>
         /// Sets Element Colour
+        /// Input is Integer so set color in TAS 
+        /// then use node Color to find out integer for this colour
         /// </summary>
         /// <param name="Element">TAS3D Element</param>
         /// <param name="Colour">Element Colour</param>

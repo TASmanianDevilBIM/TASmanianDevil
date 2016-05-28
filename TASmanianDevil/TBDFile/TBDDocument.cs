@@ -97,7 +97,11 @@ namespace TBDFile
         }
 
         /// <summary>
-        /// Close TAS TBD Document
+        /// Close TAS TBD Document. READ ME ==============
+        /// Option 1 = File will be close when Dynamo is restarted
+        /// if you use Dynamo with Revit you need to restart both
+        /// Option 2 = when script is done and you confirmed it was saved just 
+        /// go to TaskManager and End Process for TBD.exe 
         /// </summary>
         /// <param name="TBDDocument">TBD Document</param>
         /// <returns name="integer">integer</returns>

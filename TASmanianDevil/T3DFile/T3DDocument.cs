@@ -82,7 +82,11 @@ namespace T3DFile
         }
 
         /// <summary>
-        /// Closes TAS T3D Document
+        /// Closes TAS T3D Document. READ ME ==============
+        /// Option 1 = File will be close when Dynamo is restarted
+        /// if you use Dynamo with Revit you need to restart both
+        /// Option 2 = when script is done and you confirmed it was saved just 
+        /// go to TaskManager and End Process for TAS3D.exe 
         /// </summary>
         /// <param name="T3DDocument">T3D Document</param>
         /// <returns name="Boolean">Boolean</returns>
@@ -99,6 +103,7 @@ namespace T3DFile
 
         /// <summary>
         /// TAS T3D Document Current Ground Lux
+        /// ======== NOT TESTED YET ======
         /// </summary>
         /// <param name="T3DDocument">T3D Document</param>
         /// <returns name="Value">Current Ground Lux</returns>
@@ -112,6 +117,7 @@ namespace T3DFile
 
         /// <summary>
         /// Gets TAS T3D Document Current Lux Results
+        /// ======== NOT TESTED YET ======
         /// </summary>
         /// <param name="T3DDocument">T3D Document</param>
         /// <param name="Zone">Zone</param>
@@ -126,6 +132,7 @@ namespace T3DFile
 
         /// <summary>
         /// Gets TAS T3D Document Daylight Factor
+        /// ======== NOT TESTED YET ======
         /// </summary>
         /// <param name="T3DDocument">T3D Document</param>
         /// <param name="Zone">Zone</param>
@@ -140,6 +147,7 @@ namespace T3DFile
 
         /// <summary>
         /// Gets TAS T3D Document Ground Lux
+        /// ======== NOT TESTED YET ======
         /// </summary>
         /// <param name="T3DDocument">T3D Document</param>
         /// <param name="Zone">Zone</param>
@@ -154,6 +162,7 @@ namespace T3DFile
 
         /// <summary>
         /// Gets TAS T3D Document Daylight Calculation
+        /// ======== NOT TESTED YET ======
         /// </summary>
         /// <param name="T3DDocument">T3D Document</param>
         /// <returns name="Result">DaylightCalculation</returns>
@@ -167,6 +176,7 @@ namespace T3DFile
 
         /// <summary>
         /// Gets TAS T3D Document Daylight Calculation
+        /// ======== NOT TESTED YET ======
         /// </summary>
         /// <param name="T3DDocument">T3D Document</param>
         /// <param name="InitialiseZones">Initialise Zones</param>
@@ -183,6 +193,7 @@ namespace T3DFile
 
         /// <summary>
         /// Daylight Saves Calculation to TAS T3D Document
+        /// ======== NOT TESTED YET ======
         /// </summary>
         /// <param name="T3DDocument">T3D Document</param>
         /// <returns name="Result">Daylight Save Calculation</returns>
@@ -196,6 +207,7 @@ namespace T3DFile
 
         /// <summary>
         /// Gets TAS T3D Document Lux Results
+        /// ======== NOT TESTED YET ======
         /// </summary>
         /// <param name="T3DDocument">T3D Document</param>
         /// <param name="Zone">Zone</param>

@@ -80,7 +80,11 @@ namespace TSDFile
         }
 
         /// <summary>
-        /// Close TAS TSD Document
+        /// Close TAS TSD Document. READ ME ==============
+        /// Option 1 = File will be close when Dynamo is restarted
+        /// if you use Dynamo with Revit you need to restart both
+        /// Option 2 = when script is done and you confirmed it was saved just 
+        /// go to TaskManager and End Process for TSD.exe 
         /// </summary>
         /// <param name="TSDDocument">TSD Document</param>
         /// <returns name="Boolean">Boolean</returns>
