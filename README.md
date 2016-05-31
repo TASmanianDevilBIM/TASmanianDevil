@@ -7,6 +7,8 @@ TASmanianDevil BIM is a free and open source plugin for Dynamo to help engineers
 
 [TASmanianDevil BIM videos.](https://www.youtube.com/playlist?list=PLoHg9rXwbHvzEEoRiCwfKTUYzuL14ZtNq)
 
+In order to use TASmanianDevil you need to install TAS by EDSL [Download] (http://www.edsl.net/main/Software/EngineeringDownloads.aspx)
+
 Licence
 ========================================
 TASmanianDevil: A Dynamo Plugin for Thermal Analysis (GPL) started by Michal Dengusiak and joined by Jakub Ziolkowski
