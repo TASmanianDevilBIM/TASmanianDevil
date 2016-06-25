@@ -223,7 +223,7 @@ namespace H72File
 
         public override string ToString()
         {
-            return pName;
+            return string.Format("{0}(Name = {1})", "H72Node", pName);
         }
 
     }
