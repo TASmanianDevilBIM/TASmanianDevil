@@ -22,7 +22,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <StartAction>Program</StartAction>
-    <StartProgram>C:\Program Files\Dynamo 0.9\DynamoSandbox.exe</StartProgram>
+    <StartProgram>C:\Program Files\Dynamo\Dynamo Revit\1.0\DynamoSandbox.exe</StartProgram>
     <DocumentationFile>bin\Debug\TASmanianDevil.xml</DocumentationFile>
     <RegisterForComInterop>false</RegisterForComInterop>
   </PropertyGroup>
@@ -45,6 +45,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="H72File\H72Node.cs" />
+    <Compile Include="H72File\H72Parameter.cs" />
     <Compile Include="T3DFile\Building.cs" />
     <Compile Include="T3DFile\Element.cs" />
     <Compile Include="T3DFile\Window.cs" />
