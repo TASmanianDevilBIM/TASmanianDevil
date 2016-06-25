@@ -92,9 +92,9 @@ namespace H72File
         public override string ToString()
         {
             if (pValue is string)
-                return string.Format(@"{0}=""{1}""", pName, pValue);
+                return string.Format(@"{0}({1} = ""{2}"")", "H72Parameter", pName, pValue);
             else
-                return string.Format("{0}={1}", pName, pValue);
+                return string.Format("{0}({1} = {2})", "H72Parameter", pName, pValue);
         }
     }
 }
