@@ -11,13 +11,17 @@ namespace T3DFile
     /// </summary>
     public class T3DDocument : IDisposable
     {
-        private TAS3D.T3DDocument pT3DDocument;
-        private bool pSave;
+        static private TAS3D.T3DDocument pT3DDocument;
+        static private bool pSave;
 
         internal T3DDocument(string FilePath, bool Save)
         {
             pSave = Save;
+
             pT3DDocument = GetT3DDocument(pSave);
+            if (pT3DDocument == null)
+                pT3DDocument = new TAS3D.T3DDocument();
+
             pT3DDocument.Open(FilePath);
         }
 
@@ -46,10 +50,18 @@ namespace T3DFile
 
             }
 
-            if(aT3DDocument == null)
-                aT3DDocument = new TAS3D.T3DDocument();
-
             return aT3DDocument;
+        }
+
+        private static void ExecutionEvents_GraphPostExecution(Dynamo.Session.IExecutionSession IExecutionSession)
+        {
+            pT3DDocument = GetT3DDocument(pSave);
+            if (pT3DDocument != null)
+            {
+                if (pSave && pT3DDocument.filePath != null)
+                    pT3DDocument.Save(pT3DDocument.filePath);
+                pT3DDocument.Close();
+            }
         }
 
         /// <summary>
@@ -63,6 +75,9 @@ namespace T3DFile
         /// </search>
         public static T3DDocument Open(object FilePath, bool Save = false)
         {
+            Dynamo.Events.ExecutionEvents.GraphPostExecution -= ExecutionEvents_GraphPostExecution;
+            Dynamo.Events.ExecutionEvents.GraphPostExecution += ExecutionEvents_GraphPostExecution;
+
             return new T3DDocument(FilePath.ToString(), Save);
         }
 
@@ -231,10 +246,16 @@ namespace T3DFile
         /// </search>
         public static T3DDocument New(string Name, string Description)
         {
-            TAS3D.T3DDocument aT3DDocument = GetT3DDocument(false);
-            aT3DDocument.Building.name = Name;
-            aT3DDocument.Building.description = Description;
-            return new T3DDocument(aT3DDocument, false);
+            Dynamo.Events.ExecutionEvents.GraphPostExecution -= ExecutionEvents_GraphPostExecution;
+            Dynamo.Events.ExecutionEvents.GraphPostExecution += ExecutionEvents_GraphPostExecution;
+
+            pT3DDocument = GetT3DDocument(false);
+            if (pT3DDocument == null)
+                pT3DDocument = new TAS3D.T3DDocument();
+
+            pT3DDocument.Building.name = Name;
+            pT3DDocument.Building.description = Description;
+            return new T3DDocument(pT3DDocument, false);
         }
 
         /// <summary>
@@ -249,11 +270,17 @@ namespace T3DFile
         /// </search>
         public static T3DDocument New(string FilePath, string Name, string Description)
         {
-            TAS3D.T3DDocument aT3DDocument = GetT3DDocument(true);
-            aT3DDocument.Building.name = Name;
-            aT3DDocument.Building.description = Description;
-            aT3DDocument.filePath = FilePath;
-            return new T3DDocument(aT3DDocument, true);
+            Dynamo.Events.ExecutionEvents.GraphPostExecution -= ExecutionEvents_GraphPostExecution;
+            Dynamo.Events.ExecutionEvents.GraphPostExecution += ExecutionEvents_GraphPostExecution;
+
+            pT3DDocument = GetT3DDocument(true);
+            if (pT3DDocument == null)
+                pT3DDocument = new TAS3D.T3DDocument();
+
+            pT3DDocument.Building.name = Name;
+            pT3DDocument.Building.description = Description;
+            pT3DDocument.filePath = FilePath;
+            return new T3DDocument(pT3DDocument, true);
         }
 
         /// <summary>
@@ -315,9 +342,6 @@ namespace T3DFile
         {
             if (pT3DDocument != null)
             {
-                if (pSave && pT3DDocument.filePath != null)
-                    pT3DDocument.Save(pT3DDocument.filePath);
-
                 pT3DDocument.Close();
                 pT3DDocument = null;
             }
