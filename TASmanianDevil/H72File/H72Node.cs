@@ -3,14 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DynamoServices;
 
 namespace H72File
 {
     /// <summary>
-    /// H72 file Node
+    /// H72 file node
     /// </summary>
     public class H72Node
     {
+        private static List<Tuple<bool, string, H72Node>> pH72NodeListCollector;
+
         private string pName;
         private List<H72Node> pH72NodeList;
         private List<H72Parameter> pH72ParameterList;
@@ -31,7 +34,7 @@ namespace H72File
 
             if (System.IO.File.Exists(FilePath))
             {
-                string[] aLines = System.IO.File.ReadAllLines(FilePath);
+                string[] aLines = System.IO.File.ReadAllLines(FilePath, Encoding.Default);
                 int aIndex = 0;
                 while (aIndex < aLines.Length)
                 {
@@ -104,6 +107,12 @@ namespace H72File
                             else if(aTrimmedLine.StartsWith("*"))
                             {
                                 EndIndex++;
+                                if(EndIndex < Lines.Length)
+                                {
+                                    aTrimmedLine = aTrimmedLine.TrimEnd();
+                                    H72Parameter aH72Parameter = new H72Parameter(aTrimmedLine, Lines[EndIndex].Trim());
+                                    pH72ParameterList.Add(aH72Parameter);
+                                }
                             }
                         }
                         EndIndex++;
@@ -115,6 +124,22 @@ namespace H72File
 
         }
 
+        internal void AppendStringList(int Index, List<string> StringList)
+        {
+            string aPrefix = new string(' ', Index*3);
+            StringList.Add(string.Format("{0}[{1}]", aPrefix, pName));
+            if (pH72ParameterList != null)
+                foreach (H72Parameter aH72Parameter in pH72ParameterList)
+                    aH72Parameter.AppendStringList(Index, StringList);
+
+            if (pH72NodeList != null)
+                foreach (H72Node aH72Node in pH72NodeList)
+                {
+                    StringList.Add(string.Empty);
+                    aH72Node.AppendStringList(Index + 1, StringList);
+                }
+        }
+
         internal string Name
         {
             get
@@ -122,7 +147,32 @@ namespace H72File
                 return pName;
             }
         }
-        
+
+        private void Save(object FilePath)
+        {
+            List<string> aStringList = new List<string>();
+            foreach (H72Node aH72Node in pH72NodeList)
+            {
+                aH72Node.AppendStringList(0, aStringList);
+                aStringList.Add(string.Empty);
+            }
+            if (aStringList.Count > 0)
+                aStringList.RemoveAt(aStringList.Count - 1);
+            System.IO.File.WriteAllLines(FilePath.ToString(), aStringList, Encoding.Default);
+        }
+
+        private static void ExecutionEvents_GraphPostExecution(Dynamo.Session.IExecutionSession IExecutionSession)
+        {
+            //Dynamo.Events.ExecutionEvents.GraphPostExecution -= ExecutionEvents_GraphPostExecution;
+            if(pH72NodeListCollector != null)
+            {
+                pH72NodeListCollector.RemoveAll(x => !x.Item1);
+                foreach (Tuple<bool, string, H72Node> aTuple in pH72NodeListCollector)
+                    aTuple.Item3.Save(aTuple.Item2);
+                pH72NodeListCollector = null;
+            }
+        }
+
         /// <summary>
         /// Gets all H72 parameters
         /// </summary>
@@ -169,6 +219,46 @@ namespace H72File
         }
 
         /// <summary>
+        /// Sets H72 Parameter for Node
+        /// </summary>
+        /// <param name="H72Node">TAS H72 Node</param>
+        /// <param name="Name">Parameter Name</param>
+        /// <param name="Value">Parameter Value</param>
+        /// <returns name="H72Parameter">Parameter</returns>
+        /// <search>
+        /// TAS, H72, H72Node, H72 Node, SetParameter, Set Parameter, set parameter, setparameter, seth72parameter,
+        /// </search>
+        public static H72Parameter SetParameter(H72Node H72Node, string Name, object Value)
+        {
+            H72Parameter aH72Parameter = H72Node.pH72ParameterList.Find(x => x.Name == Name);
+            if(aH72Parameter == null)
+            {
+                aH72Parameter = new H72Parameter(Name);
+                H72Node.pH72ParameterList.Add(aH72Parameter);
+            }
+            aH72Parameter.Value = Value;
+
+            return aH72Parameter;
+        }
+
+        /// <summary>
+        /// Removes H72 Parameter for Node
+        /// </summary>
+        /// <param name="H72Node">TAS H72 Node</param>
+        /// <param name="Name">Parameter Name</param>
+        /// <returns name="Removed">Removed</returns>
+        /// <search>
+        /// TAS, H72, H72Node, H72 Node, RemoveParameter, Remove Parameter, remove parameter, removeparameter, removeh72parameter,
+        /// </search>
+        public static bool RemoveParameter(H72Node H72Node, string Name)
+        {
+            int aCount = H72Node.pH72ParameterList.Count;
+            H72Node.pH72ParameterList.RemoveAll(x => x.Name == Name);
+
+            return aCount != H72Node.pH72ParameterList.Count;
+        }
+
+        /// <summary>
         /// Gets H72 node name
         /// </summary>
         /// <param name="H72Node">TAS H72 Node</param>
@@ -212,19 +302,29 @@ namespace H72File
         /// Opens TAS H72 File
         /// </summary>
         /// <param name="FilePath">File Path</param>
+        /// <param name="Save">Save File</param>
         /// <returns name="H72Node">H72 Node</returns>
         /// <search>
         /// TAS, H72Node, tas, h72node, open h72 node, openh72node
         /// </search>
-        public static H72Node Open(object FilePath)
+        public static H72Node Open(object FilePath, bool Save = false)
         {
-            return new H72Node(FilePath.ToString());
+            Dynamo.Events.ExecutionEvents.GraphPostExecution -= ExecutionEvents_GraphPostExecution;
+            Dynamo.Events.ExecutionEvents.GraphPostExecution += ExecutionEvents_GraphPostExecution;
+
+            string aFilePath = FilePath.ToString();
+            H72Node aH72Node = new H72Node(aFilePath);
+
+            if (pH72NodeListCollector == null)
+                pH72NodeListCollector = new List<Tuple<bool, string, H72Node>>();
+            pH72NodeListCollector.Add(new Tuple<bool, string, H72Node>(Save, aFilePath, aH72Node));
+
+            return aH72Node;
         }
 
         public override string ToString()
         {
             return string.Format("{0}(Name = {1})", "H72Node", pName);
         }
-
     }
 }
