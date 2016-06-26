@@ -14,6 +14,12 @@ namespace H72File
         private string pName;
         private object pValue;
 
+        internal H72Parameter(string Name)
+        {
+            pName = Name;
+            pValue = null;
+        }
+
         internal H72Parameter(string Name, string StringValue)
         {
             pName = Name;
@@ -61,6 +67,10 @@ namespace H72File
             {
                 return pValue;
             }
+            set
+            {
+                pValue = value;
+            }
         }
 
         /// <summary>
@@ -77,6 +87,21 @@ namespace H72File
         }
 
         /// <summary>
+        /// Sets Value of H72 Parameter
+        /// </summary>
+        /// <param name="H72Parameter">H72 Parameter</param>
+        /// <param name="Value">H72 Parameter Value</param>
+        /// <returns name="H72Parameter">H72 Parameter</returns>
+        /// <search>
+        /// TAS, H72Parameter, H72 Parameter, h72parameter, set value, value, Value, SetValue
+        /// </search>
+        public static H72Parameter SetValue(H72Parameter H72Parameter, object Value)
+        {
+            H72Parameter.pValue = Value;
+            return H72Parameter;
+        }
+
+        /// <summary>
         /// Gets Name of H72 Parameter
         /// </summary>
         /// <param name="H72Parameter">H72 Parameter</param>
@@ -89,12 +114,37 @@ namespace H72File
             return H72Parameter.pName;
         }
 
+        internal void AppendStringList(int Index, List<string> StringList)
+        {
+            string aPrefix = new string(' ', Index*3);
+            if (pName.StartsWith("*"))
+            {
+                StringList.Add(string.Format(@"{0}{1}", aPrefix, pName));
+                StringList.Add(string.Format(@"{0}{1}", aPrefix, pValue));
+            }
+            else
+            {
+                if (pValue is string)
+                    StringList.Add(string.Format(@"{0}{1}=""{2}""", aPrefix, pName, pValue));
+                else
+                    StringList.Add(string.Format("{0}{1}={2}", aPrefix, pName, pValue));
+            }
+        }
+
         public override string ToString()
         {
-            if (pValue is string)
-                return string.Format(@"{0}({1} = ""{2}"")", "H72Parameter", pName, pValue);
+            if (pName.StartsWith("*"))
+            {
+                return string.Format(@"{0}({1} {2})", "H72Parameter", pName, pValue);
+            }
             else
-                return string.Format("{0}({1} = {2})", "H72Parameter", pName, pValue);
+            {
+                if (pValue is string)
+                    return string.Format(@"{0}({1} = ""{2}"")", "H72Parameter", pName, pValue);
+                else
+                    return string.Format("{0}({1} = {2})", "H72Parameter", pName, pValue);
+            }
+
         }
     }
 }
