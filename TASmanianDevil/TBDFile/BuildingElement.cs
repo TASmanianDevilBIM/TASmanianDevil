@@ -60,6 +60,34 @@ namespace TBDFile
         }
 
         /// <summary>
+        /// TAS Building Element BE Type
+        /// </summary>
+        /// <param name="BuildingElement">Building Element</param>
+        /// <returns name="BEType">BE Type</returns>
+        /// <search>
+        /// TAS, BuildingElement, Building Element, BE Type, BEType, betype, be type, BuildingElementType, Building Element Type, building element type
+        /// </search>
+        public static BuildingElementType BuildingElementType(BuildingElement BuildingElement)
+        {
+            return (BuildingElementType)BuildingElement.pBuildingElement.BEType;
+        }
+
+        /// <summary>
+        /// Sets TAS Building Element Building Element Type
+        /// </summary>
+        /// <param name="BuildingElement">Building Element</param>
+        /// <param name="BuildingElementType">Building Element Type</param>
+        /// <returns name="BuildingElement">Building Element</returns>
+        /// <search>
+        /// TAS, BuildingElement, Building Element, BE Type, BEType, betype, be type, SetBuildingElementType, Set Building Element Type
+        /// </search>
+        public static BuildingElement SetBuildingElementType(BuildingElement BuildingElement, BuildingElementType BuildingElementType)
+        {
+            BuildingElement.pBuildingElement.BEType = (int)BuildingElementType;
+            return BuildingElement;
+        }
+
+        /// <summary>
         /// Sets TAS Building Element Width
         /// </summary>
         /// <param name="BuildingElement">Building Element</param>
@@ -270,5 +298,54 @@ namespace TBDFile
             BuildingElement.pBuildingElement.ghost = Value;
             return BuildingElement;
         }
+    }
+
+    /// <summary>
+    /// TAS TBD Building Element Type
+    /// </summary>  
+    public enum BuildingElementType
+    {
+        /// <summary>Ceiling</summary>
+        Ceiling = 8,
+        /// <summary>Curtain Wall</summary>
+        CurtainWall = 16,
+        /// <summary>Door Element</summary>
+        DoorElement = 14,
+        /// <summary>Exposed Floor</summary>
+        ExposedFloor = 19,
+        /// <summary>External Wall</summary>
+        ExternalWall = 2,
+        /// <summary>Frame Element</summary>
+        FrameELement = 15,
+        /// <summary>Glazing</summary>
+        Glazing = 12,
+        /// <summary>Internal Floor</summary>
+        InternalFloor = 4,
+        /// <summary>Internal Wall</summary>
+        InternallWall = 1,
+        /// <summary>No Building Element Type</summary>
+        NoBEType = 0,
+        /// <summary>Null Element</summary>
+        NullElement = 17,
+        /// <summary>Raised Floor</summary>
+        RaisedFloor = 10,
+        /// <summary>Roof Element</summary>
+        RoofElement = 3,
+        /// <summary>Roof Flight</summary>
+        RoofFlight = 13,
+        /// <summary>Shade Element</summary>
+        ShadeElement = 5,
+        /// <summary>Slab On Grade</summary>
+        SlabOnGrade = 11,
+        /// <summary>Solar Panel</summary>
+        SolarPanel = 18,
+        /// <summary>Underground Ceiling</summary>
+        UndergroundCeiling = 9,
+        /// <summary>Underground Slab</summary>
+        UndergroundSlab = 7,
+        /// <summary>Underground Wall</summary>
+        UndergroundWall = 6,
+        /// <summary>Vehicle Door</summary>
+        VehicleDoor = 20,
     }
 }
