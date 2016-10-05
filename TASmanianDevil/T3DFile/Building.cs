@@ -20,7 +20,7 @@ namespace T3DFile
 
 		// From here
         /// <summary>
-        /// Gets TAS Building description
+        /// Gets TAS Building description MD
         /// </summary>
         /// <param name="Building">TAS Building</param>
         /// <returns name="Description">Building description</returns>
