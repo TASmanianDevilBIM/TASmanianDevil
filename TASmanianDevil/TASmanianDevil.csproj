@@ -54,6 +54,7 @@
     <Compile Include="T3DFile\Building.cs" />
     <Compile Include="T3DFile\Element.cs" />
     <Compile Include="T3DFile\Window.cs" />
+    <Compile Include="T3DFile\WrLWCalculation.cs" />
     <Compile Include="T3DFile\ZoneSet.cs" />
     <Compile Include="T3DFile\Zone.cs" />
     <Compile Include="TBDFile\ApertureType.cs" />

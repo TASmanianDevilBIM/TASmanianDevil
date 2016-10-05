@@ -1,8 +1,6 @@
-﻿using System;
+﻿using Autodesk.DesignScript.Runtime;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace T3DFile
 {
@@ -336,6 +334,183 @@ namespace T3DFile
         public static Building Building(T3DDocument T3DDocument)
         {
             return new Building(T3DDocument.pT3DDocument.Building);
+        }
+
+        /// <summary>
+        /// Adds LW Calculation to TAS T3D Document
+        /// </summary>
+        /// <param name="T3DDocument">T3D Document</param>
+        /// <returns name="WrLWCalculation">Wr LW Calculation</returns>
+        /// <search>
+        /// TAS, T3DDocument, T3DDocument, Building, WrLWCalculation, Wr LW Calculation, wrlwcalculation, wr lw calculation
+        /// </search>
+        public static WrLWCalculation AddLWCalculation(T3DDocument T3DDocument)
+        {
+            return new WrLWCalculation(T3DDocument.pT3DDocument.AddLW_Calculation());
+        }
+
+        /// <summary>
+        /// Gets CBDM Data from TAS T3D Document
+        /// </summary>
+        /// <param name="T3DDocument">T3D Document</param>
+        /// <param name="Create">Create</param>
+        /// <returns name="CBDMData">CBDM Data</returns>
+        /// <search>
+        /// TAS, T3DDocument, T3DDocument, GetCBDMData, Get CBDM Data, getcbdmdata, get cbdm data
+        /// </search>
+        public static object GetCBDMData(T3DDocument T3DDocument, int Create)
+        {
+            return T3DDocument.pT3DDocument.GetCBDMData(Create);
+        }
+
+        /// <summary>
+        /// Gets Window Data from TAS T3D Document
+        /// </summary>
+        /// <param name="T3DDocument">T3D Document</param>
+        /// <param name="WindowName">Window Name</param>
+        /// <returns name="WindowData">Window Data</returns>
+        /// <returns name="Zone">Zone</returns>
+        /// <returns name="Window">Window</returns>
+        /// <returns name="Area">Area</returns>
+        /// <returns name="Orientation">Orientation</returns>
+        /// <returns name="Coords">Coords</returns>
+        /// <search>
+        /// TAS, T3DDocument, T3DDocument, GetWindowData, Get Window Data, getwindowdata, get window data
+        /// </search>
+        [MultiReturn(new[] { "WindowData", "Zone", "Window", "Area", "Orientation", "Coords" })]
+        public static Dictionary<string, object> GetWindowData(T3DDocument T3DDocument, string WindowName)
+        {
+            TAS3D.Zone aZone = null;
+            TAS3D.window aWindow = null;
+            double aArea = double.MinValue;
+            double aOrientation = double.MinValue;
+            object aCoords = null;
+            bool aResult = T3DDocument.pT3DDocument.GetWindowData(WindowName, out aZone, out aWindow, out aArea, out aOrientation, out aCoords);
+
+            return new Dictionary<string, object>
+            {
+                {"WindowData", aResult},
+                {"Zone", new Zone(aZone) },
+                {"Window", new Window(aWindow) },
+                {"Area", aArea },
+                {"Orientation", aOrientation },
+                {"Coords", aCoords }
+            };
+
+        }
+
+        /// <summary>
+        /// Gets Window Factors from TAS T3D Document
+        /// </summary>
+        /// <param name="T3DDocument">T3D Document</param>
+        /// <returns name="Names">Names</returns>
+        /// <returns name="Factors">Factors</returns>
+        /// <search>
+        /// TAS, T3DDocument, T3DDocument, GetWindowFactors, Get Window Factors, getwindowfactors
+        /// </search>
+        [MultiReturn(new[] { "Names", "Factors"})]
+        public static Dictionary<string, object> GetWindowFactors(T3DDocument T3DDocument)
+        {
+            object aNames = null;
+            object aFactors = null;
+            T3DDocument.pT3DDocument.GetWindowFactors(out aNames, out aFactors);
+
+            return new Dictionary<string, object>
+            {
+                {"Names", aNames},
+                {"Factors", aFactors },
+            };
+
+        }
+
+        /// <summary>
+        /// Gets Window Results from TAS T3D Document
+        /// </summary>
+        /// <param name="T3DDocument">T3D Document</param>
+        /// <returns name="Names">Names</returns>
+        /// <returns name="Points">Points</returns>
+        /// <returns name="LuxValues">Lux Values</returns>
+        /// <search>
+        /// TAS, T3DDocument, T3DDocument, GetWindowFactors, Get Window Results, getwindowresults
+        /// </search>
+        [MultiReturn(new[] { "Names", "Points", "LuxValues" })]
+        public static Dictionary<string, object> GetWindowResults(T3DDocument T3DDocument)
+        {
+            object aNames = null;
+            object aPoints = null;
+            object aLuxValues = null;
+            T3DDocument.pT3DDocument.GetWindowResults(out aNames, out aPoints, out aLuxValues);
+
+            return new Dictionary<string, object>
+            {
+                {"Names", aNames},
+                {"Points", aPoints },
+                {"LuxValues", aLuxValues }
+            };
+
+        }
+
+        /// <summary>
+        /// Imports GBXML File to TAS T3D Document
+        /// </summary>
+        /// <param name="T3DDocument">T3D Document</param>
+        /// <param name="Path">File Path</param>
+        /// <param name="Overwrite">Overwrite</param>
+        /// <param name="ReverseIncorrectSurfaces">Reverse Incorrect Surfaces</param>
+        /// <returns name="Result">Boolean result of operation</returns>
+        /// <search>
+        /// TAS, T3DDocument, T3DDocument, ImportGBXML, Import GBXML, import gbxml
+        /// </search>
+        public static bool ImportGBXML(T3DDocument T3DDocument, string Path, int Overwrite, int ReverseIncorrectSurfaces)
+        {
+            return T3DDocument.pT3DDocument.ImportGBXML(Path, Overwrite, ReverseIncorrectSurfaces);
+        }
+
+        /// <summary>
+        /// Check if is sun up for TAS T3D Document
+        /// </summary>
+        /// <param name="T3DDocument">T3D Document</param>
+        /// <param name="Day">Day</param>
+        /// <param name="Hour">Hour</param>
+        /// <param name="Minutes">Minutes</param>
+        /// <returns name="IsSunUp">Is Sun Up</returns>
+        /// <search>
+        /// TAS, T3DDocument, T3DDocument, issunup, IsSunUp, is sun up, Is Sun Up
+        /// </search>
+        public static bool IsSunUp(T3DDocument T3DDocument, int Day, int Hour, int Minutes)
+        {
+            return T3DDocument.pT3DDocument.IsSunUp(Day, Hour, Minutes);
+        }
+
+        /// <summary>
+        /// Check if is sun up for TAS T3D Document
+        /// </summary>
+        /// <param name="T3DDocument">T3D Document</param>
+        /// <param name="Zone">Zone</param>
+        /// <param name="WrLWCalculation">Wr LW Calculation</param>
+        /// <param name="Results">Array of results</param>
+        /// <param name="GroundLux">Ground Lux</param>
+        /// <returns name="Result">Result of operation</returns>
+        /// <search>
+        /// TAS, T3DDocument, T3DDocument, set lux results, SetLuxResults, Set Lux Results, setluxresults
+        /// </search>
+        public static bool SetLuxResults(T3DDocument T3DDocument, Zone Zone, WrLWCalculation WrLWCalculation, object Results, double GroundLux)
+        {
+            return T3DDocument.pT3DDocument.SetLuxResults(Zone.pZone, WrLWCalculation.pWrLWCalculation, Results, GroundLux);
+        }
+
+        /// <summary>
+        /// Set process idle for TAS T3D Document
+        /// </summary>
+        /// <param name="T3DDocument">T3D Document</param>
+        /// <param name="Value">Value</param>
+        /// <returns name="Result">Result of operation</returns>
+        /// <search>
+        /// TAS, T3DDocument, T3DDocument, set process idle, SetProcessIdle, Set Process Idle, setprocessidle
+        /// </search>
+        public static bool SetProcessIdle(T3DDocument T3DDocument, string Value)
+        {
+            return T3DDocument.pT3DDocument.SetProcessIdle(Value);
         }
 
         void IDisposable.Dispose()

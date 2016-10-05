@@ -33,6 +33,19 @@ namespace TSDFile
         }
 
         /// <summary>
+        /// Gets TAS Zone Data Floor Area
+        /// </summary>
+        /// <param name="ZoneData">TSD Zone Data</param>
+        /// <returns name="FloorArea">Floor Area</returns>
+        /// <search>
+        /// TAS, TBDDocument, TBDDocument, ZoneData, FloorArea, Floor Area,
+        /// </search>
+        public static float FloorArea(ZoneData ZoneData)
+        {
+            return ZoneData.pZoneData.floorArea;
+        }
+
+        /// <summary>
         /// Gets TAS Annual Zone Result
         /// </summary>
         /// <param name="ZoneData">TSD Zone Data</param>

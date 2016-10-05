@@ -53,6 +53,35 @@ namespace TBDFile
         }
 
         /// <summary>
+        /// End Merge TAS TBD Document
+        /// </summary>
+        /// <param name="TBDDocument">TBD Document</param>
+        /// <returns name="TBDDocument">TBD Document</returns>
+        /// <search>
+        /// TAS, TBDDocument, tas, tbddocument, EndMerge, End Merge, endmerge, end merge
+        /// </search>
+        public static TBDDocument EndMerge(TBDDocument TBDDocument)
+        {
+            TBDDocument.pTBDDocument.EndMerge();
+            return TBDDocument;
+        }
+
+        /// <summary>
+        /// Imports Shading Data to TAS TBD Document
+        /// </summary>
+        /// <param name="TBDDocument">TBD Document</param>
+        /// <param name="Path">Path</param>
+        /// <returns name="TBDDocument">TBD Document</returns>
+        /// <search>
+        /// TAS, TBDDocument, tas, tbddocument, ImportShadingData, Import Shading Data, importshadingdata, import shading data
+        /// </search>
+        public static TBDDocument ImportShadingData(TBDDocument TBDDocument, string Path)
+        {
+            TBDDocument.pTBDDocument.ImportShadingData(Path);
+            return TBDDocument;
+        }
+
+        /// <summary>
         /// Opens TAS TBD Document
         /// </summary>
         /// <param name="FilePath">File Path</param>
