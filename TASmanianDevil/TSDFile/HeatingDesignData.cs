@@ -96,7 +96,7 @@ namespace TSDFile
         {
             List<ZoneData> aZoneDataList = new List<ZoneData>();
 
-            int aIndex = 0;
+            int aIndex = 1;
             TSD.ZoneData aZone = HeatingDesignData.pHeatingDesignData.GetZoneData(aIndex);
             while (aZone != null)
             {
