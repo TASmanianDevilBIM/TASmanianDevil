@@ -457,13 +457,14 @@ namespace T3DFile
         /// <param name="Path">File Path</param>
         /// <param name="Overwrite">Overwrite</param>
         /// <param name="ReverseIncorrectSurfaces">Reverse Incorrect Surfaces</param>
+        ///  <param name="ZonesFromSpaces">ZonesFromSpaces</param>
         /// <returns name="Result">Boolean result of operation</returns>
         /// <search>
         /// TAS, T3DDocument, T3DDocument, ImportGBXML, Import GBXML, import gbxml
         /// </search>
-        public static bool ImportGBXML(T3DDocument T3DDocument, string Path, int Overwrite, int ReverseIncorrectSurfaces)
+        public static bool ImportGBXML(T3DDocument T3DDocument, string Path, int Overwrite, int ReverseIncorrectSurfaces, int ZonesFromSpaces)
         {
-            return T3DDocument.pT3DDocument.ImportGBXML(Path, Overwrite, ReverseIncorrectSurfaces);
+            return T3DDocument.pT3DDocument.ImportGBXML(Path, Overwrite, ReverseIncorrectSurfaces,ZonesFromSpaces);
         }
 
         /// <summary>
