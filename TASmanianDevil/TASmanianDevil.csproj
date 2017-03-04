@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Generic\Calculations.cs" />
     <Compile Include="H72File\H72Node.cs" />
     <Compile Include="H72File\H72Parameter.cs" />
     <Compile Include="T3DFile\Building.cs" />
@@ -79,7 +80,7 @@
     <Compile Include="TBDFile\ZoneGroup.cs" />
     <Compile Include="TSDFile\BuildingData.cs" />
     <Compile Include="TSDFile\CoolingDesignData.cs" />
-    <Compile Include="Generic.cs" />
+    <Compile Include="Generic\Info.cs" />
     <Compile Include="TSDFile\HeatingDesignData.cs" />
     <Compile Include="TSDFile\SimulationData.cs" />
     <Compile Include="T3DFile\T3DDocument.cs" />
