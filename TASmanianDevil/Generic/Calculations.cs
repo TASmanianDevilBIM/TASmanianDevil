@@ -15,21 +15,37 @@ namespace Generic
     public static class Calculations
     {
         /// <summary>
-        /// Gets TAS Annual Building Result
+        /// Gets TAS Annual Building Result from TSD file and recalculate to Revit units to allow direct connection to Space parameters.
         /// </summary>
-        /// <param name="FilePath">TSD File Path</param>
-        /// <param name="TSDZoneArray"> Zone Array</param>
-        /// <param name="TSDBuildingArray">Buidling Array</param>
+        /// <param name="FilePath">Connect Path.TSD File Path</param>
+        /// <param name="TSDZoneArray"> Zone Array parameter - peak hour and value will be given based on this parameter all remaing values will be take at this hour</param>
+        /// <param name="TSDBuildingArray">Buidling Array - peak building data bassed on given parameter</param>
         /// <returns name="ZoneName"> Zone Names</returns>
-        /// <returns name="ZoneNumber"> Zone Number</returns>
-        /// <returns name="ZoneGUID"> Zone GUID</returns>
-        /// <returns name="Indexes">Indexes</returns>
-        /// <returns name="AirMovementGains">Air Movement Gains</returns>
+        /// <returns name="ZoneNumber"> Zone Number- recalculated if space removed from middle</returns>
+        /// <returns name="ZoneGUID"> TAS internal Zone GUID - never changes</returns>
+        /// <returns name="Indexes">Indexes of Hour 1-8760</returns>
+        /// <returns name="AirMovementGains">Air Movement Gains, Represents heat gained via inter-zone air flows, arising from specified Air Movement flows and Aperture flows. It is measured in Watts*10.7639104167097</returns>
+        /// <returns name="DryBulbTemp">The zone's dry-bulb air temperature, measured in degrees Celsius + 273.15</returns>
+        /// <returns name="ResultantTemp">Resultant Temp An average of the dry-bulb temperature and the mean radiant temperature. It is displayed in degrees Celsius+ 273.15</returns>
+        /// <returns name="InfVentGain">Inf Vent Gain It is measured in Watts *10.7639104167097</returns>
+        /// <returns name="OccupantSensibleGain">This is the sensible power input from the occupants. It includes both radiant and convective portions, it is measured in Watts*10.7639104167097</returns>
+        /// <returns name="LightingGain">This is the sensible power input from the lights.It includes both radiant and convective portions It is measured in Watts*10.7639104167097</returns>
+        /// <returns name="EquipmentSensibleGain">This is the sensible power input from the equipment .It includes both radiant and convective portions It is measured in Watts*10.7639104167097</returns>
+        /// <returns name="Infiltration">The fresh air infiltration (leakage) into the zone, expressed in kilograms per second</returns>
+        /// <returns name="EquipmentLatentGain">This is the latent load from the equipment, it is measured in Watts*10.7639104167097</returns>
+        /// <returns name="OccupancyLatentGain">This is the latent load from the occupants, it is measured in Watts*10.7639104167097</returns>
+        /// <returns name="HumidityRatio">The zone's humidity measured in grams of water per kilogram of air</returns>
+        /// <returns name="RelativeHumidity">The zone's relative humidity. It is displayed as a percentage</returns>
+        /// <returns name="MaxLatentIndexList">The zone's max latent (OccupancyLatentGain+EquipmentLatentGain) hour Index</returns>
+        /// <returns name="MaxLatentList">The zone's max latent load from the occupants and equipment, it is measured in Watts*10.7639104167097</returns>
+        /// <returns name="MaxBuildingLoad">The total load  over all outputted zones in the building, irrespective of output selection. It is displayed in Watts*10.7639104167097</returns>
+        /// <returns name="MaxBuildingIndexCooling">The Index Hour 1-8760 for total load  over all outputted zones in the building7</returns>
+        /// 
         /// <search>
         /// TAS, TBDDocument, TBDDocument, BuildingData, Get Annual Building Result, tas, tsddocument, tsddocument AnnualBuildingResult, annualbuildingresult
         /// </search>
-        [MultiReturn(new[] { "ZoneName", "ZoneNumber","GUID", "Indexes", "AirMovementGains", "DryBulbTemp", "ResultantTemp", "InfVentGain", "LightingGain", "EquipmentSensibleGain", "Infiltration", "EquipmentLatentGain", "OccupancyLatentGain", "HumidityRatio", "RelativeHumidity", "OccupantSensibleGain", "MaxLatentIndexList", "MaxLatentList", "MaxBuildingCooling", "MaxBuildingIndexCooling" })]
-        public static Dictionary<string, object> GetResults(string FilePath, TSDZoneArray TSDZoneArray, TSDBuildingArray TSDBuildingArray)
+        [MultiReturn(new[] { "ZoneName", "ZoneNumber","GUID", "Indexes", "AirMovementGains", "DryBulbTemp", "ResultantTemp", "InfVentGain", "LightingGain", "EquipmentSensibleGain", "Infiltration", "OccupantSensibleGain", "EquipmentLatentGain", "OccupancyLatentGain", "HumidityRatio", "RelativeHumidity", "MaxLatentIndexList", "MaxLatentList", "MaxBuildingCooling", "MaxBuildingIndexCooling" })]
+        public static Dictionary<string, object> GetResults_RevitUnits(string FilePath, TSDZoneArray TSDZoneArray, TSDBuildingArray TSDBuildingArray)
         {
             TSDDocument aTSDDocument = new TSDDocument(FilePath, false);
             SimulationData aSimulationData = TSDDocument.SimulationData(aTSDDocument);
@@ -45,6 +61,7 @@ namespace Generic
                 aMax_CoolingProfile = aFloatList_CoolingProfile.Max();
                 aIndex_CoolingProfile = aFloatList_CoolingProfile.IndexOf(aMax_CoolingProfile);
             }
+
             List<string> aStringList_ZoneName = new List<string>();
             List<int> aIntList_ZoneNumber = new List<int>();
             List<string> aIntList_ZoneGUID = new List<string>();
@@ -85,6 +102,7 @@ namespace Generic
             List<float> aDryBulbTempList = new List<float>();
             List<float> aResultantTemp = new List<float>();
             List<float> aInfVentGain = new List<float>();
+            List<float> aOccupantSensibleGain = new List<float>();
             List<float> aLightingGain = new List<float>();
             List<float> aEquipmentSensibleGain = new List<float>();
             List<float> aInfiltration = new List<float>();
@@ -92,7 +110,6 @@ namespace Generic
             List<float> aOccupancyLatentGain = new List<float>();
             List<float> aHumidityRatio = new List<float>();
             List<float> aRelativeHumidity = new List<float>();
-            List<float> aOccupantSensibleGain = new List<float>();
             List<int> aMaxLatentIndexList = new List<int>();
             List<float> aMaxLatentList = new List<float>();
 
@@ -115,6 +132,7 @@ namespace Generic
                 float aValue = float.NaN;
 
                 aValue = Functions.GetAtIndex(aZoneData, aIndex, TSD.tsdZoneArray.airMovementGain);
+                aValue = Convert.ToSingle(Math.Round(aValue * 10.7639104167097, 2));
                 aAirMovementGainList.Add(aValue);
 
                 aValue = Functions.GetAtIndex(aZoneData, aIndex, TSD.tsdZoneArray.dryBulbTemp);
@@ -128,6 +146,10 @@ namespace Generic
                 aValue = Functions.GetAtIndex(aZoneData, aIndex, TSD.tsdZoneArray.infVentGain);
                 aValue = Convert.ToSingle(Math.Round(aValue * 10.7639104167097, 2));
                 aInfVentGain.Add(aValue);
+
+                aValue = Functions.GetAtIndex(aZoneData, aIndex, TSD.tsdZoneArray.occupantSensibleGain);
+                aValue = Convert.ToSingle(Math.Round(aValue * 1, 2));
+                aOccupantSensibleGain.Add(aValue);
 
                 aValue = Functions.GetAtIndex(aZoneData, aIndex, TSD.tsdZoneArray.lightingGain);
                 aValue = Convert.ToSingle(Math.Round(aValue * 10.7639104167097, 2));
@@ -157,9 +179,7 @@ namespace Generic
                 aValue = Convert.ToSingle(Math.Round(aValue * 1, 2));
                 aRelativeHumidity.Add(aValue);
 
-                aValue = Functions.GetAtIndex(aZoneData, aIndex, TSD.tsdZoneArray.occupantSensibleGain);
-                aValue = Convert.ToSingle(Math.Round(aValue * 1, 2));
-                aOccupantSensibleGain.Add(aValue);
+
             }
 
             TSDDocument.Close(aTSDDocument);
@@ -174,6 +194,7 @@ namespace Generic
                     { "DryBulbTemp", aDryBulbTempList},
                     { "ResultantTemp", aResultantTemp},
                     { "InfVentGain", aInfVentGain},
+                    { "OccupantSensibleGain", aOccupantSensibleGain},
                     { "LightingGain", aLightingGain},
                     { "EquipmentSensibleGain", aEquipmentSensibleGain},
                     { "Infiltration", aInfiltration},
@@ -181,7 +202,6 @@ namespace Generic
                     { "OccupancyLatentGain", aOccupancyLatentGain},
                     { "HumidityRatio", aHumidityRatio},
                     { "RelativeHumidity", aRelativeHumidity},
-                    { "OccupantSensibleGain", aOccupantSensibleGain},
                     { "MaxLatentIndexList", aMaxLatentIndexList},
                     { "MaxLatentList", aMaxLatentList},
                     { "MaxBuildingCooling", aMax_CoolingProfile},
