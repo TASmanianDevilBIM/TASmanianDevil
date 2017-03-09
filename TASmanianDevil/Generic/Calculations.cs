@@ -15,7 +15,7 @@ namespace Generic
     public static class Calculations
     {
         /// <summary>
-        /// Gets TAS Annual Building Result from TSD file and recalculate to Revit units to allow direct connection to Space parameters.
+        /// Gets in formated way TAS Annual Building Result from TSD file and recalculate to Revit units to allow direct connection to Space parameters. Connect Zone, Building array and sorting will be performed according to connected parameters.
         /// </summary>
         /// <param name="FilePath">Connect Path.TSD File Path</param>
         /// <param name="TSDZoneArray"> Zone Array parameter - peak hour and value will be given based on this parameter all remaing values will be take at this hour</param>
@@ -35,6 +35,9 @@ namespace Generic
         /// <returns name="LightingGain">This is the sensible power input from the lights.It includes both radiant and convective portions It is measured in Watts*10.7639104167097</returns>
         /// <returns name="EquipmentSensibleGain">This is the sensible power input from the equipment .It includes both radiant and convective portions It is measured in Watts*10.7639104167097</returns>
         /// <returns name="Infiltration">The fresh air infiltration (leakage) into the zone, expressed in kilograms per second</returns>
+        /// <returns name="BuildingHeatTransfer">Represents the sum of heat gains from two sources:1-Heat entering the zone from a link, null link or internal building component. 2-Heat released into the zone which has been temporarily stored in the air (positive when the air temperature is falling, negative when it is rising). The building heat transfer is measured in Watts*10.7639104167097</returns>
+        /// <returns name="ExternalConductionOpaque">This is the heat gained through the inside surfaces of opaque components exposed to the outside or touching the ground. It is measured in Watts*10.7639104167097</returns>
+        /// <returns name="ExternalConductionGlazing">This is the heat gained through the inside surfaces of exposed transparent components. It is measured in Watts*10.7639104167097</returns>
         /// <returns name="EquipmentLatentGain">This is the latent load from the equipment, it is measured in Watts*10.7639104167097</returns>
         /// <returns name="OccupancyLatentGain">This is the latent load from the occupants, it is measured in Watts*10.7639104167097</returns>
         /// <returns name="HumidityRatio">The zone's humidity measured in grams of water per kilogram of air</returns>
@@ -47,7 +50,7 @@ namespace Generic
         /// <search>
         /// TAS, TBDDocument, TBDDocument, BuildingData, Get Annual Building Result, tas, tsddocument, tsddocument AnnualBuildingResult, annualbuildingresult
         /// </search>
-        [MultiReturn(new[] { "ZoneName", "ZoneNumber","GUID", "Indexes", "HeatingLoad", "CoolingLoad",  "DryBulbTemp", "ResultantTemp", "SolarGain", "AirMovementGains", "InfVentGain", "LightingGain", "EquipmentSensibleGain", "Infiltration", "OccupantSensibleGain", "EquipmentLatentGain", "OccupancyLatentGain", "HumidityRatio", "RelativeHumidity", "MaxLatentIndexList", "MaxLatentList", "MaxBuildingCooling", "MaxBuildingIndexCooling" })]
+        [MultiReturn(new[] { "ZoneName", "ZoneNumber","GUID", "Indexes", "HeatingLoad", "CoolingLoad",  "DryBulbTemp", "ResultantTemp", "SolarGain", "AirMovementGains", "InfVentGain", "LightingGain", "EquipmentSensibleGain", "Infiltration", "BuildingHeatTransfer", "ExternalConductionOpaque", "ExternalConductionGlazing", "OccupantSensibleGain", "EquipmentLatentGain", "OccupancyLatentGain", "HumidityRatio", "RelativeHumidity", "MaxLatentIndexList", "MaxLatentList", "MaxBuildingCooling", "MaxBuildingIndexCooling" })]
         public static Dictionary<string, object> GetResults_RevitUnits(string FilePath, TSDZoneArray TSDZoneArray, TSDBuildingArray TSDBuildingArray)
         {
             TSDDocument aTSDDocument = new TSDDocument(FilePath, false);
@@ -112,6 +115,9 @@ namespace Generic
             List<float> aLightingGainList = new List<float>();
             List<float> aEquipmentSensibleGainList = new List<float>();
             List<float> aInfiltrationList = new List<float>();
+            List<float> aBuildingHeatTransferList = new List<float>();
+            List<float> aExternalConductionOpaqueList = new List<float>();
+            List<float> aExternalConductionGlazingList = new List<float>();
             List<float> aEquipmentLatentGainList = new List<float>();
             List<float> aOccupancyLatentGainList = new List<float>();
             List<float> aHumidityRatioList = new List<float>();
@@ -181,6 +187,18 @@ namespace Generic
                 aValue = Convert.ToSingle(Math.Round(aValue * 1, 2));
                 aInfiltrationList.Add(aValue);
 
+                aValue = Functions.GetAtIndex(aZoneData, aIndex, TSD.tsdZoneArray.buildingHeatTransfer);
+                aValue = Convert.ToSingle(Math.Round(aValue * 1, 2));
+                aBuildingHeatTransferList.Add(aValue);
+
+                aValue = Functions.GetAtIndex(aZoneData, aIndex, TSD.tsdZoneArray.externalConductionOpaque);
+                aValue = Convert.ToSingle(Math.Round(aValue * 1, 2));
+                aExternalConductionOpaqueList.Add(aValue);
+
+                aValue = Functions.GetAtIndex(aZoneData, aIndex, TSD.tsdZoneArray.externalConductionGlazing);
+                aValue = Convert.ToSingle(Math.Round(aValue * 1, 2));
+                aExternalConductionGlazingList.Add(aValue);
+
                 aValue = Functions.GetAtIndex(aZoneData, aIndex, TSD.tsdZoneArray.equipmentLatentGain);
                 aValue = Convert.ToSingle(Math.Round(aValue * 10.7639104167097, 2));
                 aEquipmentLatentGainList.Add(aValue);
@@ -219,6 +237,9 @@ namespace Generic
                     { "LightingGain", aLightingGainList},
                     { "EquipmentSensibleGain", aEquipmentSensibleGainList},
                     { "Infiltration", aInfiltrationList},
+                    { "BuildingHeatTransfer", aBuildingHeatTransferList},
+                    { "ExternalConductionOpaque", aExternalConductionOpaqueList},
+                    { "ExternalConductionGlazing", aExternalConductionGlazingList},
                     { "EquipmentLatentGain", aEquipmentLatentGainList},
                     { "OccupancyLatentGain", aOccupancyLatentGainList},
                     { "HumidityRatio", aHumidityRatioList},

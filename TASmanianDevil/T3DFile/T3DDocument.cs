@@ -73,8 +73,8 @@ namespace T3DFile
         /// </search>
         public static T3DDocument Open(object FilePath, bool Save = false)
         {
-            Dynamo.Events.ExecutionEvents.GraphPostExecution -= ExecutionEvents_GraphPostExecution;
-            Dynamo.Events.ExecutionEvents.GraphPostExecution += ExecutionEvents_GraphPostExecution;
+            //Dynamo.Events.ExecutionEvents.GraphPostExecution -= ExecutionEvents_GraphPostExecution;
+            //Dynamo.Events.ExecutionEvents.GraphPostExecution += ExecutionEvents_GraphPostExecution;
 
             return new T3DDocument(FilePath.ToString(), Save);
         }

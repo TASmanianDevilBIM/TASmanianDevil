@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Autodesk.DesignScript.Runtime;
 
 namespace T3DFile
 {
@@ -18,18 +19,49 @@ namespace T3DFile
             pZone = Zone;
         }
 
+        ///// <summary>
+        ///// Gets TAS 3D Zone Name
+        ///// </summary>
+        ///// <param name="Zone">TAS Zone</param>
+        ///// <returns name="Name">Zone Name</returns>
+        ///// <search>
+        ///// TAS, Zone, zone, Zone, zone, name, Name
+        ///// </search>
+        //public static string Name(Zone Zone)
+        //{
+        //    return Zone.pZone.name;
+        //}
+
         /// <summary>
-        /// Gets TAS 3D Zone Name
+        /// Gets TAS 3D Zone Name and Boolean
         /// </summary>
-        /// <param name="Zone">TAS Zone</param>
+        /// <param name="Zones">TAS Zone</param>
         /// <returns name="Name">Zone Name</returns>
+        /// <returns name="bool">True/False</returns>
         /// <search>
-        /// TAS, Zone, zone, Zone, zone, name, Name
+        /// TAS, T3D, zone, Zone, zone, name, Name
         /// </search>
-        public static string Name(Zone Zone)
+        [MultiReturn(new[] { "zone", "bool" })]
+        public static Dictionary<string, object> Name(List<Zone> Zones)
         {
-            return Zone.pZone.name;
+            List<string> outzones = new List<string>();
+            foreach (Zone zone in Zones)
+            {
+                outzones.Add(zone.pZone.name);
+
+            }
+            bool outbool = false;
+            if (outzones.Count != 0)
+            {
+                outbool = true;
+            }
+            return new Dictionary<string, object>
+            {
+                { "zone", outzones },
+                { "bool", outbool }
+            };
         }
+
 
         /// <summary>
         /// Sets TAS 3D Zone Name
@@ -182,6 +214,53 @@ namespace T3DFile
         {
             Zone.pZone.colour = Colour;
             return Zone;
+        }
+
+        /// <summary>
+        /// Adds Tag to Zone
+        /// </summary>
+        /// <param name="Zone">TAS Zone</param>
+        /// <param name="strTag">String Tag</param>
+        /// <returns name="Boolean">Boolean</returns>
+        /// <search>
+        /// TAS, ZoneTag, Tag, Add Tag Description, addtag, tag, add tag 
+        /// </search>
+        public static bool AddTag(Zone Zone, string strTag)
+        {
+            ///   return new Zone(Zone.pZone.AddTag(StrTag));
+
+            bool aResult = Zone.pZone.AddTag(strTag);
+            ///TAS3D.Zone aZone = Zone.pZone.AddTag(strTag);
+            return aResult;
+        }
+
+        /// <summary>
+        /// Gets TAS Zone Tag
+        /// </summary>
+        /// <param name="Zone">TAS Zone </param>
+        /// <returns name="Tag">Tag Name</returns>
+        /// <search>
+        /// TAS, Zone Tag, Tag, Tag, tag
+        /// </search>
+        public static List<string> GetTags(Zone Zone)
+        {
+            object aObject = Zone.pZone.GetTags();
+            return (aObject as string[]).ToList();
+        }
+
+        /// <summary>
+        /// Remove Tags
+        /// </summary>
+        /// <param name="Zone">TAS Zone</param>
+        /// <param name="strTag">TAS Tag</param>
+        /// <returns name="Boolean">Boolean</returns>
+        /// <search>
+        /// TAS, Tag, Delete,  Tag, tag, delete
+        /// </search>
+        public static bool RemoveTag(Zone Zone, string strTag)
+        {
+            bool aResult = Zone.pZone.RemoveTag(strTag);
+            return aResult;
         }
 
     }
