@@ -27,7 +27,7 @@ namespace TSDFile
         /// <search>
         /// TAS, TBDDocument, TBDDocument, CoolingDesignData, Get Building, tas, tsddocument, tsddocument Cooling Design Data, coolingdesigndata
         /// </search>
-        public static CoolingDesignData CoolingDesignData(SimulationData SimulationData, int Index)
+        public static CoolingDesignData CoolingDesignData(SimulationData SimulationData, int Index = 0)
         {
             return new CoolingDesignData(SimulationData.pSimulationData.GetCoolingDesignData(Index));
         }
@@ -41,7 +41,7 @@ namespace TSDFile
         /// <search>
         /// TAS, TBDDocument, TBDDocument, HeatingDesignData, Get Building, tas, tsddocument, tsddocument Heating Design Data, heatingdesigndata
         /// </search>
-        public static HeatingDesignData HeatingDesignData(SimulationData SimulationData, int Index)
+        public static HeatingDesignData HeatingDesignData(SimulationData SimulationData, int Index = 0)
         {
             return new HeatingDesignData(SimulationData.pSimulationData.GetHeatingDesignData(Index));
         }
@@ -96,6 +96,26 @@ namespace TSDFile
         public static int LastDay(SimulationData SimulationData)
         {
             return SimulationData.pSimulationData.lastDay;
+        }
+
+        public static ZoneDataGroup GetZoneDataGroup(SimulationData SimulationData, int Index = 1)
+        {
+            return new ZoneDataGroup(SimulationData.pSimulationData.GetZoneDataGroup(Index));
+        }
+
+        public static List<ZoneDataGroup> GetZoneDataGroups(SimulationData SimulationData)
+        {
+            List<ZoneDataGroup> aZoneDataGroupList = new List<ZoneDataGroup>();
+
+            int aIndex = 1;
+            TSD.ZoneDataGroup aZoneDataGroup = SimulationData.pSimulationData.GetZoneDataGroup(aIndex);
+            while (aZoneDataGroup != null)
+            {
+                aZoneDataGroupList.Add(new ZoneDataGroup(aZoneDataGroup));
+                aIndex++;
+                aZoneDataGroup = SimulationData.pSimulationData.GetZoneDataGroup(aIndex);
+            }
+            return aZoneDataGroupList;
         }
     }
 }

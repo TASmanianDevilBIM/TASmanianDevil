@@ -74,6 +74,30 @@ namespace TSDFile
         }
 
         /// <summary>
+        /// Gets Zones Data
+        /// </summary>
+        /// <param name="BuildingData">TSD Building Design Data</param>
+        /// <returns name="ZonesData">Zones Data</returns>
+        /// <search>
+        /// TAS, TBDDocument, TBDDocument, BuildingData, Get Building Data ZoneData, tas, tsddocument, buildingdata, ZonesData, zonesdata, Zones Data, zones data
+        /// </search>
+        public static List<ZoneData> GetZonesData(BuildingData BuildingData)
+        {
+            List<ZoneData> aResult = new List<ZoneData>();
+
+            int aIndex = 1;
+            TSD.ZoneData aZoneData = BuildingData.pBuildingData.GetZoneData(aIndex);
+            while (aZoneData != null)
+            {
+                aResult.Add(new ZoneData(aZoneData));
+                aIndex++;
+                aZoneData = BuildingData.pBuildingData.GetZoneData(aIndex);
+            }
+
+            return aResult;
+        }
+
+        /// <summary>
         /// Gets number of zones fro the building data
         /// </summary>
         /// <param name="BuildingData">TSD Building Data</param>

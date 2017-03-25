@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Autodesk.DesignScript.Runtime;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,29 +19,41 @@ namespace T3DFile
             pBuilding = Building;
         }
 
-		// From here
         /// <summary>
-        /// Gets TAS Building description XX
+        /// Gets TAS T3D Building description XX
         /// </summary>
-        /// <param name="Building">TAS Building</param>
+        /// <param name="Building">TAS T3D Building</param>
         /// <returns name="Description">Building description</returns>
         /// <search>
-        /// TAS, Builidng, Zone, Get Zone Description, builidng, zone, get zone description 
+        /// TAS, Building, Zone, Get Zone Description, builidng, zone, get zone description 
         /// </search>
         public static string Description(Building Building)
         {
             return Building.pBuilding.description;
         }
-		// To here
 
         /// <summary>
-        /// Sets TAS Building description
+        /// Gets TAS T3D Building Zone
         /// </summary>
-        /// <param name="Building">TAS Building</param>
+        /// <param name="Building">TAS T3D Building</param>
+        /// <param name="Index">TAS T3D Building Zone Index</param>
+        /// <returns name="Zone">Building Zone</returns>
+        /// <search>
+        /// TAS, Building, Zone, Get Building Zone, getbuildingzone, zoneset, GetZone, getzone
+        /// </search>
+        public static Zone GetZone(Building Building, int Index)
+        {
+            return new Zone(Building.pBuilding.GetZone(Index));
+        }
+
+        /// <summary>
+        /// Sets TAS T3D Building description
+        /// </summary>
+        /// <param name="Building">TAS T3D Building</param>
         /// <param name="Description">Building Description</param>
         /// <returns name="Building">Building</returns>
         /// <search>
-        /// TAS, Builidng, Zone, Set Zone Description, builidng, zone, set zone description, SetDescription, setdescription
+        /// TAS, Building, Zone, Set Zone Description, builidng, zone, set zone description, SetDescription, setdescription
         /// </search>
         public static Building SetDescription(Building Building, string Description)
         {
@@ -49,12 +62,12 @@ namespace T3DFile
         }
 
         /// <summary>
-        /// Gets TAS Building GUID
+        /// Gets TAS T3D Building GUID
         /// </summary>
-        /// <param name="Building">TAS Building</param>
+        /// <param name="Building">TAS T3D Building</param>
         /// <returns name="GUID">Building GUID</returns>
         /// <search>
-        /// TAS, Builidng, GUID, Get Building GUID, getbuildingguid, guid
+        /// TAS, Building, GUID, Get Building GUID, getbuildingguid, guid
         /// </search>
         public static string GUID(Building Building)
         {
@@ -62,12 +75,12 @@ namespace T3DFile
         }
 
         /// <summary>
-        /// Gets TAS Building Name
+        /// Gets TAS T3D Building Name
         /// </summary>
-        /// <param name="Building">TAS Building</param>
+        /// <param name="Building">TAS T3D Building</param>
         /// <returns name="Name">Building Name</returns>
         /// <search>
-        /// TAS, Builidng, Name, Get Building Name, getbuildingname, name
+        /// TAS, Building, Name, Get Building Name, getbuildingname, name
         /// </search>
         public static string Name(Building Building)
         {
@@ -75,13 +88,13 @@ namespace T3DFile
         }
 
         /// <summary>
-        /// Sets TAS Building Name
+        /// Sets TAS T3D Building Name
         /// </summary>
-        /// <param name="Building">TAS Building</param>
+        /// <param name="Building">TAS T3D Building</param>
         /// <param name="Name">Name</param>
         /// <returns name="Building">Building</returns>
         /// <search>
-        /// TAS, Builidng, Name, Set Building Name, setbuildingname, name, SetName, setname
+        /// TAS, Building, Name, Set Building Name, setbuildingname, name, SetName, setname
         /// </search>
         public static Building SetName(Building Building, string Name)
         {
@@ -90,12 +103,12 @@ namespace T3DFile
         }
 
         /// <summary>
-        /// Gets TAS Building North Angle
+        /// Gets TAS T3D Building North Angle
         /// </summary>
-        /// <param name="Building">TAS Building</param>
+        /// <param name="Building">TAS T3D Building</param>
         /// <returns name="Angle">Building North Angle</returns>
         /// <search>
-        /// TAS, Builidng, North Angle, Get Building North Angle, getbuildingnorthangle, northangle, NorthAngle, northangle
+        /// TAS, Building, North Angle, Get Building North Angle, getbuildingnorthangle, northangle, NorthAngle, northangle
         /// </search>
         public static double NorthAngle(Building Building)
         {
@@ -103,13 +116,13 @@ namespace T3DFile
         }
 
         /// <summary>
-        /// Sets TAS Building North Angle
+        /// Sets TAS T3D Building North Angle
         /// </summary>
-        /// <param name="Building">TAS Building</param>
+        /// <param name="Building">TAS T3D Building</param>
         /// <param name="NorthAngle">North Angle</param>
         /// <returns name="Angle">Building North Angle</returns>
         /// <search>
-        /// TAS, Builidng, North Angle, Set Building North Angle, setbuildingnorthangle, northangle, NorthAngle, northangle
+        /// TAS, Building, North Angle, Set Building North Angle, setbuildingnorthangle, northangle, NorthAngle, northangle
         /// </search>
         public static Building SetNorthAngle(Building Building, double NorthAngle)
         {
@@ -118,12 +131,12 @@ namespace T3DFile
         }
 
         /// <summary>
-        /// Gets TAS Building Time Zone
+        /// Gets TAS T3D Building Time Zone
         /// </summary>
-        /// <param name="Building">TAS Building</param>
+        /// <param name="Building">TAS T3D Building</param>
         /// <returns name="TimeZone">Building Time Zone</returns>
         /// <search>
-        /// TAS, Builidng, TimeZone, Get Building TimeZone, getbuildingtimezone, Time Zone, time zone, timezone
+        /// TAS, Building, TimeZone, Get Building TimeZone, getbuildingtimezone, Time Zone, time zone, timezone
         /// </search>
         public static double TimeZone(Building Building)
         {
@@ -131,12 +144,12 @@ namespace T3DFile
         }
 
         /// <summary>
-        /// Gets TAS Building Latitude
+        /// Gets TAS T3D Building Latitude
         /// </summary>
-        /// <param name="Building">TAS Building</param>
+        /// <param name="Building">TAS T3D Building</param>
         /// <returns name="Latitude">Building Latitude</returns>
         /// <search>
-        /// TAS, Builidng, Latitude, Get Building Latitude, getbuildinglatitude, latitude
+        /// TAS, Building, Latitude, Get Building Latitude, getbuildinglatitude, latitude
         /// </search>
         public static double Latitude(Building Building)
         {
@@ -144,13 +157,13 @@ namespace T3DFile
         }
 
         /// <summary>
-        /// Sets TAS Building Latitude
+        /// Sets TAS T3D Building Latitude
         /// </summary>
-        /// <param name="Building">TAS Building</param>
+        /// <param name="Building">TAS T3D Building</param>
         /// <param name="Latitude">Building Latitude</param>
         /// <returns name="Building">Building</returns>
         /// <search>
-        /// TAS, Builidng, Latitude, Set Building Latitude, setbuildinglatitude, latitude, SetLatitude, setlatitude
+        /// TAS, Building, Latitude, Set Building Latitude, setbuildinglatitude, latitude, SetLatitude, setlatitude
         /// </search>
         public static Building SetLatitude(Building Building, double Latitude)
         {
@@ -159,12 +172,12 @@ namespace T3DFile
         }
 
         /// <summary>
-        /// Gets TAS Building Longitude
+        /// Gets TAS T3D Building Longitude
         /// </summary>
-        /// <param name="Building">TAS Building</param>
+        /// <param name="Building">TAS T3D Building</param>
         /// <returns name="Latitude">Building Latitude</returns>
         /// <search>
-        /// TAS, Builidng, Longitude, Get Building Longitude, getbuildinglongitude, longitude
+        /// TAS, Building, Longitude, Get Building Longitude, getbuildinglongitude, longitude
         /// </search>
         public static double Longitude(Building Building)
         {
@@ -172,13 +185,13 @@ namespace T3DFile
         }
 
         /// <summary>
-        /// Sets TAS Building Longitude
+        /// Sets TAS T3D Building Longitude
         /// </summary>
-        /// <param name="Building">TAS Building</param>
+        /// <param name="Building">TAS T3D Building</param>
         /// <param name="Longitude">Building Longitude</param>
         /// <returns name="Building">Building</returns>
         /// <search>
-        /// TAS, Builidng, Longitude, Set Building Longitude, setbuildinglongitude, longitude
+        /// TAS, Building, Longitude, Set Building Longitude, setbuildinglongitude, longitude
         /// </search>
         public static Building SetLongitude(Building Building, double Longitude)
         {
@@ -187,12 +200,12 @@ namespace T3DFile
         }
 
         /// <summary>
-        /// Gets TAS Building Year
+        /// Gets TAS T3D Building Year
         /// </summary>
-        /// <param name="Building">TAS Building</param>
+        /// <param name="Building">TAS T3D Building</param>
         /// <returns name="Year">Building Year</returns>
         /// <search>
-        /// TAS, Builidng, Year, Get Building Year, getbuildingyear, year
+        /// TAS, Building, Year, Get Building Year, getbuildingyear, year
         /// </search>
         public static int Year(Building Building)
         {
@@ -200,13 +213,13 @@ namespace T3DFile
         }
 
         /// <summary>
-        /// Gets TAS Building Element
+        /// Gets TAS T3D Building Element
         /// </summary>
-        /// <param name="Building">TAS Building</param>
-        /// <param name="Index">TAS Building Element Index</param>
+        /// <param name="Building">TAS T3D Building</param>
+        /// <param name="Index">TAS T3D Building Element Index</param>
         /// <returns name="Element">Building Element</returns>
         /// <search>
-        /// TAS, Builidng, Element, Get Building Element, getbuildingelement, element, GetElement, getelement
+        /// TAS, Building, Element, Get Building Element, getbuildingelement, element, GetElement, getelement
         /// </search>
         public static Element GetElement(Building Building, int Index)
         {
@@ -214,12 +227,12 @@ namespace T3DFile
         }
 
         /// <summary>
-        /// Gets TAS Building Elements
+        /// Gets TAS T3D Building Elements
         /// </summary>
-        /// <param name="Building">TAS Building</param>
+        /// <param name="Building">TAS T3D Building</param>
         /// <returns name="Elements">Building Elements</returns>
         /// <search>
-        /// TAS, Builidng, Elements, Get Building Elements, getbuildingelements, elements, GetElements, getelements
+        /// TAS, Building, Elements, Get Building Elements, getbuildingelements, elements, GetElements, getelements
         /// </search>
         public static List<Element> Elements(Building Building)
         {
@@ -237,9 +250,9 @@ namespace T3DFile
         }
 
         /// <summary>
-        /// Gets TAS Building Name
+        /// Gets TAS T3D Building Name
         /// </summary>
-        /// <param name="Building">TAS Building</param>
+        /// <param name="Building">TAS T3D Building</param>
         /// <param name="Name">Windows Name</param>
         /// <param name="OpeningType">Opening Type</param>
         /// <param name="Colour">Windows Colour</param>
@@ -248,7 +261,7 @@ namespace T3DFile
         /// <param name="Level">Windows Level</param>
         /// <returns name="Window">Building Window</returns>
         /// <search>
-        /// TAS, Builidng, Name, AddWindow, Window, addwindow, Add Window
+        /// TAS, Building, Name, AddWindow, Window, addwindow, Add Window
         /// </search>
         public static Window AddWindow(Building Building, string Name, int OpeningType, uint Colour, double Height, double Width, double Level)
         {
@@ -256,13 +269,13 @@ namespace T3DFile
         }
 
         /// <summary>
-        /// Gets TAS Building Window
+        /// Gets TAS T3D Building Window
         /// </summary>
-        /// <param name="Building">TAS Building</param>
-        /// <param name="Index">TAS Building Window Index</param>
+        /// <param name="Building">TAS T3D Building</param>
+        /// <param name="Index">TAS T3D Building Window Index</param>
         /// <returns name="Window">Building Window</returns>
         /// <search>
-        /// TAS, Builidng, Window, Get Building Window, getbuildingwindow, window, GetWindow, getwindow
+        /// TAS, Building, Window, Get Building Window, getbuildingwindow, window, GetWindow, getwindow
         /// </search>
         public static Window GetWindow(Building Building, int Index)
         {
@@ -270,12 +283,12 @@ namespace T3DFile
         }
 
         /// <summary>
-        /// Gets TAS Building Windows
+        /// Gets TAS T3D Building Windows
         /// </summary>
-        /// <param name="Building">TAS Building</param>
+        /// <param name="Building">TAS T3D Building</param>
         /// <returns name="Windows">Building Windows</returns>
         /// <search>
-        /// TAS, Builidng, Windows, Get Building Windows, getbuildingwindows, Windows, GetWindows, getWindows
+        /// TAS, Building, Windows, Get Building Windows, getbuildingwindows, Windows, GetWindows, getWindows
         /// </search>
         public static List<Window> Windows(Building Building)
         {
@@ -295,13 +308,13 @@ namespace T3DFile
         /// <summary>
         /// Adds new Zone Set to building
         /// </summary>
-        /// <param name="Building">TAS Building</param>
+        /// <param name="Building">TAS T3D Building</param>
         /// <param name="Name">Zone Set Name</param>
         /// <param name="Description">Zone Set Description</param>
         /// <param name="NumberOfZones">Zone Set Number Of Zones</param>
         /// <returns name="ZoneSet">Zone Set</returns>
         /// <search>
-        /// TAS, Builidng, AddZoneSet, builidng, zone, addzoneset
+        /// TAS, Building, AddZoneSet, builidng, zone, addzoneset
         /// </search>
         public static ZoneSet AddZoneSet(Building Building, string Name, string Description, int NumberOfZones)
         {
@@ -309,13 +322,13 @@ namespace T3DFile
         }
 
         /// <summary>
-        /// Gets TAS Building Zone Set
+        /// Gets TAS T3D Building Zone Set
         /// </summary>
-        /// <param name="Building">TAS Building</param>
-        /// <param name="Index">TAS Building Zone Set Index</param>
+        /// <param name="Building">TAS T3D Building</param>
+        /// <param name="Index">TAS T3D Building Zone Set Index</param>
         /// <returns name="ZoneSet">Building Zone Set</returns>
         /// <search>
-        /// TAS, Builidng, ZoneSet, Get Building Zone Set, getbuildingzoneset, zoneset, GetZoneSet, getzoneset
+        /// TAS, Building, ZoneSet, Get Building Zone Set, getbuildingzoneset, zoneset, GetZoneSet, getzoneset
         /// </search>
         public static ZoneSet GetZoneSet(Building Building, int Index)
         {
@@ -323,12 +336,12 @@ namespace T3DFile
         }
 
         /// <summary>
-        /// Gets TAS Building Zone Sets
+        /// Gets TAS T3D Building Zone Sets
         /// </summary>
-        /// <param name="Building">TAS Building</param>
+        /// <param name="Building">TAS T3D Building</param>
         /// <returns name="ZoneSets">Building Zone Sets</returns>
         /// <search>
-        /// TAS, Builidng, ZoneSets, Get Building ZoneSets, getbuildingzonesets, zonesets, Getzonesets, Zone Sets, Zone Sets, zone sets
+        /// TAS, Building, ZoneSets, Get Building ZoneSets, getbuildingzonesets, zonesets, Getzonesets, Zone Sets, Zone Sets, zone sets
         /// </search>
         public static List<ZoneSet> ZoneSets(Building Building)
         {
@@ -346,30 +359,14 @@ namespace T3DFile
         }
 
         /// <summary>
-        /// Gets TAS Building Zone
+        /// Gets TAS T3D Building Zone Sets
         /// </summary>
-        /// <param name="Building">TAS Building</param>
-        /// <param name="Index">TAS Building Zone Index</param>
-        /// <returns name="Zone">Building Zone</returns>
-        /// <search>
-        /// TAS, Builidng, Zone, Get Building Zone, getbuildingzone, zoneset, GetZone, getzone
-        /// </search>
-        public static Zone GetZone(Building Building, int Index)
-        {
-            return new Zone(Building.pBuilding.GetZone(Index));
-        }
-
-        
-
-        /// <summary>
-        /// Gets TAS Building Zone Sets
-        /// </summary>
-        /// <param name="Building">TAS Building</param>
+        /// <param name="Building">TAS T3D Building</param>
         /// <returns name="Zones">Building Zone Sets</returns>
         /// <search>
-        /// TAS, Builidng, Zones, Get Building ZoneSets, getbuildingzones, zones, Getzones, Zones
+        /// TAS, Building, Zones, Get Building ZoneSets, getbuildingzones, zones, Getzones, Zones
         /// </search>
-        public static List<Zone> Zones(Building Building)
+        public static IEnumerable<Zone> Zones(Building Building)
         {
             List<Zone> aZoneList = new List<Zone>();
 
@@ -384,6 +381,10 @@ namespace T3DFile
             return aZoneList;
         }
 
-        
+        [IsVisibleInDynamoLibrary(false)]
+        public override string ToString()
+        {
+            return string.Format("{0} [{1} : {2}]", GetType(), pBuilding.name, pBuilding.GUID);
+        }
     }
 }

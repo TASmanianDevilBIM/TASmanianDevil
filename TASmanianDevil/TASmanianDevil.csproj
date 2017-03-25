@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>TASmanianDevil</RootNamespace>
     <AssemblyName>TASmanianDevil</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugEngines>{351668CC-8477-4fbf-BFE3-5F1006E4DB1F}</DebugEngines>
@@ -36,8 +37,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="DynamoServices">
-      <HintPath>..\..\..\..\..\..\..\Program Files\Dynamo\Dynamo Core\1.2\DynamoServices.dll</HintPath>
+      <HintPath>C:\Program Files\Dynamo\Dynamo Core\1.2\DynamoServices.dll</HintPath>
       <Private>False</Private>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -50,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Generic\Calculations.cs" />
+    <Compile Include="Generic\Document.cs" />
     <Compile Include="H72File\H72Node.cs" />
     <Compile Include="H72File\H72Parameter.cs" />
     <Compile Include="T3DFile\Building.cs" />
@@ -90,6 +93,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TBDFile\Zone.cs" />
     <Compile Include="TSDFile\ZoneData.cs" />
+    <Compile Include="TSDFile\ZoneDataGroup.cs" />
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="stdole">

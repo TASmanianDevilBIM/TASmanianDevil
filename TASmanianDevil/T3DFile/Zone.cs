@@ -19,49 +19,42 @@ namespace T3DFile
             pZone = Zone;
         }
 
-        ///// <summary>
-        ///// Gets TAS 3D Zone Name
-        ///// </summary>
-        ///// <param name="Zone">TAS Zone</param>
-        ///// <returns name="Name">Zone Name</returns>
-        ///// <search>
-        ///// TAS, Zone, zone, Zone, zone, name, Name
-        ///// </search>
-        //public static string Name(Zone Zone)
-        //{
-        //    return Zone.pZone.name;
-        //}
+        /// <summary>
+        /// Gets TAS 3D Zone Name
+        /// </summary>
+        /// <param name="Zone">TAS Zone</param>
+        /// <returns name="Name">Zone Name</returns>
+        /// <search>
+        /// TAS, Zone, zone, Zone, zone, name, Name
+        /// </search>
+        public static string Name(Zone Zone)
+        {
+            return Zone.pZone.name;   // when I connect zones returns list of Names
+        }
 
         /// <summary>
         /// Gets TAS 3D Zone Name and Boolean
         /// </summary>
         /// <param name="Zones">TAS Zone</param>
-        /// <returns name="Name">Zone Name</returns>
-        /// <returns name="bool">True/False</returns>
+        /// <returns name="Zone">Zone Name</returns>
+        /// <returns name="HasZones">True/False</returns>
         /// <search>
         /// TAS, T3D, zone, Zone, zone, name, Name
         /// </search>
-        [MultiReturn(new[] { "zone", "bool" })]
-        public static Dictionary<string, object> Name(List<Zone> Zones)
+        [MultiReturn(new[] { "Zone", "HasZones" })]
+        public static Dictionary<string, object> Names(List<Zone> Zones)
         {
-            List<string> outzones = new List<string>();
-            foreach (Zone zone in Zones)
+            List<string> aNameList = new List<string>();
+            foreach (Zone aZone in Zones)
             {
-                outzones.Add(zone.pZone.name);
-
-            }
-            bool outbool = false;
-            if (outzones.Count != 0)
-            {
-                outbool = true;
+                aNameList.Add(aZone.pZone.name);
             }
             return new Dictionary<string, object>
             {
-                { "zone", outzones },
-                { "bool", outbool }
+                { "Zone", aNameList },
+                { "HasZones", aNameList.Count != 0 ? true : false }
             };
         }
-
 
         /// <summary>
         /// Sets TAS 3D Zone Name
@@ -79,10 +72,24 @@ namespace T3DFile
         }
 
         /// <summary>
+        /// Delete TAS 3D Zone
+        /// </summary>
+        /// <param name="Zone">TAS Zone</param>
+        /// <returns name="Succeeded">Succeeded</returns>
+        /// <search>
+        /// TAS, zone, Zone, Delete, delete
+        /// </search>
+        public static bool Delete(Zone Zone)
+        {
+            Zone.pZone.Delete();
+            return true;
+        }
+
+        /// <summary>
         /// Gets TAS 3D Zone Description
         /// </summary>
         /// <param name="Zone">TAS Zone</param>
-        /// <returns name="Zone">Zone</returns>
+        /// <returns name="Description">Description</returns>
         /// <search>
         /// TAS, Zone, zone, description, Description
         /// </search>
@@ -151,13 +158,16 @@ namespace T3DFile
         /// Check is zone is used
         /// </summary>
         /// <param name="Zone">TAS Zone</param>
-        /// <returns name="IsUsed">IsUsed</returns>
+        /// <returns name="IsUsed">Is Used</returns>
         /// <search>
         /// TAS, Zone, zone, IsUsed, Is Used
         /// </search>
-        public static int IsUsed(Zone Zone)
+        public static bool IsUsed(Zone Zone)
         {
-            return Zone.pZone.isUsed;
+            if (Zone.pZone.isUsed == 1)
+                return true;
+            else
+                return false;
         }
 
         /// <summary>
@@ -263,5 +273,10 @@ namespace T3DFile
             return aResult;
         }
 
+        [IsVisibleInDynamoLibrary(false)]
+        public override string ToString()
+        {
+            return string.Format("{0} [{1} : {2}]", GetType(), pZone.name, pZone.GUID);
+        }
     }
 }

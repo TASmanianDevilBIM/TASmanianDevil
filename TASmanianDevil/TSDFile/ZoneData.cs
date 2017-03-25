@@ -22,12 +22,26 @@ namespace TSDFile
         /// Gets TAS Annual Zone Result
         /// </summary>
         /// <param name="ZoneData">TSD Zone Data</param>
+        /// <param name="TSDZoneArray">TSDZoneArray</param>
+        /// <returns name="Data">TAS Data</returns>
+        /// <search>
+        /// TAS, TBDDocument, TBDDocument, ZoneData, Get Annual Zone Result, tas, tsddocument, tsddocument AnnualZoneResult, annualzoneresult
+        /// </search>
+        public static object GetAnnualZoneResult(ZoneData ZoneData, TSDZoneArray TSDZoneArray)
+        {
+            return ZoneData.pZoneData.GetAnnualZoneResult((int)TSDZoneArray);
+        }
+
+        /// <summary>
+        /// Gets TAS Annual Zone Result
+        /// </summary>
+        /// <param name="ZoneData">TSD Zone Data</param>
         /// <param name="Index">TSD Data Index</param>
         /// <returns name="Data">TAS Data</returns>
         /// <search>
         /// TAS, TBDDocument, TBDDocument, ZoneData, Get Annual Zone Result, tas, tsddocument, tsddocument AnnualZoneResult, annualzoneresult
         /// </search>
-        public static object AnnualZoneResult(ZoneData ZoneData, int Index)
+        public static object GetAnnualZoneResult(ZoneData ZoneData, int Index)
         {
             return ZoneData.pZoneData.GetAnnualZoneResult(Index);
         }
@@ -43,20 +57,6 @@ namespace TSDFile
         public static float FloorArea(ZoneData ZoneData)
         {
             return ZoneData.pZoneData.floorArea;
-        }
-
-        /// <summary>
-        /// Gets TAS Annual Zone Result
-        /// </summary>
-        /// <param name="ZoneData">TSD Zone Data</param>
-        /// <param name="TSDZoneArray">TSDZoneArray</param>
-        /// <returns name="Data">TAS Data</returns>
-        /// <search>
-        /// TAS, TBDDocument, TBDDocument, ZoneData, Get Annual Zone Result, tas, tsddocument, tsddocument AnnualZoneResult, annualzoneresult
-        /// </search>
-        public static object AnnualZoneResult(ZoneData ZoneData, TSDZoneArray TSDZoneArray)
-        {
-            return ZoneData.pZoneData.GetAnnualZoneResult((int)TSDZoneArray);
         }
 
         /// <summary>

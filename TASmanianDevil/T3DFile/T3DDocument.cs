@@ -1,64 +1,58 @@
 ﻿using Autodesk.DesignScript.Runtime;
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 
 namespace T3DFile
 {
     /// <summary>
     /// TAS T3DDocument
     /// </summary>
-    public class T3DDocument : IDisposable
+    public class T3DDocument : TASmanianDevil.Document
     {
-        static private TAS3D.T3DDocument pT3DDocument;
-        static private bool pSave;
-
-        internal T3DDocument(string FilePath, bool Save)
+        private T3DDocument(string FilePath, bool Save)
+            : base(FilePath, Save)
         {
-            pSave = Save;
 
-            pT3DDocument = GetT3DDocument(pSave);
-            if (pT3DDocument == null)
-                pT3DDocument = new TAS3D.T3DDocument();
-
-            pT3DDocument.Open(FilePath);
         }
 
-        private T3DDocument(TAS3D.T3DDocument T3DDocument, bool Save)
+        protected override void Close()
         {
-            pSave = Save;
-            pT3DDocument = T3DDocument;
+            Document.Close();
         }
 
-        private static TAS3D.T3DDocument GetT3DDocument(bool Save)
+        protected override string ActiveObjectName
         {
-            TAS3D.T3DDocument aT3DDocument = null;
-            try
+            get
             {
-                object aObject = System.Runtime.InteropServices.Marshal.GetActiveObject("TAS3D.T3DDocument");
-                if (aObject != null && aObject is TAS3D.T3DDocument)
-                {
-                    aT3DDocument = aObject as TAS3D.T3DDocument;
-                    if (Save && !string.IsNullOrEmpty(aT3DDocument.filePath))
-                        aT3DDocument.Save(aT3DDocument.filePath);
-                    aT3DDocument.Close();
-                }
+                return "T3D.Document";
             }
-            catch
-            {
-
-            }
-
-            return aT3DDocument;
         }
 
-        private static void ExecutionEvents_GraphPostExecution(Dynamo.Session.IExecutionSession IExecutionSession)
+        protected override void Create()
         {
-            pT3DDocument = GetT3DDocument(pSave);
-            if (pT3DDocument != null)
+            Document = new TAS3D.T3DDocument();
+        }
+
+        protected override void Save()
+        {
+            Document.Save(FilePath);
+        }
+
+        protected override void Open()
+        {
+            Document.Open(FilePath);
+        }
+
+        protected static TAS3D.T3DDocument Document
+        {
+            get
             {
-                if (pSave && pT3DDocument.filePath != null)
-                    pT3DDocument.Save(pT3DDocument.filePath);
-                pT3DDocument.Close();
+                return Object as TAS3D.T3DDocument;
+            }
+            set
+            {
+                Object = value;
             }
         }
 
@@ -71,26 +65,22 @@ namespace T3DFile
         /// <search>
         /// TAS, T3DDocument, tas, t3ddocument, open t3ddocument, opent3ddocument
         /// </search>
-        public static T3DDocument Open(object FilePath, bool Save = false)
+        public static T3DDocument Open(object FilePath, bool Save)
         {
-            //Dynamo.Events.ExecutionEvents.GraphPostExecution -= ExecutionEvents_GraphPostExecution;
-            //Dynamo.Events.ExecutionEvents.GraphPostExecution += ExecutionEvents_GraphPostExecution;
-
             return new T3DDocument(FilePath.ToString(), Save);
         }
 
         /// <summary>
         /// Saves TAS T3D Document
         /// </summary>
-        /// <param name="FilePath">File Path</param>
         /// <param name="T3DDocument">T3D Document</param>
         /// <returns name="T3DDocument">T3D Document</returns>
         /// <search>
         /// TAS, T3DDocument, tas, t3ddocument, save t3ddocument, savet3ddocument
         /// </search>
-        public static T3DDocument Save(T3DDocument T3DDocument, object FilePath)
+        public static T3DDocument Save(T3DDocument T3DDocument)
         {
-            T3DDocument.pT3DDocument.Save(FilePath.ToString());
+            T3DDocument.Save();
             return T3DDocument;
         }
 
@@ -102,15 +92,14 @@ namespace T3DFile
         /// go to TaskManager and End Process for TAS3D.exe 
         /// </summary>
         /// <param name="T3DDocument">T3D Document</param>
+        /// <param name="Save">Save file</param>
         /// <returns name="Boolean">Boolean</returns>
         /// <search>
         /// TAS, T3DDocument, tas, T3Ddocument, close t3ddocument, closet3ddocument
         /// </search>
         public static bool Close(T3DDocument T3DDocument)
         {
-            T3DDocument.pT3DDocument.Close();
-            T3DDocument.pT3DDocument = null;
-            T3DDocument = null;
+            T3DDocument.Close();
             return true;
         }
 
@@ -125,7 +114,7 @@ namespace T3DFile
         /// </search>
         public static double GetCurrentGroundLux(T3DDocument T3DDocument)
         {
-            return T3DDocument.pT3DDocument.GetCurrentGroundLux();
+            return Document.GetCurrentGroundLux();
         }
 
         /// <summary>
@@ -140,7 +129,7 @@ namespace T3DFile
         /// </search>
         public static object GetCurrentLuxResults(T3DDocument T3DDocument, Zone Zone)
         {
-            return T3DDocument.pT3DDocument.GetCurrentLuxResults(Zone.pZone);
+            return Document.GetCurrentLuxResults(Zone.pZone);
         }
 
         /// <summary>
@@ -155,7 +144,7 @@ namespace T3DFile
         /// </search>
         public static double GetDaylightFactor(T3DDocument T3DDocument, Zone Zone)
         {
-            return T3DDocument.pT3DDocument.GetDaylightFactor(Zone.pZone);
+            return Document.GetDaylightFactor(Zone.pZone);
         }
 
         /// <summary>
@@ -170,7 +159,7 @@ namespace T3DFile
         /// </search>
         public static double GetGroundLux(T3DDocument T3DDocument, Zone Zone)
         {
-            return T3DDocument.pT3DDocument.GetGroundLux(Zone.pZone);
+            return Document.GetGroundLux(Zone.pZone);
         }
 
         /// <summary>
@@ -184,7 +173,7 @@ namespace T3DFile
         /// </search>
         public static bool DaylightCalculation(T3DDocument T3DDocument)
         {
-            return T3DDocument.pT3DDocument.DaylightCalculation(0);
+            return Document.DaylightCalculation(0);
         }
 
         /// <summary>
@@ -199,9 +188,21 @@ namespace T3DFile
         /// <search>
         /// TAS, T3DDocument, tas, T3Ddocument, DaylightCalculation, Daylight Calculation, daylight calculation
         /// </search>
-        public static bool DaylightCalculation(T3DDocument T3DDocument, int InitialiseZones, int IncludeAllZones, int Update3DModel)
+        public static bool DaylightCalculation(T3DDocument T3DDocument, bool InitialiseZones, bool IncludeAllZones, bool Update3DModel)
         {
-            return T3DDocument.pT3DDocument.DaylightInitCalculation(InitialiseZones, IncludeAllZones, Update3DModel, 0);
+            int aInitialiseZones = 0;
+            if (InitialiseZones)
+                aInitialiseZones = 1;
+
+            int aIncludeAllZones = 0;
+            if (IncludeAllZones)
+                aIncludeAllZones = 1;
+
+            int aUpdate3DModel = 0;
+            if (Update3DModel)
+                aUpdate3DModel = 1;
+
+            return Document.DaylightInitCalculation(aInitialiseZones, aIncludeAllZones, aUpdate3DModel, 0);
         }
 
         /// <summary>
@@ -215,7 +216,7 @@ namespace T3DFile
         /// </search>
         public static bool DaylightSaveCalculation(T3DDocument T3DDocument)
         {
-            return T3DDocument.pT3DDocument.DaylightSaveCalculation();
+            return Document.DaylightSaveCalculation();
         }
 
         /// <summary>
@@ -230,30 +231,7 @@ namespace T3DFile
         /// </search>
         public static object GetLuxResults(T3DDocument T3DDocument, Zone Zone)
         {
-            return T3DDocument.pT3DDocument.GetLuxResults(Zone.pZone);
-        }
-
-        /// <summary>
-        /// Opens TAS T3D Document
-        /// </summary>
-        /// <param name="Name">Building Name</param>
-        /// <param name="Description">Building Description</param>
-        /// <returns name="T3DDocument">T3D Document</returns>
-        /// <search>
-        /// TAS, TBDDocument, tas, t3ddocument, new t3ddocument, newt3ddocument
-        /// </search>
-        public static T3DDocument New(string Name, string Description)
-        {
-            Dynamo.Events.ExecutionEvents.GraphPostExecution -= ExecutionEvents_GraphPostExecution;
-            Dynamo.Events.ExecutionEvents.GraphPostExecution += ExecutionEvents_GraphPostExecution;
-
-            pT3DDocument = GetT3DDocument(false);
-            if (pT3DDocument == null)
-                pT3DDocument = new TAS3D.T3DDocument();
-
-            pT3DDocument.Building.name = Name;
-            pT3DDocument.Building.description = Description;
-            return new T3DDocument(pT3DDocument, false);
+            return Document.GetLuxResults(Zone.pZone);
         }
 
         /// <summary>
@@ -268,17 +246,11 @@ namespace T3DFile
         /// </search>
         public static T3DDocument New(string FilePath, string Name, string Description)
         {
-            Dynamo.Events.ExecutionEvents.GraphPostExecution -= ExecutionEvents_GraphPostExecution;
-            Dynamo.Events.ExecutionEvents.GraphPostExecution += ExecutionEvents_GraphPostExecution;
+            T3DDocument aT3DDocument = new T3DDocument(FilePath, true);
+            Document.Building.name = Name;
+            Document.Building.description = Description;
 
-            pT3DDocument = GetT3DDocument(true);
-            if (pT3DDocument == null)
-                pT3DDocument = new TAS3D.T3DDocument();
-
-            pT3DDocument.Building.name = Name;
-            pT3DDocument.Building.description = Description;
-            pT3DDocument.filePath = FilePath;
-            return new T3DDocument(pT3DDocument, true);
+            return aT3DDocument;
         }
 
         /// <summary>
@@ -296,9 +268,13 @@ namespace T3DFile
         /// <search>
         /// TAS, T3DDocument, tas, T3Ddocument, export t3ddocument, exportt3ddocument
         /// </search>
-        public static bool Export(T3DDocument T3DDocument, int DayFirst, int DayLast, int DayStep, int ZoneSets, int Merge, int IncludeExternalZones, string OutputPath)
+        public static bool Export(T3DDocument T3DDocument, int DayFirst, int DayLast, int DayStep, int ZoneSets, int Merge, bool IncludeExternalZones, string OutputPath)
         {
-            return T3DDocument.pT3DDocument.Export(DayFirst, DayLast, DayStep, ZoneSets, Merge, IncludeExternalZones, OutputPath, 0);
+            int aIncludeExternalZones = 0;
+            if (IncludeExternalZones)
+                aIncludeExternalZones = 1;
+
+            return Document.Export(DayFirst, DayLast, DayStep, ZoneSets, Merge, aIncludeExternalZones, OutputPath, 0);
         }
 
         /// <summary>
@@ -318,9 +294,13 @@ namespace T3DFile
         /// <search>
         /// TAS, T3DDocument, tas, T3Ddocument, export t3ddocument, exportt3ddocument
         /// </search>
-        public static bool ExportNew(T3DDocument T3DDocument, int DayFirst, int DayLast, int DayStep, int ZoneSets, int Merge, int IncludeExternalZones, string OutputPath, int AutoAssignConstructions, int AutoAssignsICs)
+        public static bool ExportNew(T3DDocument T3DDocument, int DayFirst, int DayLast, int DayStep, int ZoneSets, int Merge, bool IncludeExternalZones, string OutputPath, int AutoAssignConstructions, int AutoAssignsICs)
         {
-            return T3DDocument.pT3DDocument.ExportNew(DayFirst, DayLast, DayStep, ZoneSets, Merge, IncludeExternalZones, OutputPath, AutoAssignConstructions, AutoAssignsICs, 0);
+            int aIncludeExternalZones = 0;
+            if (IncludeExternalZones)
+                aIncludeExternalZones = 1;
+
+            return Document.ExportNew(DayFirst, DayLast, DayStep, ZoneSets, Merge, aIncludeExternalZones, OutputPath, AutoAssignConstructions, AutoAssignsICs, 0);
         }
 
         /// <summary>
@@ -333,7 +313,7 @@ namespace T3DFile
         /// </search>
         public static Building Building(T3DDocument T3DDocument)
         {
-            return new Building(T3DDocument.pT3DDocument.Building);
+            return new Building(Document.Building);
         }
 
         /// <summary>
@@ -346,7 +326,7 @@ namespace T3DFile
         /// </search>
         public static WrLWCalculation AddLWCalculation(T3DDocument T3DDocument)
         {
-            return new WrLWCalculation(T3DDocument.pT3DDocument.AddLW_Calculation());
+            return new WrLWCalculation(Document.AddLW_Calculation());
         }
 
         /// <summary>
@@ -360,7 +340,7 @@ namespace T3DFile
         /// </search>
         public static object GetCBDMData(T3DDocument T3DDocument, int Create)
         {
-            return T3DDocument.pT3DDocument.GetCBDMData(Create);
+            return Document.GetCBDMData(Create);
         }
 
         /// <summary>
@@ -385,7 +365,7 @@ namespace T3DFile
             double aArea = double.MinValue;
             double aOrientation = double.MinValue;
             object aCoords = null;
-            bool aResult = T3DDocument.pT3DDocument.GetWindowData(WindowName, out aZone, out aWindow, out aArea, out aOrientation, out aCoords);
+            bool aResult = Document.GetWindowData(WindowName, out aZone, out aWindow, out aArea, out aOrientation, out aCoords);
 
             return new Dictionary<string, object>
             {
@@ -408,12 +388,12 @@ namespace T3DFile
         /// <search>
         /// TAS, T3DDocument, T3DDocument, GetWindowFactors, Get Window Factors, getwindowfactors
         /// </search>
-        [MultiReturn(new[] { "Names", "Factors"})]
+        [MultiReturn(new[] { "Names", "Factors" })]
         public static Dictionary<string, object> GetWindowFactors(T3DDocument T3DDocument)
         {
             object aNames = null;
             object aFactors = null;
-            T3DDocument.pT3DDocument.GetWindowFactors(out aNames, out aFactors);
+            Document.GetWindowFactors(out aNames, out aFactors);
 
             return new Dictionary<string, object>
             {
@@ -439,7 +419,7 @@ namespace T3DFile
             object aNames = null;
             object aPoints = null;
             object aLuxValues = null;
-            T3DDocument.pT3DDocument.GetWindowResults(out aNames, out aPoints, out aLuxValues);
+            Document.GetWindowResults(out aNames, out aPoints, out aLuxValues);
 
             return new Dictionary<string, object>
             {
@@ -457,14 +437,44 @@ namespace T3DFile
         /// <param name="Path">File Path</param>
         /// <param name="Overwrite">Overwrite</param>
         /// <param name="ReverseIncorrectSurfaces">Reverse Incorrect Surfaces</param>
-        ///  <param name="ZonesFromSpaces">ZonesFromSpaces</param>
-        /// <returns name="Result">Boolean result of operation</returns>
+        /// <param name="ZonesFromSpaces">ZonesFromSpaces</param>
+        /// <returns name="T3DDocument">T3D Document</returns>
+        /// <returns name="Succeeded">Succeeded</returns>
         /// <search>
         /// TAS, T3DDocument, T3DDocument, ImportGBXML, Import GBXML, import gbxml
         /// </search>
-        public static bool ImportGBXML(T3DDocument T3DDocument, string Path, int Overwrite, int ReverseIncorrectSurfaces, int ZonesFromSpaces)
+        [MultiReturn(new[] { "T3DDocument", "Succeeded"})]
+        public static Dictionary<string, object> ImportGBXML(T3DDocument T3DDocument, string Path, bool Overwrite, bool ReverseIncorrectSurfaces, bool ZonesFromSpaces)
         {
-            return T3DDocument.pT3DDocument.ImportGBXML(Path, Overwrite, ReverseIncorrectSurfaces, ZonesFromSpaces);
+            bool aSucceeded = false;
+
+            int aOverwrite = 0;
+            if (Overwrite)
+                aOverwrite = 1;
+
+            int aReverseIncorrectSurfaces = 0;
+            if (ReverseIncorrectSurfaces)
+                aReverseIncorrectSurfaces = 1;
+
+            int aZonesFromSpaces = 0;
+            if (ZonesFromSpaces)
+                aZonesFromSpaces = 1;
+
+            try
+            {
+                if (Document.ImportGBXML(Path, aOverwrite, aReverseIncorrectSurfaces, aZonesFromSpaces))
+                    aSucceeded = true;
+            }
+            catch
+            {
+                aSucceeded = false;
+            }
+
+            return new Dictionary<string, object>
+            {
+                {"T3DDocument", T3DDocument},
+                {"Succeeded", aSucceeded }
+            };
         }
 
         /// <summary>
@@ -480,7 +490,7 @@ namespace T3DFile
         /// </search>
         public static bool IsSunUp(T3DDocument T3DDocument, int Day, int Hour, int Minutes)
         {
-            return T3DDocument.pT3DDocument.IsSunUp(Day, Hour, Minutes);
+            return Document.IsSunUp(Day, Hour, Minutes);
         }
 
         /// <summary>
@@ -497,7 +507,7 @@ namespace T3DFile
         /// </search>
         public static bool SetLuxResults(T3DDocument T3DDocument, Zone Zone, WrLWCalculation WrLWCalculation, object Results, double GroundLux)
         {
-            return T3DDocument.pT3DDocument.SetLuxResults(Zone.pZone, WrLWCalculation.pWrLWCalculation, Results, GroundLux);
+            return Document.SetLuxResults(Zone.pZone, WrLWCalculation.pWrLWCalculation, Results, GroundLux);
         }
 
         /// <summary>
@@ -511,17 +521,13 @@ namespace T3DFile
         /// </search>
         public static bool SetProcessIdle(T3DDocument T3DDocument, string Value)
         {
-            return T3DDocument.pT3DDocument.SetProcessIdle(Value);
+            return Document.SetProcessIdle(Value);
         }
 
-        void IDisposable.Dispose()
+        [IsVisibleInDynamoLibrary(false)]
+        public override string ToString()
         {
-            if (pT3DDocument != null)
-            {
-                pT3DDocument.Close();
-                pT3DDocument = null;
-            }
-
+            return string.Format("{0} [{1}]", GetType(), FilePath);
         }
     }
 }

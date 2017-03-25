@@ -325,6 +325,5 @@ namespace T3DFile
             Window.pWindow.framePerc = FramePercentage;
             return Window;
         }
-
     }
 }

@@ -212,7 +212,7 @@ namespace TBDFile
         }
 
         /// <summary>
-        /// Gets Builidng Element Zone Surfaces
+        /// Gets Building Element Zone Surfaces
         /// </summary>
         /// <param name="BuildingElement">TAS Building Element</param>
         /// <returns name="ZoneSurfaces">Zone Surface List</returns>

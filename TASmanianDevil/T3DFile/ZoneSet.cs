@@ -133,7 +133,7 @@ namespace T3DFile
         /// <param name="Index">TAS Zone Index</param>
         /// <returns name="Zone">Building Zone</returns>
         /// <search>
-        /// TAS, Builidng, Zone, Get Building Zone, getbuildingzone, zone, GetZone, getzone
+        /// TAS, Building, Zone, Get Building Zone, getbuildingzone, zone, GetZone, getzone
         /// </search>
         public static Zone GetZone(ZoneSet ZoneSet, int Index)
         {

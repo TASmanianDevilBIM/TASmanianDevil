@@ -9,47 +9,53 @@ namespace TBDFile
     /// <summary>
     /// TAS TBDDocument
     /// </summary>
-    public class TBDDocument : IDisposable
+    public class TBDDocument : TASmanianDevil.Document
     {
-        private TBD.TBDDocument pTBDDocument;
-        private bool pSave;
 
         internal TBDDocument(string FilePath, bool Save)
+            : base(FilePath, Save)
         {
-            pSave = Save;
-            pTBDDocument = GetTBDDocument(pSave);
-            pTBDDocument.open(FilePath);       
+               
         }
 
-        internal TBDDocument(TBD.TBDDocument TBDDocument, bool Save)
+        protected override void Close()
         {
-            pSave = Save;
-            pTBDDocument = TBDDocument; 
+            Document.close();
         }
 
-        private static TBD.TBDDocument GetTBDDocument(bool Save)
+        protected override string ActiveObjectName
         {
-            TBD.TBDDocument aTBDDocument = null;
-            try
+            get
             {
-                object aObject = System.Runtime.InteropServices.Marshal.GetActiveObject("TBD.Document");
-                if (aObject != null && aObject is TAS3D.T3DDocument)
-                {
-                    aTBDDocument = aObject as TBD.TBDDocument;
-                    if (Save)
-                        aTBDDocument.save();
-                    aTBDDocument.close();
-                }
+                return "TBD.Document";
             }
-            catch
+        }
+
+        protected override void Create()
+        {
+            Document = new TBD.TBDDocument();
+        }
+
+        protected override void Save()
+        {
+            Document.save();
+        }
+
+        protected override void Open()
+        {
+            Document.open(FilePath);
+        }
+
+        protected static TBD.TBDDocument Document
+        {
+            get
             {
-
+                return Object as TBD.TBDDocument;
             }
-
-            if (aTBDDocument == null)
-                aTBDDocument = new TBD.TBDDocument();
-
-            return aTBDDocument;
+            set
+            {
+                Object = value;
+            }
         }
 
         /// <summary>
@@ -62,7 +68,7 @@ namespace TBDFile
         /// </search>
         public static TBDDocument EndMerge(TBDDocument TBDDocument)
         {
-            TBDDocument.pTBDDocument.EndMerge();
+            Document.EndMerge();
             return TBDDocument;
         }
 
@@ -77,7 +83,7 @@ namespace TBDFile
         /// </search>
         public static TBDDocument ImportShadingData(TBDDocument TBDDocument, string Path)
         {
-            TBDDocument.pTBDDocument.ImportShadingData(Path);
+            Document.ImportShadingData(Path);
             return TBDDocument;
         }
 
@@ -100,16 +106,17 @@ namespace TBDFile
         /// </summary>
         /// <param name="Name">Building Name</param>
         /// <param name="Description">Building Description</param>
+        /// <param name="FilePath">File Path</param>
         /// <returns name="TBDDocument">TBD Document</returns>
         /// <search>
         /// TAS, TBDDocument, tas, tbddocument, new tbddocument,newtbddocument
         /// </search>
-        public static TBDDocument New(string Name, string Description)
+        public static TBDDocument New(string FilePath, string Name, string Description)
         {
-            TBD.TBDDocument aTBDDocument = GetTBDDocument(false);
-            aTBDDocument.Building.name = Name;
-            aTBDDocument.Building.description = Description;
-            return new TBDDocument(aTBDDocument, false);
+            TBDDocument aTBDDocument = new TBDDocument(FilePath, true);
+            Document.Building.name = Name;
+            Document.Building.description = Description;
+            return aTBDDocument;
         }
 
         /// <summary>
@@ -120,9 +127,10 @@ namespace TBDFile
         /// <search>
         /// TAS, TBDDocument, tas, tbddocument, save tbddocument, opentbddocument
         /// </search>
-        public static int Save(TBDDocument TBDDocument)
+        public static TBDDocument Save(TBDDocument TBDDocument)
         {
-            return TBDDocument.pTBDDocument.save();
+            Document.save();
+            return TBDDocument;
         }
 
         /// <summary>
@@ -137,25 +145,23 @@ namespace TBDFile
         /// <search>
         /// TAS, TBDDocument, tas, tbddocument, close tbddocument, closebddocument
         /// </search>
-        public static int Close(TBDDocument TBDDocument)
+        public static bool Close(TBDDocument TBDDocument)
         {
-            int aResult = TBDDocument.pTBDDocument.close();
-            TBDDocument.pTBDDocument = null;
-            TBDDocument = null;
-            return aResult;
+            TBDDocument.Close();
+            return true;
         }
 
         /// <summary>
         /// Opens TAS TBD Document
         /// </summary>
         /// <param name="TBDDocument">TBD Document</param>
-        /// <returns name="Builidng">TAS Building</returns>
+        /// <returns name="Building">TAS Building</returns>
         /// <search>
         /// TAS, TBDDocument, TBDDocument, Building, Get Building, tas, tbddocument, tbddocument building
         /// </search>
         public static Building Building(TBDDocument TBDDocument)
         {
-            return new Building(TBDDocument.pTBDDocument.Building);
+            return new Building(Document.Building);
         }
 
         /// <summary>
@@ -168,7 +174,7 @@ namespace TBDFile
         /// </search>
         public static int Sizing(TBDDocument TBDDocument)
         {
-            return TBDDocument.pTBDDocument.sizing(0);
+            return Document.sizing(0);
         }
 
         /// <summary>
@@ -189,20 +195,7 @@ namespace TBDFile
         /// </search>
         public static int Simulate(TBDDocument TBDDocument, int StartDay, int EndDay, int AutoViewResults, int OutputAperture, int OutputAll, int Merge, string TSDPath, int WeightingFactors)
         {
-            return TBDDocument.pTBDDocument.simulate(StartDay, EndDay, AutoViewResults, OutputAperture, OutputAll, Merge, TSDPath, WeightingFactors, 0);
-        }
-
-        void IDisposable.Dispose()
-        {
-            if (pTBDDocument != null)
-            {
-                if (pSave)
-                    pTBDDocument.save();
-
-                pTBDDocument.close();
-                pTBDDocument = null;
-            }
-
+            return Document.simulate(StartDay, EndDay, AutoViewResults, OutputAperture, OutputAll, Merge, TSDPath, WeightingFactors, 0);
         }
     }
 }

@@ -85,6 +85,30 @@ namespace TSDFile
         }
 
         /// <summary>
+        /// Gets Zones Data
+        /// </summary>
+        /// <param name="HeatingDesignData">TSD Heating Design Data</param>
+        /// <returns name="ZonesData">Zones Data</returns>
+        /// <search>
+        /// TAS, TBDDocument, TBDDocument, HeatingDesignData, Get Heating Design Data ZoneData, tas, tsddocument, heatingdesigndata, ZonesData, zonesdata, Zones Data, zones data
+        /// </search>
+        public static List<ZoneData> GetZonesData(HeatingDesignData HeatingDesignData)
+        {
+            List<ZoneData> aResult = new List<ZoneData>();
+
+            int aIndex = 1;
+            TSD.ZoneData aZoneData = HeatingDesignData.pHeatingDesignData.GetZoneData(aIndex);
+            while (aZoneData != null)
+            {
+                aResult.Add(new ZoneData(aZoneData));
+                aIndex++;
+                aZoneData = HeatingDesignData.pHeatingDesignData.GetZoneData(aIndex);
+            }
+
+            return aResult;
+        }
+
+        /// <summary>
         /// Gets Zone Data
         /// </summary>
         /// <param name="HeatingDesignData">TSD Heating Design Data</param>

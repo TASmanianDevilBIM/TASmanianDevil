@@ -24,7 +24,7 @@ namespace TBDFile
         /// <param name="Construction">TAS Construction</param>
         /// <returns name="Description">Construction description</returns>
         /// <search>
-        /// TAS, Builidng, Construction, Get Construction Description, builidng, construction, get construction description 
+        /// TAS, Building, Construction, Get Construction Description, builidng, construction, get construction description 
         /// </search>
         public static string Description(Construction Construction)
         {
@@ -37,7 +37,7 @@ namespace TBDFile
         /// <param name="Construction">TAS Construction</param>
         /// <returns name="AdditionalHeatTransfer">Additional Heat Transfer</returns>
         /// <search>
-        /// TAS, Builidng, Construction, Get Construction Additional Heat Transfer, builidng, construction, get construction additional heat transfer, AdditionalHeatTransfer, additionalheattransfer
+        /// TAS, Building, Construction, Get Construction Additional Heat Transfer, builidng, construction, get construction additional heat transfer, AdditionalHeatTransfer, additionalheattransfer
         /// </search>
         public static float AdditionalHeatTransfer(Construction Construction)
         {
@@ -50,7 +50,7 @@ namespace TBDFile
         /// <param name="Construction">TAS Construction</param>
         /// <returns name="Conductance">Construction conductance</returns>
         /// <search>
-        /// TAS, Builidng, Construction, Get Construction Conductance, builidng, construction, get construction conductance 
+        /// TAS, Building, Construction, Get Construction Conductance, builidng, construction, get construction conductance 
         /// </search>
         public static float Conductance(Construction Construction)
         {
@@ -63,7 +63,7 @@ namespace TBDFile
         /// <param name="Construction">TAS Construction</param>
         /// <returns name="ExternalBlind">External Blind</returns>
         /// <search>
-        /// TAS, Builidng, Construction, Get Construction External Blind, builidng, construction, get construction external blind, ExternalBlind, externalblind
+        /// TAS, Building, Construction, Get Construction External Blind, builidng, construction, get construction external blind, ExternalBlind, externalblind
         /// </search>
         public static int ExternalBlind(Construction Construction)
         {
@@ -76,7 +76,7 @@ namespace TBDFile
         /// <param name="Construction">TAS Construction</param>
         /// <returns name="Emissivity">External Emissivity</returns>
         /// <search>
-        /// TAS, Builidng, Construction, Get Construction External Emissivity, builidng, construction, get construction external emissivity, ExternalEmissivity, externalemissivity
+        /// TAS, Building, Construction, Get Construction External Emissivity, builidng, construction, get construction external emissivity, ExternalEmissivity, externalemissivity
         /// </search>
         public static float ExternalEmissivity(Construction Construction)
         {
@@ -89,7 +89,7 @@ namespace TBDFile
         /// <param name="Construction">TAS Construction</param>
         /// <returns name="Absorptance">External Solar Absorptance for External Surface</returns>
         /// <search>
-        /// TAS, Builidng, Construction, Get Construction External Solar Absorptance External Surface, builidng, construction, get construction external solar absorptance external surface,  ExternalSolarAbsorptanceExtSurf, externalsolarabsorptanceextsurf, ExternalSolarAbsorptanceExternalSurface, externalsolarabsorptanceexternalsurface, 
+        /// TAS, Building, Construction, Get Construction External Solar Absorptance External Surface, builidng, construction, get construction external solar absorptance external surface,  ExternalSolarAbsorptanceExtSurf, externalsolarabsorptanceextsurf, ExternalSolarAbsorptanceExternalSurface, externalsolarabsorptanceexternalsurface, 
         /// </search>
         public static float ExternalSolarAbsorptanceExtSurf(Construction Construction)
         {
@@ -102,7 +102,7 @@ namespace TBDFile
         /// <param name="Construction">TAS Construction</param>
         /// <returns name="Absorptance">External Solar Absorptance for Internal Surface</returns>
         /// <search>
-        /// TAS, Builidng, Construction, Get Construction External Solar Absorptance Internal Surface, builidng, construction, get construction external solar absorptance for internal surface, ExternalSolarAbsorptanceIntSurf, ExternalSolarAbsorptanceInternalSurface, externalsolarabsorptanceintsurf, externalsolarabsorptanceinternalsurface
+        /// TAS, Building, Construction, Get Construction External Solar Absorptance Internal Surface, builidng, construction, get construction external solar absorptance for internal surface, ExternalSolarAbsorptanceIntSurf, ExternalSolarAbsorptanceInternalSurface, externalsolarabsorptanceintsurf, externalsolarabsorptanceinternalsurface
         /// </search>
         public static float ExternalSolarAbsorptanceIntSurf(Construction Construction)
         {
@@ -115,7 +115,7 @@ namespace TBDFile
         /// <param name="Construction">TAS Construction</param>
         /// <returns name="FFactor">Construction FFactor</returns>
         /// <search>
-        /// TAS, Builidng, Construction, Get Construction FFactor, builidng, construction, get construction ffactor , FFactor, ffactor
+        /// TAS, Building, Construction, Get Construction FFactor, builidng, construction, get construction ffactor , FFactor, ffactor
         /// </search>
         public static float FFactor(Construction Construction)
         {
@@ -128,7 +128,7 @@ namespace TBDFile
         /// <param name="Construction">TAS Construction</param>
         /// <returns name="GUID">Construction GUID</returns>
         /// <search>
-        /// TAS, Builidng, Construction, Get Construction GUID, builidng, construction, get construction guid 
+        /// TAS, Building, Construction, Get Construction GUID, builidng, construction, get construction guid 
         /// </search>
         public static string GUID(Construction Construction)
         {
@@ -141,7 +141,7 @@ namespace TBDFile
         /// <param name="Construction">TAS Construction</param>
         /// <returns name="InternalBlind">Construction Internal Blind</returns>
         /// <search>
-        /// TAS, Builidng, Construction, Get Construction Internal Blind, builidng, construction, get construction internal blind, InternalBlind, internalblind 
+        /// TAS, Building, Construction, Get Construction Internal Blind, builidng, construction, get construction internal blind, InternalBlind, internalblind 
         /// </search>
         public static int InternalBlind(Construction Construction)
         {
@@ -154,7 +154,7 @@ namespace TBDFile
         /// <param name="Construction">TAS Construction</param>
         /// <returns name="Emissity">Construction Internal Emissivity</returns>
         /// <search>
-        /// TAS, Builidng, Construction, Get Construction Internal Emissivity, builidng, construction, get construction internal emissivity, InternalEmissivity, internalemissivity
+        /// TAS, Building, Construction, Get Construction Internal Emissivity, builidng, construction, get construction internal emissivity, InternalEmissivity, internalemissivity
         /// </search>
         public static float InternalEmissivity(Construction Construction)
         {
@@ -167,7 +167,7 @@ namespace TBDFile
         /// <param name="Construction">TAS Construction</param>
         /// <returns name="Absorptance">Construction Absorptance</returns>
         /// <search>
-        /// TAS, Builidng, Construction, Get Construction Internal Solar Absorptance External Surface, builidng, construction, get construction internal solar absorptance external surface, InternalSolarAbsorptanceExtSurf, InternalSolarAbsorptanceExternalSurface, internalsolarabsorptanceextsurf, internalsolarabsorptanceexternalsurface
+        /// TAS, Building, Construction, Get Construction Internal Solar Absorptance External Surface, builidng, construction, get construction internal solar absorptance external surface, InternalSolarAbsorptanceExtSurf, InternalSolarAbsorptanceExternalSurface, internalsolarabsorptanceextsurf, internalsolarabsorptanceexternalsurface
         /// </search>
         public static float InternalSolarAbsorptanceExtSurf(Construction Construction)
         {
@@ -180,7 +180,7 @@ namespace TBDFile
         /// <param name="Construction">TAS Construction</param>
         /// <returns name="Absorptance">Construction Internal Solar Absorptance for Internal Surface</returns>
         /// <search>
-        /// TAS, Builidng, Construction, Get Construction Internal Solar Absorptance Internal Surface, builidng, construction, get construction internal solar absorptance internal surface, InternalSolarAbsorptanceIntSurf, InternalSolarAbsorptanceInternalSurface, internalsolarabsorptanceintsurf, internalsolarabsorptanceinternalsurface
+        /// TAS, Building, Construction, Get Construction Internal Solar Absorptance Internal Surface, builidng, construction, get construction internal solar absorptance internal surface, InternalSolarAbsorptanceIntSurf, InternalSolarAbsorptanceInternalSurface, internalsolarabsorptanceintsurf, internalsolarabsorptanceinternalsurface
         /// </search>
         public static float InternalSolarAbsorptanceIntSurf(Construction Construction)
         {
@@ -193,7 +193,7 @@ namespace TBDFile
         /// <param name="Construction">TAS Construction</param>
         /// <returns name="LightReflectance">Construction Light Reflectance/returns>
         /// <search>
-        /// TAS, Builidng, Construction, Get Construction Light Reflectance, builidng, construction, get construction light reflectance, LightReflectance, lightreflectance
+        /// TAS, Building, Construction, Get Construction Light Reflectance, builidng, construction, get construction light reflectance, LightReflectance, lightreflectance
         /// </search>
         public static float LightReflectance(Construction Construction)
         {
@@ -206,7 +206,7 @@ namespace TBDFile
         /// <param name="Construction">TAS Construction</param>
         /// <returns name="LightTransmittance">Construction Light Transmittance</returns>
         /// <search>
-        /// TAS, Builidng, Construction, Get Construction Light Transmittance, builidng, construction, get construction light transmittance, LightTransmittance, lighttransmittance
+        /// TAS, Building, Construction, Get Construction Light Transmittance, builidng, construction, get construction light transmittance, LightTransmittance, lighttransmittance
         /// </search>
         public static float LightTransmittance(Construction Construction)
         {
@@ -220,7 +220,7 @@ namespace TBDFile
         /// <param name="Index">Material Contruction Index</param>
         /// <returns name="Width">Construction Material Width</returns>
         /// <search>
-        /// TAS, Builidng, Construction, Get Construction Material Width, builidng, construction, get construction material width, MaterialWidth, materialwidth
+        /// TAS, Building, Construction, Get Construction Material Width, builidng, construction, get construction material width, MaterialWidth, materialwidth
         /// </search>
         public static float MaterialWidth(Construction Construction, int Index)
         {
@@ -233,7 +233,7 @@ namespace TBDFile
         /// <param name="Construction">TAS Construction</param>
         /// <returns name="Name">Construction Name</returns>
         /// <search>
-        /// TAS, Builidng, Construction, Get Construction Name, builidng, construction, get construction name 
+        /// TAS, Building, Construction, Get Construction Name, builidng, construction, get construction name 
         /// </search>
         public static string Name(Construction Construction)
         {
@@ -246,7 +246,7 @@ namespace TBDFile
         /// <param name="Construction">TAS Construction</param>
         /// <returns name="SolarTransmittance">Solar Transmittance</returns>
         /// <search>
-        /// TAS, Builidng, Construction, Get Construction Solar Transmittance, builidng, construction, get construction solar transmittance, SolarTransmittance, solartransmittance
+        /// TAS, Building, Construction, Get Construction Solar Transmittance, builidng, construction, get construction solar transmittance, SolarTransmittance, solartransmittance
         /// </search>
         public static float SolarTransmittance(Construction Construction)
         {
@@ -259,7 +259,7 @@ namespace TBDFile
         /// <param name="Construction">TAS Construction</param>
         /// <returns name="TimeConstant">Construction Time Constant</returns>
         /// <search>
-        /// TAS, Builidng, Construction, Get Construction Time Constant, builidng, construction, get construction time constant, TimeConstant, timeconstant
+        /// TAS, Building, Construction, Get Construction Time Constant, builidng, construction, get construction time constant, TimeConstant, timeconstant
         /// </search>
         public static float TimeConstant(Construction Construction)
         {
@@ -272,7 +272,7 @@ namespace TBDFile
         /// <param name="Construction">TAS Construction</param>
         /// <returns name="ConstructionType">Construction Type</returns>
         /// <search>
-        /// TAS, Builidng, Construction, Get Construction Construction Type, builidng, construction, get construction construction type, ConstructionType, constructiontype
+        /// TAS, Building, Construction, Get Construction Construction Type, builidng, construction, get construction construction type, ConstructionType, constructiontype
         /// </search>
         public static ConstructionTypes ConstructionType(Construction Construction)
         {
@@ -286,7 +286,7 @@ namespace TBDFile
         /// <param name="Index">Material Index</param>
         /// <returns name="Name">Construction Name</returns>
         /// <search>
-        /// TAS, Builidng, Construction, Get Construction Material, builidng, construction, get construction material 
+        /// TAS, Building, Construction, Get Construction Material, builidng, construction, get construction material 
         /// </search>
         public static Material GetMaterial(Construction Construction, int Index)
         {
@@ -299,7 +299,7 @@ namespace TBDFile
         /// <param name="Construction">TAS Construction</param>
         /// <returns name="Materials">Construction Materials</returns>
         /// <search>
-        /// TAS, Builidng, Construction, Get Construction Materials, builidng, construction, get construction materials
+        /// TAS, Building, Construction, Get Construction Materials, builidng, construction, get construction materials
         /// </search>
         public static List<Material> Materials(Construction Construction)
         {
@@ -322,7 +322,7 @@ namespace TBDFile
         /// <param name="Construction">TAS Construction</param>
         /// <returns name="Name">Construction U Value</returns>
         /// <search>
-        /// TAS, Builidng, Construction, Get Construction U Value, builidng, construction, get construction u, uvalue, UValue 
+        /// TAS, Building, Construction, Get Construction U Value, builidng, construction, get construction u, uvalue, UValue 
         /// </search>
         public static object U(Construction Construction)
         {
@@ -335,7 +335,7 @@ namespace TBDFile
         /// <param name="Construction">TAS Construction</param>
         /// <returns name="Values">Construction Glazing Values</returns>
         /// <search>
-        /// TAS, Builidng, Construction, Get Construction Glazing Values, builidng, construction, get construction glazing values, GetGlazingValues, getglazingvalues
+        /// TAS, Building, Construction, Get Construction Glazing Values, builidng, construction, get construction glazing values, GetGlazingValues, getglazingvalues
         /// </search>
         public static object GetGlazingValues(Construction Construction)
         {
@@ -355,7 +355,7 @@ namespace TBDFile
         /// <param name="BucketArray">BucketArray</param>
         /// <returns name="CondAnalysis">Construction Cond Analysis</returns>
         /// <search>
-        /// TAS, Builidng, Construction, Get Construction Name, builidng, construction, get construction name 
+        /// TAS, Building, Construction, Get Construction Name, builidng, construction, get construction name 
         /// </search>
         public static object GetCondAnalysis(Construction Construction, float TIn, float TOut, float RhIn, float RhOut, float RIn, float ROut, string BucketArray)
         {

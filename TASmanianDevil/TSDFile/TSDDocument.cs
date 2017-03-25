@@ -9,47 +9,52 @@ namespace TSDFile
     /// <summary>
     /// TAS TSDDocument
     /// </summary>
-    public class TSDDocument : IDisposable
+    public class TSDDocument : TASmanianDevil.Document
     {
-        private TSD.TSDDocument pTSDDocument;
-        private bool pSave;
-
         internal TSDDocument(string FilePath, bool Save)
+            : base(FilePath, Save)
         {
-            pSave = Save;
-            pTSDDocument = GetTSDDocument(Save); 
-            pTSDDocument.open(FilePath);
+
         }
 
-        private TSDDocument(TSD.TSDDocument TSDDocument, bool Save)
+        protected override void Close()
         {
-            pSave = Save;
-            pTSDDocument = TSDDocument;
+            Document.close();
         }
 
-        private static TSD.TSDDocument GetTSDDocument(bool Save)
+        protected override string ActiveObjectName
         {
-            TSD.TSDDocument aTSDDocument = null;
-            try
+            get
             {
-                object aObject = System.Runtime.InteropServices.Marshal.GetActiveObject("TSD.Document");
-                if (aObject != null && aObject is TSD.TSDDocument)
-                {
-                    aTSDDocument = aObject as TSD.TSDDocument;
-                    if (Save)
-                        aTSDDocument.save();
-                    aTSDDocument.close();
-                }
+                return "TSD.Document";
             }
-            catch
+        }
+
+        protected override void Create()
+        {
+            Document = new TSD.TSDDocument();
+        }
+
+        protected override void Save()
+        {
+            Document.save();
+        }
+
+        protected override void Open()
+        {
+            Document.open(FilePath);
+        }
+
+        protected static TSD.TSDDocument Document
+        {
+            get
             {
-
+                return Object as TSD.TSDDocument;
             }
-
-            if (aTSDDocument == null)
-                aTSDDocument = new TSD.TSDDocument();
-
-            return aTSDDocument;
+            set
+            {
+                Object = value;
+            }
         }
 
         /// <summary>
@@ -76,7 +81,7 @@ namespace TSDFile
         /// </search>
         public static SimulationData SimulationData(TSDDocument TSDDocument)
         {
-            return new SimulationData(TSDDocument.pTSDDocument.SimulationData);
+            return new SimulationData(Document.SimulationData);
         }
 
         /// <summary>
@@ -93,9 +98,7 @@ namespace TSDFile
         /// </search>
         public static bool Close(TSDDocument TSDDocument)
         {
-            TSDDocument.pTSDDocument.close();
-            TSDDocument.pTSDDocument = null;
-            TSDDocument = null;
+            Document.close();
             return true;
         }
 
@@ -109,9 +112,9 @@ namespace TSDFile
         /// </search>
         public static TSDDocument New(string Path)
         {
-            TSD.TSDDocument aTSDDocument = GetTSDDocument(false);
-            aTSDDocument.SimulationData.buildingPath = Path;
-            return new TSDDocument(aTSDDocument, false);
+            TSDDocument aTSDDocument = new TSDDocument(FilePath, true);
+            Document.SimulationData.buildingPath = Path;
+            return aTSDDocument;
         }
 
         /// <summary>
@@ -124,19 +127,8 @@ namespace TSDFile
         /// </search>
         public static bool Save(TSDDocument TSDDocument)
         {
-            return TSDDocument.pTSDDocument.save();
-        }
-
-        void IDisposable.Dispose()
-        {
-            if (pTSDDocument != null)
-            {
-                if (pSave)
-                    pTSDDocument.save();
-
-                pTSDDocument.close();
-                pTSDDocument = null;
-            }
+            TSDDocument.Save();
+            return true;
         }
     }
 }

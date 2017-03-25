@@ -24,7 +24,7 @@ namespace TBDFile
         /// <param name="Building">TAS Building</param>
         /// <returns name="Zones">Zone List</returns>
         /// <search>
-        /// TAS, Builidng, Zones, Get Zones, tas, builidng, zones, get zones
+        /// TAS, Building, Zones, Get Zones, tas, builidng, zones, get zones
         /// </search>
         public static List<Zone> Zones(Building Building)
         {
@@ -47,7 +47,7 @@ namespace TBDFile
         /// <param name="Building">TAS Building</param>
         /// <returns name="InternalConditions">Building Internal Conditions</returns>
         /// <search>
-        /// TAS, Builidng, Zones, Get Internal Conditions, tas, builidng, zones, get internalcondition, InternalCondition, internalcondition
+        /// TAS, Building, Zones, Get Internal Conditions, tas, builidng, zones, get internalcondition, InternalCondition, internalcondition
         /// </search>
         public static List<InternalCondition> InternalConditions(Building Building)
         {
@@ -71,7 +71,7 @@ namespace TBDFile
         /// <param name="Index">Index</param>
         /// <returns name="InternalCondition">Building Internal Condition</returns>
         /// <search>
-        /// TAS, Builidng, Zones, Get Internal Condition, tas, builidng, zones, get internalcondition, InternalCondition, internalcondition
+        /// TAS, Building, Zones, Get Internal Condition, tas, builidng, zones, get internalcondition, InternalCondition, internalcondition
         /// </search>
         public static InternalCondition GetInternalCondition(Building Building, int Index)
         {
@@ -85,11 +85,11 @@ namespace TBDFile
         /// <param name="Index">zone index</param>
         /// <returns name="Zone">Zone</returns>
         /// <search>
-        /// TAS, Builidng, Zone, Get Zone tas, builidng, zone, get zone
+        /// TAS, Building, Zone, Get Zone tas, builidng, zone, get zone
         /// </search>
         public static Zone GetZone(Building Building, int Index)
         {
-            return new Zone(Building.pBuilding.GetZone(Index));
+            return new Zone(Building.pBuilding.GetZone(Index - 1));
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace TBDFile
         /// <param name="GUID">zone Guid</param>
         /// <returns name="Zone">Zone</returns>
         /// <search>
-        /// TAS, Builidng, Zone, Get Zone tas, builidng, zone, get zone
+        /// TAS, Building, Zone, Get Zone tas, builidng, zone, get zone
         /// </search>
         public static Zone GetZone(Building Building, string GUID)
         {
@@ -113,7 +113,7 @@ namespace TBDFile
         /// <param name="Index">Index</param>
         /// <returns name="BuildingElement">Building Element</returns>
         /// <search>
-        /// TAS, Builidng, Zone, Get Building Element, getbuildingelement, GetBuildingElement
+        /// TAS, Building, Zone, Get Building Element, getbuildingelement, GetBuildingElement
         /// </search>
         public static BuildingElement GetBuildingElement(Building Building, int Index)
         {
@@ -149,7 +149,7 @@ namespace TBDFile
         /// <param name="Building">TAS Building</param>
         /// <returns name="BuildingElement">Building Element</returns>
         /// <search>
-        /// TAS, Builidng, AddBuildingElement, Add Building Element
+        /// TAS, Building, AddBuildingElement, Add Building Element
         /// </search>
         public static BuildingElement AddBuildingElement(Building Building)
         {
@@ -162,7 +162,7 @@ namespace TBDFile
         /// <param name="Building">TAS Building</param>
         /// <returns name="Description">Zone description</returns>
         /// <search>
-        /// TAS, Builidng, Zone, Get Zone Description, builidng, zone, get zone description 
+        /// TAS, Building, Zone, Get Zone Description, builidng, zone, get zone description 
         /// </search>
         public static string Description(Building Building)
         {
@@ -175,7 +175,7 @@ namespace TBDFile
         /// <param name="Building">TAS Building</param>
         /// <returns name="CoolingDesignDay">Cooling Design Day</returns>
         /// <search>
-        /// TAS, Builidng, AddCoolingDesignDay, Add Cooling Design Day
+        /// TAS, Building, AddCoolingDesignDay, Add Cooling Design Day
         /// </search>
         public static CoolingDesignDay AddCoolingDesignDay(Building Building)
         {
@@ -188,7 +188,7 @@ namespace TBDFile
         /// <param name="Building">TAS Building</param>
         /// <returns name="HeatingDesignDay">Heating Design Day</returns>
         /// <search>
-        /// TAS, Builidng, AddHeatingDesignDay, Add Heating Design Day
+        /// TAS, Building, AddHeatingDesignDay, Add Heating Design Day
         /// </search>
         public static HeatingDesignDay AddHeatingDesignDay(Building Building)
         {
@@ -203,7 +203,7 @@ namespace TBDFile
         /// <param name="Description">Description</param>
         /// <returns name="ZoneGroup">Zone Group</returns>
         /// <search>
-        /// TAS, Builidng, Zone Group, Add Zone Group, tas, builidng, zone group, add zone group
+        /// TAS, Building, Zone Group, Add Zone Group, tas, builidng, zone group, add zone group
         /// </search>
         public static ZoneGroup AddZoneGroup(Building Building, string Name, string Description = "")
         {
@@ -221,7 +221,7 @@ namespace TBDFile
         /// <param name="Index">Index</param>
         /// <returns name="Value">Value</returns>
         /// <search>
-        /// TAS, Builidng, Zone Group, Remove Zone Group, tas, builidng, zone group, remove zone group, removezonegroup
+        /// TAS, Building, Zone Group, Remove Zone Group, tas, builidng, zone group, remove zone group, removezonegroup
         /// </search>
         public static int RemoveZoneGroup(Building Building, int Index)
         {
@@ -235,7 +235,7 @@ namespace TBDFile
         /// <param name="Index">Index</param>
         /// <returns name="Value">Value</returns>
         /// <search>
-        /// TAS, Builidng, Zone Group, Get Zone Group, tas, builidng, zone group, get zone group, GetZoneGroup
+        /// TAS, Building, Zone Group, Get Zone Group, tas, builidng, zone group, get zone group, GetZoneGroup
         /// </search>
         public static ZoneGroup GetZoneGroup(Building Building, int Index)
         {
@@ -248,7 +248,7 @@ namespace TBDFile
         /// <param name="Building">TAS Building</param>
         /// <returns name="ZoneGroups">Zone Group List</returns>
         /// <search>
-        /// TAS, Builidng, Zone Group, Get Zone Group, tas, builidng, zone group, get zone group, GetZoneGroup
+        /// TAS, Building, Zone Group, Get Zone Group, tas, builidng, zone group, get zone group, GetZoneGroup
         /// </search>
         public static List<ZoneGroup> ZoneGroups(Building Building)
         {
@@ -273,7 +273,7 @@ namespace TBDFile
         /// <param name="Description">Description</param>
         /// <returns name="InternalCondition">Internal Condition</returns>
         /// <search>
-        /// TAS, Builidng, Internal Condition, Add Internal Condition, tas, builidng, internal condition, add internal condition
+        /// TAS, Building, Internal Condition, Add Internal Condition, tas, builidng, internal condition, add internal condition
         /// </search>
         public static InternalCondition AddInternalCondition(Building Building, string Name, string Description)
         {
@@ -291,7 +291,7 @@ namespace TBDFile
         /// <param name="Index">Day index</param>
         /// <returns name="CoolingDesignDay">Cooling Design Day</returns>
         /// <search>
-        /// TAS, Builidng, GetCoolingDesignDay, Get Cooling Design Day
+        /// TAS, Building, GetCoolingDesignDay, Get Cooling Design Day
         /// </search>
         public static CoolingDesignDay GetCoolingDesignDay(Building Building, int Index)
         {
@@ -305,7 +305,7 @@ namespace TBDFile
         /// <param name="Index">Day index</param>
         /// <returns name="HeatingDesignDay">Heating Desig nDay</returns>
         /// <search>
-        /// TAS, Builidng, HeatingDesignDay, Heating Design Day, GetHeatingDesignDay
+        /// TAS, Building, HeatingDesignDay, Heating Design Day, GetHeatingDesignDay
         /// </search>
         public static HeatingDesignDay GetHeatingDesignDay(Building Building, int Index)
         {
@@ -318,7 +318,7 @@ namespace TBDFile
         /// <param name="Building">TAS Building</param>
         /// <returns name="PeakCooling">Peak Cooling</returns>
         /// <search>
-        /// TAS, Builidng, building, Peak Cooling, peak cooling, peakcooling, PeakCooling
+        /// TAS, Building, building, Peak Cooling, peak cooling, peakcooling, PeakCooling
         /// </search>
         public static float PeakCooling(Building Building)
         {
@@ -331,7 +331,7 @@ namespace TBDFile
         /// <param name="Building">TAS Building</param>
         /// <returns name="PeakCooling">Peak Heating</returns>
         /// <search>
-        /// TAS, Builidng, building, Peak Heating, peak heating, peakheating, PeakHeating
+        /// TAS, Building, building, Peak Heating, peak heating, peakheating, PeakHeating
         /// </search>
         public static float PeakHeating(Building Building)
         {
@@ -344,7 +344,7 @@ namespace TBDFile
         /// <param name="Building">TAS Building</param>
         /// <returns name="Constructions">Construction List</returns>
         /// <search>
-        /// TAS, Builidng, Get Constructions, tas, builidng, constructions, get constructions
+        /// TAS, Building, Get Constructions, tas, builidng, constructions, get constructions
         /// </search>
         public static List<Construction> Constructions(Building Building)
         {
@@ -368,7 +368,7 @@ namespace TBDFile
         /// <param name="Index">construction index</param>
         /// <returns name="Construction">Construction</returns>
         /// <search>
-        /// TAS, Builidng, Construction, Get Construction, tas, builidng, construction, get construction
+        /// TAS, Building, Construction, Get Construction, tas, builidng, construction, get construction
         /// </search>
         public static Construction GetConstruction(Building Building, int Index)
         {
@@ -382,7 +382,7 @@ namespace TBDFile
         /// <param name="Construction">Building Construction to be copied</param>
         /// <returns name="Construction">Construction</returns>
         /// <search>
-        /// TAS, Builidng, AddConstruction, Add Construction
+        /// TAS, Building, AddConstruction, Add Construction
         /// </search>
         public static Construction AddConstruction(Building Building, Construction Construction)
         {
@@ -396,7 +396,7 @@ namespace TBDFile
         /// <param name="Index">Internal Condition index</param>
         /// <returns name="Building">Building</returns>
         /// <search>
-        /// TAS, Builidng, Internal Condition, Remove Internal Condition, tas, builidng, internal condition, remove internal condition, removeinternal condition removeic
+        /// TAS, Building, Internal Condition, Remove Internal Condition, tas, builidng, internal condition, remove internal condition, removeinternal condition removeic
         /// </search>
         public static Building RemoveInternalCondition(Building Building, int Index)
         {
@@ -411,7 +411,7 @@ namespace TBDFile
         /// <param name="ApertureType">Base Aperture Type to be copied</param>
         /// <returns name="ApertureType">Aperture Type</returns>
         /// <search>
-        /// TAS, Builidng, builidng, ApertureType, Aperture Type, AddApertureType, Add Aperture Type
+        /// TAS, Building, builidng, ApertureType, Aperture Type, AddApertureType, Add Aperture Type
         /// </search>
         public static ApertureType AddApertureType(Building Building, ApertureType ApertureType)
         {
@@ -425,7 +425,7 @@ namespace TBDFile
         /// <param name="Index">Aperture Type Index</param>
         /// <returns name="ApertureType">Aperture Type</returns>
         /// <search>
-        /// TAS, Builidng, builidng, ApertureType, Aperture Type, GetApertureType, Get Aperture Type
+        /// TAS, Building, builidng, ApertureType, Aperture Type, GetApertureType, Get Aperture Type
         /// </search>
         public static ApertureType GetApertureType(Building Building, int Index)
         {
@@ -438,7 +438,7 @@ namespace TBDFile
         /// <param name="Building">TAS Building</param>
         /// <returns name="ApertureTypes">Zone Aperture Type List</returns>
         /// <search>
-        /// TAS, Builidng, tas, builidng, ApertureTypes, Aperture Types
+        /// TAS, Building, tas, builidng, ApertureTypes, Aperture Types
         /// </search>
         public static List<ApertureType> ApertureTypes(Building Building)
         {
@@ -461,7 +461,7 @@ namespace TBDFile
         /// <param name="Building">TAS Building</param>
         /// <returns name="Value">Value</returns>
         /// <search>
-        /// TAS, Builidng, ClearDesignDays, Clear Design Days
+        /// TAS, Building, ClearDesignDays, Clear Design Days
         /// </search>
         public static int ClearDesignDays(Building Building)
         {
@@ -474,7 +474,7 @@ namespace TBDFile
         /// <param name="Building">TAS Building</param>
         /// <returns name="Schedule">Building Schedule</returns>
         /// <search>
-        /// TAS, Builidng, Schedule, AddSchedule, Add Schedule
+        /// TAS, Building, Schedule, AddSchedule, Add Schedule
         /// </search>
         public static Schedule AddSchedule(Building Building)
         {
@@ -487,7 +487,7 @@ namespace TBDFile
         /// <param name="Building">TAS Building</param>
         /// <returns name="SurfaceOutputSpec">Building Surface Output Spec</returns>
         /// <search>
-        /// TAS, Builidng, SurfaceOutputSpec, AddSurfaceOutputSpec, addsurfaceoutputspec, Add Surface Output Spec, add surface output spec
+        /// TAS, Building, SurfaceOutputSpec, AddSurfaceOutputSpec, addsurfaceoutputspec, Add Surface Output Spec, add surface output spec
         /// </search>
         public static SurfaceOutputSpec AddSurfaceOutputSpec(Building Building)
         {

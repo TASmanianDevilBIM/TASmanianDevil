@@ -79,32 +79,33 @@ namespace TSDFile
         /// <search>
         /// TAS, TBDDocument, TBDDocument, CoolingDesignData, Get Cooling Design Data ZoneData, tas, tsddocument, CoolingDesignData, coolingdesigndata, ZoneData, zonedata, Zone Data, zone data
         /// </search>
-        public static ZoneData GetZoneData(CoolingDesignData CoolingDesignData, int Index)
+        public static ZoneData GetZoneData(CoolingDesignData CoolingDesignData, int Index = 1)
         {
             return  new ZoneData(CoolingDesignData.pCoolingDesignData.GetZoneData(Index));
         }
 
         /// <summary>
-        /// Gets Zone Data
+        /// Gets Zones Data
         /// </summary>
         /// <param name="CoolingDesignData">TSD Cooling Design Data</param>
-        /// <returns name="ZoneData">Zone Data</returns>
+        /// <returns name="ZonesData">Zones Data</returns>
         /// <search>
-        /// TAS, TBDDocument, TBDDocument, CoolingDesignData, Get Cooling Design Data ZoneData, tas, tsddocument, CoolingDesignData, coolingdesigndata, ZoneData, zonedata, Zone Data, zone data
+        /// TAS, TBDDocument, TBDDocument, CoolingDesignData, Get Cooling Design Data ZoneData, tas, tsddocument, CoolingDesignData, coolingdesigndata, ZonesData, zonesdata, Zones Data, zones data
         /// </search>
-        public static List<ZoneData> ZoneData(CoolingDesignData CoolingDesignData)
+        public static List<ZoneData> GetZonesData(CoolingDesignData CoolingDesignData)
         {
-            List<ZoneData> aZoneDataList = new List<ZoneData>();
+            List<ZoneData> aResult = new List<ZoneData>();
 
-            int aIndex = 0;
-            TSD.ZoneData aZone = CoolingDesignData.pCoolingDesignData.GetZoneData(aIndex);
-            while (aZone != null)
+            int aIndex = 1;
+            TSD.ZoneData aZoneData = CoolingDesignData.pCoolingDesignData.GetZoneData(aIndex);
+            while (aZoneData != null)
             {
-                aZoneDataList.Add(new ZoneData(aZone));
+                aResult.Add(new ZoneData(aZoneData));
                 aIndex++;
-                aZone = CoolingDesignData.pCoolingDesignData.GetZoneData(aIndex);
+                aZoneData = CoolingDesignData.pCoolingDesignData.GetZoneData(aIndex);
             }
-            return aZoneDataList;
+
+            return aResult;
         }
     }
 }
