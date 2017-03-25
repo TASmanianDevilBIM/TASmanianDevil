@@ -299,9 +299,9 @@ namespace Generic
             "ZoneDataGroup",
             "Max_CoolingLoad", "LatentLoad_CoolingLoad", "Index_CoolingLoad", "Max_HumidityRatio_Local_CoolingLoad", "ZoneData_HumidityRatio_Max_CoolingLoad", "Infiltration_CoolingLoad", "ExternalTemperature_CoolingLoad", "ExternalHumidity_CoolingLoad" ,
             "Max_HeatingLoad", "LatentLoad_HeatingLoad", "Index_HeatingLoad", "Min_HumidityRatio_Local_HeatingLoad", "ZoneData_HumidityRatio_Min_HeatingLoad", "Infiltration_HeatingLoad", "ExternalTemperature_HeatingLoad", "ExternalHumidity_HeatingLoad",
-            "Max_LatentRemovalLoad", "CoolingLoad_LatentRemovalLoad", "LatentLoad_LatentRemovalLoad", "Index_LatentRemovalLoad", "Max_HumidityRatio_Local_LatentRemovalLoad", "ZoneData_HumidityRatio_Max_LatentRemovalLoad","Infiltration_LatentRemovalLoad", "ExternalTemperature_LatentRemovalLoad", "ExternalHumidity_LatentRemovalLoad", 
+            "Max_LatentRemovalLoad", "CoolingLoad_LatentRemovalLoad", "LatentLoad_LatentRemovalLoad", "Index_LatentRemovalLoad", "Max_HumidityRatio_Local_LatentRemovalLoad", "ZoneData_HumidityRatio_Max_LatentRemovalLoad","Infiltration_LatentRemovalLoad", "ExternalTemperature_LatentRemovalLoad", "ExternalHumidity_LatentRemovalLoad",
             "Max_LatentAdditionLoad", "HeatingLoad_LatentAdditionLoad", "LatentLoad_LatentAdditionLoad", "Index_LatentAdditionLoad", "Min_HumidityRatio_Local_LatentAdditionLoad", "ZoneData_HumidityRatio_Min_LatentAdditionLoad", "Infiltration_LatentAdditionLoad", "ExternalTemperature_LatentAdditionLoad", "ExternalHumidity_LatentAdditionLoad",
-            "Sum_Max_CoolingLoad", "Sum_Index_CoolingLoad", "Sum_Max_HeatingLoad", "Sum_Index_HeatingLoad", "Sum_Max_LatentRemovalLoad", "Sum_Index_LatentRemovalLoad", "Sum_Max_LatentAdditionLoad", "Sum_Index_LatentAdditionLoad"})]
+            "Sum_Max_CoolingLoad", "Sum_Index_CoolingLoad","aExternalTemperature_CoolingLoad", "aExternalHumidity_CoolingLoad", "Sum_Max_HeatingLoad", "Sum_Index_HeatingLoad", "aExternalTemperature_HeatingLoad","aExternalHumidity_HeatingLoad", "Sum_Max_LatentRemovalLoad", "Sum_Index_LatentRemovalLoad", "aExternalTemperature_LatentRemovalLoad","aExternalHumidity_LatentRemovalLoad", "Sum_Max_LatentAdditionLoad", "Sum_Index_LatentAdditionLoad","aExternalTemperature_LatentAdditionalLoad","aExternalHumidity_LatentAdditionalLoad"})]
         public static Dictionary<string, object> GetGroupResults(BuildingData BuildingData, List<ZoneDataGroup> ZoneDataGroups, bool ConvertUnits = false)
         {
             float aTempertureConversion = 273.15f;
@@ -408,7 +408,7 @@ namespace Generic
                 aValueList.Add(Functions.GetAnnualBuildingResultList(BuildingData, TSD.tsdBuildingArray.externalHumidity)[aIndex_HeatingLoad]);
                 Functions.GetMin(aZoneDataList, aIndex_HeatingLoad, out aMin_HumidityRatio_Local, out aZoneData_HumidityRatio_Min, TSD.tsdZoneArray.humidityRatio);
                 aValueList.Add(aMin_HumidityRatio_Local);
-                aTupleList_HeatingLoad.Add(new Tuple<int, ZoneData, List<float>>(aIndex_HeatingLoad, aZoneData_HumidityRatio_Min, aResultList));
+                aTupleList_HeatingLoad.Add(new Tuple<int, ZoneData, List<float>>(aIndex_HeatingLoad, aZoneData_HumidityRatio_Min, aValueList));
 
                 //LatentRemovalLoad
                 aValueList = new List<float>();
@@ -445,17 +445,31 @@ namespace Generic
 
             float aSum_Max_CoolingLoad = aSum_CoolingLoad.Max();
             int aSum_Index_CoolingLoad = aSum_CoolingLoad.IndexOf(aSum_Max_CoolingLoad);
-
-            // paste here and get index aSum_Index_CoolingLoad to get letent gain sum
+            aTSDBuildingArray = TSD.tsdBuildingArray.externalTemperature;
+            float aExternalTemperature_CoolingLoad = Functions.GetAnnualBuildingResultList(BuildingData, aTSDBuildingArray)[aSum_Index_CoolingLoad];
+            aTSDBuildingArray = TSD.tsdBuildingArray.externalHumidity;
+            float aExternalHumidity_CoolingLoad = Functions.GetAnnualBuildingResultList(BuildingData, aTSDBuildingArray)[aSum_Index_CoolingLoad];
 
             float aSum_Max_HeatingLoad = aSum_HeatingLoad.Max();
             int aSum_Index_HeatingLoad = aSum_HeatingLoad.IndexOf(aSum_Max_HeatingLoad);
+            aTSDBuildingArray = TSD.tsdBuildingArray.externalTemperature;
+            float aExternalTemperature_HeatingLoad = Functions.GetAnnualBuildingResultList(BuildingData, aTSDBuildingArray)[aSum_Index_HeatingLoad];
+            aTSDBuildingArray = TSD.tsdBuildingArray.externalHumidity;
+            float aExternalHumidity_HeatingLoad = Functions.GetAnnualBuildingResultList(BuildingData, aTSDBuildingArray)[aSum_Index_HeatingLoad];
 
             float aSum_Max_LatentRemovalLoad = aSum_LatentRemovalLoad.Max();
             int aSum_Index_LatentRemovalLoad = aSum_LatentRemovalLoad.IndexOf(aSum_Max_LatentRemovalLoad);
+            aTSDBuildingArray = TSD.tsdBuildingArray.externalTemperature;
+            float aExternalTemperature_LatentRemovalLoad = Functions.GetAnnualBuildingResultList(BuildingData, aTSDBuildingArray)[aSum_Index_LatentRemovalLoad];
+            aTSDBuildingArray = TSD.tsdBuildingArray.externalHumidity;
+            float aExternalHumidity_LatentRemovalLoad = Functions.GetAnnualBuildingResultList(BuildingData, aTSDBuildingArray)[aSum_Index_LatentRemovalLoad];
 
             float aSum_Max_LatentAdditionalLoad = aSum_LatentAdditionalLoad.Max();
             int aSum_Index_LatentAdditionalLoad = aSum_LatentAdditionalLoad.IndexOf(aSum_Max_LatentAdditionalLoad);
+            aTSDBuildingArray = TSD.tsdBuildingArray.externalTemperature;
+            float aExternalTemperature_LatentAdditionalLoad = Functions.GetAnnualBuildingResultList(BuildingData, aTSDBuildingArray)[aSum_Index_LatentAdditionalLoad];
+            aTSDBuildingArray = TSD.tsdBuildingArray.externalHumidity;
+            float aExternalHumidity_LatentAdditionalLoad = Functions.GetAnnualBuildingResultList(BuildingData, aTSDBuildingArray)[aSum_Index_LatentAdditionalLoad];
 
             return new Dictionary<string, object>
             {
@@ -505,12 +519,24 @@ namespace Generic
 
                 { "Sum_Max_CoolingLoad", aSum_Max_CoolingLoad},
                 { "Sum_Index_CoolingLoad", aSum_Index_CoolingLoad},
+                { "aExternalTemperature_CoolingLoad", aExternalTemperature_CoolingLoad},
+                { "aExternalHumidity_CoolingLoad", aExternalHumidity_CoolingLoad},
+
                 { "Sum_Max_HeatingLoad", aSum_Max_HeatingLoad},
                 { "Sum_Index_HeatingLoad", aSum_Index_HeatingLoad},
+                { "aExternalTemperature_HeatingLoad", aExternalTemperature_HeatingLoad},
+                { "aExternalHumidity_HeatingLoad", aExternalHumidity_HeatingLoad},
+
                 { "Sum_Max_LatentRemovalLoad", aSum_Max_LatentRemovalLoad},
                 { "Sum_Index_LatentRemovalLoad", aSum_Index_LatentRemovalLoad},
+                { "aExternalTemperature_LatentRemovalLoad", aExternalTemperature_LatentRemovalLoad},
+                { "aExternalHumidity_LatentRemovalLoad", aExternalHumidity_LatentRemovalLoad},
+
+
                 { "Sum_Max_LatentAdditionLoad", aSum_Max_LatentAdditionalLoad},
                 { "Sum_Index_LatentAdditionLoad", aSum_Index_LatentAdditionalLoad},
+                { "aExternalTemperature_LatentAdditionalLoad", aExternalTemperature_LatentAdditionalLoad},
+                { "aExternalHumidity_LatentAdditionalLoad", aExternalHumidity_LatentAdditionalLoad},
             };
         }
 
@@ -520,7 +546,7 @@ namespace Generic
             "Max_HeatingLoad", "LatentLoad_HeatingLoad", "Index_HeatingLoad", "Min_HumidityRatio_Local_HeatingLoad", "ZoneData_HumidityRatio_Min_HeatingLoad", "Infiltration_HeatingLoad", "ExternalTemperature_HeatingLoad", "ExternalHumidity_HeatingLoad",
             "Max_LatentRemovalLoad", "CoolingLoad_LatentRemovalLoad", "LatentLoad_LatentRemovalLoad", "Index_LatentRemovalLoad", "Max_HumidityRatio_Local_LatentRemovalLoad", "ZoneData_HumidityRatio_Max_LatentRemovalLoad","Infiltration_LatentRemovalLoad", "ExternalTemperature_LatentRemovalLoad", "ExternalHumidity_LatentRemovalLoad",
             "Max_LatentAdditionLoad", "HeatingLoad_LatentAdditionLoad", "LatentLoad_LatentAdditionLoad", "Index_LatentAdditionLoad", "Min_HumidityRatio_Local_LatentAdditionLoad", "ZoneData_HumidityRatio_Min_LatentAdditionLoad", "Infiltration_LatentAdditionLoad", "ExternalTemperature_LatentAdditionLoad", "ExternalHumidity_LatentAdditionLoad",
-            "Sum_Max_CoolingLoad", "Sum_Index_CoolingLoad", "Sum_Max_HeatingLoad", "Sum_Index_HeatingLoad", "Sum_Max_LatentRemovalLoad", "Sum_Index_LatentRemovalLoad", "Sum_Max_LatentAdditionLoad", "Sum_Index_LatentAdditionLoad"})]
+            "Sum_Max_CoolingLoad", "Sum_Index_CoolingLoad","aExternalTemperature_CoolingLoad", "aExternalHumidity_CoolingLoad", "Sum_Max_HeatingLoad", "Sum_Index_HeatingLoad", "aExternalTemperature_HeatingLoad","aExternalHumidity_HeatingLoad", "Sum_Max_LatentRemovalLoad", "Sum_Index_LatentRemovalLoad", "aExternalTemperature_LatentRemovalLoad","aExternalHumidity_LatentRemovalLoad", "Sum_Max_LatentAdditionLoad", "Sum_Index_LatentAdditionLoad","aExternalTemperature_LatentAdditionalLoad","aExternalHumidity_LatentAdditionalLoad"})]
         public static Dictionary<string, object> GetGroupResults(string FilePath, bool ConvertUnits = false)
         {
             TSDDocument aTSDDocument = new TSDDocument(FilePath, false);
