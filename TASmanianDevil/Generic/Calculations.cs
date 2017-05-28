@@ -120,7 +120,7 @@ namespace Generic
                 int aIndex_Building = -1;
                 Functions.GetMax(aZoneDataList_Building[i], out aMax_Building, out aIndex_Building, (TSD.tsdZoneArray)TSDZoneArray);
 
-                if(BuildingDataOnly)
+                if (BuildingDataOnly)
                 {
                     aTupleList.Add(new Tuple<ZoneData, int, float, DataType>(aZoneDataList_Building[i], aIndex_Building, aMax_Building, DataType.BuildingData));
                 }
@@ -157,9 +157,9 @@ namespace Generic
             List<float> aHumidityRatioList = new List<float>();
             List<float> aRelativeHumidityList = new List<float>();
             List<float> aLatentAdditionLoadList = new List<float>();
-            List<float> aLatentRemovalLoadList = new List<float>();        
+            List<float> aLatentRemovalLoadList = new List<float>();
             List<float> aLatentLoadList = new List<float>();
-            
+
             List<DataType> aDataTypeList = new List<DataType>();
 
 
@@ -353,7 +353,7 @@ namespace Generic
             List<float> aSum_HeatingLoad = new List<float>();
             List<float> aSum_LatentRemovalLoad = new List<float>();
             List<float> aSum_LatentAdditionalLoad = new List<float>();
-            for(int i = 0; i < 8760; i++)
+            for (int i = 0; i < 8760; i++)
             {
                 aSum_CoolingLoad.Add(0);
                 aSum_HeatingLoad.Add(0);
@@ -417,7 +417,7 @@ namespace Generic
                 aCalc = aResultList.Max();
                 aValueList.Add(aCalc * aPowerConversion);
                 int aIndex_LatentRemovalLoad = aResultList.IndexOf(aCalc);
-                aValueList.Add((Functions.GetAtIndex(aZoneDataList, aIndex_LatentRemovalLoad, TSD.tsdZoneArray.occupancyLatentGain) + Functions.GetAtIndex(aZoneDataList, aIndex_LatentRemovalLoad, TSD.tsdZoneArray.equipmentLatentGain))* aPowerConversion);
+                aValueList.Add((Functions.GetAtIndex(aZoneDataList, aIndex_LatentRemovalLoad, TSD.tsdZoneArray.occupancyLatentGain) + Functions.GetAtIndex(aZoneDataList, aIndex_LatentRemovalLoad, TSD.tsdZoneArray.equipmentLatentGain)) * aPowerConversion);
                 aValueList.Add(Functions.GetAtIndex(aZoneDataList, aIndex_LatentRemovalLoad, TSD.tsdZoneArray.infiltration));
                 aValueList.Add(Functions.GetAtIndex(aZoneDataList, aIndex_LatentRemovalLoad, TSD.tsdZoneArray.coolingLoad) * aPowerConversion);
                 aValueList.Add(Functions.GetAnnualBuildingResultList(BuildingData, TSD.tsdBuildingArray.externalTemperature)[aIndex_LatentRemovalLoad] + aTempertureConversion);
@@ -577,6 +577,50 @@ namespace Generic
         public static DateTime GetDateTime(int Year, int Hours)
         {
             return new DateTime(Year, 1, 1).AddHours(Hours + 1);
+        }
+
+        [MultiReturn(new[] { "GUIDs", "Hours", "HoursAbv" })]
+        public static Dictionary<string, object> GetOverheating(BuildingData BuildingData, List<float> TemperatureList)
+        {
+            List<string> aGUIDList = new List<string>();
+            List<float> aHourList = new List<float>();
+            List<List<float>> aHourAbvList = new List<List<float>>();
+            
+            List<ZoneData> ZoneDataList = BuildingData.GetZonesData(BuildingData);
+
+            foreach (ZoneData aZoneData in ZoneDataList)
+            {
+                List<float> aValueList;
+
+                aValueList = Functions.GetList(ZoneData.GetAnnualZoneResult(aZoneData, TSDZoneArray.OccupantSensibleGain));
+                List<int> aIndexList = new List<int>();
+                for (int i = 0; i < aValueList.Count; i++)
+                    if (aValueList[i] > 0)
+                        aIndexList.Add(i);
+
+                aHourList.Add(aIndexList.Count);
+                aGUIDList.Add(ZoneData.GUID(aZoneData));
+                aHourAbvList.Add(new List<float>());
+
+                aValueList = Functions.GetList(ZoneData.GetAnnualZoneResult(aZoneData, TSDZoneArray.ResultantTemp));
+                foreach (float aTemperature in TemperatureList)
+                {
+                    int aCount = 0;
+                    foreach (int aIndex in aIndexList)
+                        if (aValueList[aIndex] > aTemperature)
+                            aCount++;
+                    aHourAbvList.Last().Add(aCount);
+                }
+            }
+
+            return new Dictionary<string, object>
+            {
+                { "GUIDs", aGUIDList},
+                { "Hours", aHourList},
+                { "HoursAbv", aHourAbvList}
+
+            };
+
         }
     }
 
