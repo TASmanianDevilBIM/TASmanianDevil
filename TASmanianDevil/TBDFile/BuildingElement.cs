@@ -63,13 +63,14 @@ namespace TBDFile
         /// TAS Building Element BE Type
         /// </summary>
         /// <param name="BuildingElement">Building Element</param>
-        /// <returns name="BEType">BE Type</returns>
+        /// <returns name="BuildingElementType">Building Element Type</returns>
         /// <search>
         /// TAS, BuildingElement, Building Element, BE Type, BEType, betype, be type, BuildingElementType, Building Element Type, building element type
         /// </search>
         public static BuildingElementType BuildingElementType(BuildingElement BuildingElement)
         {
-            return (BuildingElementType)BuildingElement.pBuildingElement.BEType;
+            int aInt = BuildingElement.pBuildingElement.BEType;
+            return (BuildingElementType)aInt;
         }
 
         /// <summary>
@@ -170,13 +171,128 @@ namespace TBDFile
         }
 
         /// <summary>
-        /// Sets Building Element Construction
+        /// TAS Building Element U Value. For detailed U value information refer to Construction U value
+        /// </summary>
+        /// <param name="BuildingElement">Building Element</param>
+        /// <param name="Decimals">Decimals</param>
+        /// <returns name="U value">U value</returns>
+        /// <search>
+        /// TAS, BuildingElement, Get U Value, getuvalue, Building Element, U, u value
+        /// </search>
+        public static double U(BuildingElement BuildingElement, int Decimals = 2)
+        {
+            TBD.Construction aConstruction = BuildingElement.pBuildingElement.GetConstruction();
+            if (aConstruction == null)
+                return -1;
+
+            object aObject = aConstruction.GetUValue();
+            List<float> aValueList = Generic.Functions.GetList(aObject);
+            switch((BuildingElementType)BuildingElement.pBuildingElement.BEType)
+            {
+                case TBDFile.BuildingElementType.Ceiling:
+                    return Math.Round(aValueList[4], Decimals);
+                case TBDFile.BuildingElementType.CurtainWall:
+                    return Math.Round(aValueList[6], Decimals);
+                case TBDFile.BuildingElementType.DoorElement:
+                    return Math.Round(aValueList[0], Decimals);
+                case TBDFile.BuildingElementType.ExposedFloor:
+                    return Math.Round(aValueList[2], Decimals);
+                case TBDFile.BuildingElementType.ExternalWall:
+                    return Math.Round(aValueList[0], Decimals);
+                case TBDFile.BuildingElementType.FrameELement:
+                    return Math.Round(aValueList[0], Decimals);
+                case TBDFile.BuildingElementType.Glazing:
+                    return Math.Round(aValueList[6], Decimals);
+                case TBDFile.BuildingElementType.InternalFloor:
+                    return Math.Round(aValueList[5], Decimals);
+                case TBDFile.BuildingElementType.InternallWall:
+                    return Math.Round(aValueList[3], Decimals);
+                case TBDFile.BuildingElementType.NoBEType:
+                    return -1;
+                case TBDFile.BuildingElementType.NullElement:
+                    return -1;
+                case TBDFile.BuildingElementType.RaisedFloor:
+                    return Math.Round(aValueList[5], Decimals);
+                case TBDFile.BuildingElementType.RoofElement:
+                    return Math.Round(aValueList[1], Decimals);
+                case TBDFile.BuildingElementType.RoofLight:
+                    return Math.Round(aValueList[6], Decimals);
+                case TBDFile.BuildingElementType.ShadeElement:
+                    return -1;
+                case TBDFile.BuildingElementType.SlabOnGrade:
+                    return Math.Round(aValueList[2], Decimals);
+                case TBDFile.BuildingElementType.SolarPanel:
+                    return -1;
+                case TBDFile.BuildingElementType.UndergroundCeiling:
+                    return Math.Round(aValueList[2], Decimals);
+                case TBDFile.BuildingElementType.UndergroundSlab:
+                    return Math.Round(aValueList[2], Decimals);
+                case TBDFile.BuildingElementType.UndergroundWall:
+                    return Math.Round(aValueList[0], Decimals);
+                case TBDFile.BuildingElementType.VehicleDoor:
+                    return Math.Round(aValueList[0], Decimals);
+            }
+            return -1;
+        }
+
+        /// <summary>
+        /// TAS Building Element G Value. For detailed glazing value information refer to Construction glazing values
+        /// </summary>
+        /// <param name="BuildingElement">Building Element</param>
+        /// <param name="Decimals">Decimals</param>
+        /// <returns name="G value">G value</returns>
+        /// <search>
+        /// TAS, BuildingElement, Get G Value, getgvalue, Building Element, G, g value
+        /// </search>
+        public static double G(BuildingElement BuildingElement, int Decimals = 2)
+        {
+            TBD.Construction aConstruction = BuildingElement.pBuildingElement.GetConstruction();
+            if (aConstruction == null)
+                return 0;
+
+            TBD.ConstructionTypes aConstructionTypes = aConstruction.type;
+            if (aConstructionTypes == TBD.ConstructionTypes.tcdTransparentConstruction)
+            {
+                object aObject = aConstruction.GetGlazingValues();
+                List<float> aValueList = Generic.Functions.GetList(aObject);
+                return Math.Round(aValueList[5], Decimals);
+            }
+            return 0;
+        }
+
+        /// <summary>
+        /// TAS Building Element Lighting Transmittance Value.
+        /// </summary>
+        /// <param name="BuildingElement">Building Element</param>
+        /// <param name="Decimals">Decimals</param>
+        /// <returns name="LT value">Lighting Trasmittance value</returns>
+        /// <search>
+        /// TAS, BuildingElement, Get LT Value, getltvalue, Building Element, LT, lt value, lighting Transmittace, lightingtransmittance
+        /// </search>
+        public static double LT(BuildingElement BuildingElement, int Decimals = 2)
+        {
+            TBD.Construction aConstruction = BuildingElement.pBuildingElement.GetConstruction();
+            if (aConstruction == null)
+                return 0;
+
+            TBD.ConstructionTypes aConstructionTypes = aConstruction.type;
+            if (aConstructionTypes == TBD.ConstructionTypes.tcdTransparentConstruction)
+            {
+                object aObject = aConstruction.GetGlazingValues();
+                List<float> aValueList = Generic.Functions.GetList(aObject);
+                return Math.Round(aValueList[0], Decimals);
+            }
+            return 0;
+        }
+
+        /// <summary>
+        /// TAS Building Element Construction
         /// </summary>
         /// <param name="BuildingElement">Building Element</param>
         /// <param name="Construction">Construction</param>
-        /// <returns name="Value">Value</returns>
+        /// <returns name="Index">Index</returns>
         /// <search>
-        /// TAS, BuildingElement, Construction, construction, Building Element, SetConstruction, setconstruction
+        /// TAS, BuildingElement, Get Construction, Building Element, set construction, setconstruction
         /// </search>
         public static int SetConstruction(BuildingElement BuildingElement, Construction Construction)
         {
@@ -331,8 +447,8 @@ namespace TBDFile
         RaisedFloor = 10,
         /// <summary>Roof Element</summary>
         RoofElement = 3,
-        /// <summary>Roof Flight</summary>
-        RoofFlight = 13,
+        /// <summary>Roof Light</summary>
+        RoofLight = 13,
         /// <summary>Shade Element</summary>
         ShadeElement = 5,
         /// <summary>Slab On Grade</summary>

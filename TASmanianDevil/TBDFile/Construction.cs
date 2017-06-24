@@ -320,7 +320,7 @@ namespace TBDFile
         /// Gets TAS Construction U Value
         /// </summary>
         /// <param name="Construction">TAS Construction</param>
-        /// <returns name="Name">Construction U Value</returns>
+        /// <returns name="Value">Construction U Value</returns>
         /// <search>
         /// TAS, Building, Construction, Get Construction U Value, builidng, construction, get construction u, uvalue, UValue 
         /// </search>
