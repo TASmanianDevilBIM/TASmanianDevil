@@ -210,16 +210,27 @@ namespace TBDFile
         /// </search>
         public static List<Profile> Profiles(InternalGain InternalGain)
         {
-            List<Profile> aProfileList = new List<Profile>();
+            List<int> enumList = new List<int>();
+            enumList.Add((int)TBD.Profiles.ticI);       // Infiltration
+            enumList.Add((int)TBD.Profiles.ticV);       // Ventilation
+            enumList.Add((int)TBD.Profiles.ticLG);      // Lighting Gain
+            enumList.Add((int)TBD.Profiles.ticOSG);     // Occupancy Sensible Gain
+            enumList.Add((int)TBD.Profiles.ticOLG);     // Occupancy Latent Gain
+            enumList.Add((int)TBD.Profiles.ticESG);     // Equipment Sensible Gain
+            enumList.Add((int)TBD.Profiles.ticELG);     // Equipment Latent Gain
+            enumList.Add((int)TBD.Profiles.ticCOG);     // Polutant Generation
 
-            int aIndex = 0;
-            TBD.profile aProfile = InternalGain.pInternalGain.GetProfile(aIndex);
-            while (aProfile != null)
+            List<Profile> aProfileList = new List<Profile>();
+            TBD.profile aProfile = null;
+            foreach (int index in enumList)
             {
-                aProfileList.Add(new Profile(aProfile));
-                aIndex++;
-                aProfile = InternalGain.pInternalGain.GetProfile(aIndex);
+                aProfile = InternalGain.pInternalGain.GetProfile(index);
+                if (aProfile != null)
+                {
+                    aProfileList.Add(new Profile(aProfile));
+                }
             }
+
             return aProfileList;
         }
 

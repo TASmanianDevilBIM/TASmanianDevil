@@ -167,16 +167,23 @@ namespace TBDFile
         /// </search>
         public static List<Profile> Profiles(Thermostat Thermostat)
         {
-            List<Profile> aProfileList = new List<Profile>();
+            List<int> enumList = new List<int>();
+            enumList.Add((int)TBD.Profiles.ticUL);       // Temperature Upper Limit
+            enumList.Add((int)TBD.Profiles.ticLL);       // Temperature Lower Limit
+            enumList.Add((int)TBD.Profiles.ticHUL);      // Humidity Upper Limit
+            enumList.Add((int)TBD.Profiles.ticHLL);      // Humidity Lower Limit
 
-            int aIndex = 1;
-            TBD.profile aProfile = Thermostat.pThermostat.GetProfile(aIndex);
-            while (aProfile != null)
+            List<Profile> aProfileList = new List<Profile>();
+            TBD.profile aProfile = null;
+            foreach (int index in enumList)
             {
-                aProfileList.Add(new Profile(aProfile));
-                aIndex++;
-                aProfile = Thermostat.pThermostat.GetProfile(aIndex);
+                aProfile = Thermostat.pThermostat.GetProfile(index);
+                if (aProfile != null)
+                {
+                    aProfileList.Add(new Profile(aProfile));
+                }
             }
+
             return aProfileList;
         }
 
