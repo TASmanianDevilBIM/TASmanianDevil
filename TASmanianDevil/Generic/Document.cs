@@ -35,12 +35,14 @@ namespace TASmanianDevil
                     Close();
                 }
             }
-            catch
+            catch (Exception e)
             {
-
+                string aText = e.Message;
             }
 
             Create();
+            bool aCOMObject = pObject.GetType().IsCOMObject;
+            Type aType = pObject.GetType();
 
 
             if (!string.IsNullOrEmpty(pFilePath) && System.IO.File.Exists(pFilePath))
@@ -95,6 +97,7 @@ namespace TASmanianDevil
                     pClosed = true;
                 }
 
+                System.Runtime.InteropServices.Marshal.ReleaseComObject(pObject);
                 pObject = null;
             }
         }

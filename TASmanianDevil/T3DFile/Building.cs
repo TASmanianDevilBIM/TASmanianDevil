@@ -13,10 +13,15 @@ namespace T3DFile
     public class Building
     {
         private TAS3D.Building pBuilding;
+        private string pName;
+        private string pGUID;
         
         internal Building(TAS3D.Building Building)
         {
             pBuilding = Building;
+            pName = pBuilding.name;
+            pGUID = pBuilding.GUID;
+
         }
 
         /// <summary>
@@ -384,7 +389,7 @@ namespace T3DFile
         [IsVisibleInDynamoLibrary(false)]
         public override string ToString()
         {
-            return string.Format("{0} [{1} : {2}]", GetType(), pBuilding.name, pBuilding.GUID);
+            return string.Format("{0} [{1} : {2}]", GetType(), pName, pGUID);
         }
     }
 }

@@ -11,7 +11,7 @@ namespace TBDFile
     /// </summary>
     public class BuildingElement
     {
-        private TBD.buildingElement pBuildingElement;
+        internal TBD.buildingElement pBuildingElement;
 
         internal BuildingElement(TBD.buildingElement BuildingElement)
         {
