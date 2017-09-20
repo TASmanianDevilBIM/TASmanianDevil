@@ -32,6 +32,21 @@ namespace TBDFile
         }
 
         /// <summary>
+        /// Sets TAS Construction description
+        /// </summary>
+        /// <param name="Construction">TAS Construction</param>
+        /// <param name="Description">Construction Description</param>
+        /// <returns name="Construction">Construction</returns>
+        /// <search>
+        /// TAS, Building, Construction, Set Construction Description, builidng, construction, set construction description, setconstructiondescription
+        /// </search>
+        public static Construction SetDescription(Construction Construction, string Description)
+        {
+            Construction.pConstruction.description = Description;
+            return Construction;
+        }
+
+        /// <summary>
         /// Gets TAS Construction Additional Heat Transfer
         /// </summary>
         /// <param name="Construction">TAS Construction</param>
@@ -42,6 +57,21 @@ namespace TBDFile
         public static float AdditionalHeatTransfer(Construction Construction)
         {
             return Construction.pConstruction.additionalHeatTransfer;
+        }
+
+        /// <summary>
+        /// Sets TAS Construction Additional Heat Transfer
+        /// </summary>
+        /// <param name="Construction">TAS Construction</param>
+        /// <param name="AdditionalHeatTransfer">Additional Heat Transfer</param>
+        /// <returns name="Construction">TAS Construction</returns>
+        /// <search>
+        /// TAS, Building, Construction, Set Construction Additional Heat Transfer, builidng, construction, set construction additional heat transfer, AdditionalHeatTransfer, additionalheattransfer
+        /// </search>
+        public static Construction SetAdditionalHeatTransfer(Construction Construction, float AdditionalHeatTransfer)
+        {
+            Construction.pConstruction.additionalHeatTransfer = AdditionalHeatTransfer;
+            return Construction;
         }
 
         /// <summary>
@@ -120,6 +150,21 @@ namespace TBDFile
         public static float FFactor(Construction Construction)
         {
             return Construction.pConstruction.FFactor;
+        }
+
+        /// <summary>
+        /// Sets TAS Construction FFactor
+        /// </summary>
+        /// <param name="Construction">TAS Construction</param>
+        /// <param name="FFactor">Construction FFactor</param>
+        /// <returns name="Construction">Construction</returns>
+        /// <search>
+        /// TAS, Building, Construction, Set Construction FFactor, builidng, construction, set construction ffactor , FFactor, ffactor
+        /// </search>
+        public static Construction SetFFactor(Construction Construction, float FFactor)
+        {
+            Construction.pConstruction.FFactor = FFactor;
+            return Construction;
         }
 
         /// <summary>
@@ -228,6 +273,22 @@ namespace TBDFile
         }
 
         /// <summary>
+        /// Sets TAS Construction Material Width
+        /// </summary>
+        /// <param name="Construction">TAS Construction</param>
+        /// <param name="Index">Material Contruction Index</param>
+        /// <param name="Width">Material Width</param>
+        /// <returns name="Construction">Construction</returns>
+        /// <search>
+        /// TAS, Building, Construction, Set Construction Material Width, builidng, construction, set construction material width, MaterialWidth, materialwidth, setmaterialwidth
+        /// </search>
+        public static Construction SetMaterialWidth(Construction Construction, int Index, float Width)
+        {
+            Construction.pConstruction.materialWidth[Index] = Width;
+            return Construction;
+        }
+
+        /// <summary>
         /// Gets TAS Construction Name
         /// </summary>
         /// <param name="Construction">TAS Construction</param>
@@ -238,6 +299,21 @@ namespace TBDFile
         public static string Name(Construction Construction)
         {
             return Construction.pConstruction.name;
+        }
+
+        /// <summary>
+        /// Sets TAS Construction Name
+        /// </summary>
+        /// <param name="Construction">TAS Construction</param>
+        /// <param name="Name">Construction Name</param>
+        /// <returns name="Construction">Construction</returns>
+        /// <search>
+        /// TAS, Building, Construction, Set Construction Name, builidng, construction, set construction name , setname, SetName
+        /// </search>
+        public static Construction SetName(Construction Construction, string Name)
+        {
+            Construction.pConstruction.name = Name;
+            return Construction;
         }
 
         /// <summary>
@@ -291,6 +367,19 @@ namespace TBDFile
         public static Material GetMaterial(Construction Construction, int Index)
         {
             return new Material(Construction.pConstruction.materials(Index));
+        }
+
+        /// <summary>
+        /// Adds Material to TAS Construction
+        /// </summary>
+        /// <param name="Construction">TAS Construction</param>
+        /// <returns name="Material">Construction Material</returns>
+        /// <search>
+        /// TAS, Building, Construction, Add Construction Material, builidng, construction, add construction material, addmaterial, AddMaterial
+        /// </search>
+        public static Material AddMaterial(Construction Construction)
+        {
+            return new Material(Construction.pConstruction.AddMaterial());
         }
 
         /// <summary>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Autodesk.DesignScript.Runtime;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,10 +13,14 @@ namespace TBDFile
     public class Building
     {
         private TBD.Building pBuilding;
-        
+        private string pName;
+        private string pGUID;
+
         internal Building(TBD.Building Building)
         {
             pBuilding = Building;
+            pName = pBuilding.name;
+            pGUID = pBuilding.GUID;
         }
 
         /// <summary>
@@ -79,7 +84,7 @@ namespace TBDFile
         }
 
         /// <summary>
-        /// Gets TAS Building zone
+        /// Gets TBD TAS Building Zone (starting from 0)
         /// </summary>
         /// <param name="Building">TAS Building</param>
         /// <param name="Index">zone index</param>
@@ -89,7 +94,7 @@ namespace TBDFile
         /// </search>
         public static Zone GetZone(Building Building, int Index)
         {
-            return new Zone(Building.pBuilding.GetZone(Index - 1));
+            return new Zone(Building.pBuilding.GetZone(Index));
         }
 
         /// <summary>
@@ -376,7 +381,7 @@ namespace TBDFile
         }
 
         /// <summary>
-        /// Adds TAS Building Construction
+        /// Duplicates TAS Building Construction
         /// </summary>
         /// <param name="Building">TAS Building</param>
         /// <param name="Construction">Building Construction to be copied</param>
@@ -384,9 +389,22 @@ namespace TBDFile
         /// <search>
         /// TAS, Building, AddConstruction, Add Construction
         /// </search>
-        public static Construction AddConstruction(Building Building, Construction Construction)
+        public static Construction DuplicateConstruction(Building Building, Construction Construction)
         {
             return new Construction(Building.pBuilding.AddConstruction(Construction.pConstruction));
+        }
+
+        /// <summary>
+        /// Adds TAS Building Construction
+        /// </summary>
+        /// <param name="Building">TAS Building</param>
+        /// <returns name="Construction">Construction</returns>
+        /// <search>
+        /// TAS, Building, AddConstruction, Add Construction
+        /// </search>
+        public static Construction AddConstruction(Building Building)
+        {
+            return new Construction(Building.pBuilding.AddConstruction(null));
         }
 
         /// <summary>
@@ -405,7 +423,7 @@ namespace TBDFile
         }
 
         /// <summary>
-        /// Adds Aperture Type to Building
+        /// Duplicates Aperture Type to Building
         /// </summary>
         /// <param name="Building">TAS Building</param>
         /// <param name="ApertureType">Base Aperture Type to be copied</param>
@@ -413,9 +431,22 @@ namespace TBDFile
         /// <search>
         /// TAS, Building, builidng, ApertureType, Aperture Type, AddApertureType, Add Aperture Type
         /// </search>
-        public static ApertureType AddApertureType(Building Building, ApertureType ApertureType)
+        public static ApertureType DuplicateApertureType(Building Building, ApertureType ApertureType)
         {
             return new ApertureType(Building.pBuilding.AddApertureType(ApertureType.pApertureType));
+        }
+
+        /// <summary>
+        /// Adds Aperture Type to Building
+        /// </summary>
+        /// <param name="Building">TAS Building</param>
+        /// <returns name="ApertureType">Aperture Type</returns>
+        /// <search>
+        /// TAS, Building, builidng, ApertureType, Aperture Type, AddApertureType, Add Aperture Type
+        /// </search>
+        public static ApertureType AddApertureType(Building Building)
+        {
+            return new ApertureType(Building.pBuilding.AddApertureType(null));
         }
 
         /// <summary>
@@ -492,6 +523,65 @@ namespace TBDFile
         public static SurfaceOutputSpec AddSurfaceOutputSpec(Building Building)
         {
             return new SurfaceOutputSpec(Building.pBuilding.AddSurfaceOutputSpec());
+        }
+
+        /// <summary>
+        /// Gets Controls from Building
+        /// </summary>
+        /// <param name="Building">TAS Building</param>
+        /// <returns name="Controls">Controls</returns>
+        /// <search>
+        /// TAS, Building, Controls, controls, building controls, 
+        /// </search>
+        public static Controls Controls(Building Building)
+        {
+            return new Controls(Building.pBuilding.GetControls());
+        }
+
+        /// <summary>
+        /// Gets General Details from Building
+        /// </summary>
+        /// <param name="Building">TAS Building</param>
+        /// <returns name="GeneralDetails">Building General Details</returns>
+        /// <search>
+        /// TAS, Building, GeneralDetails, General Details, generaldetails, generaldetails
+        /// </search>
+        public static GeneralDetails GeneralDetails(Building Building)
+        {
+            return new GeneralDetails(Building.pBuilding.GetGeneralDetails());
+        }
+
+        /// <summary>
+        /// Gets Substitute Element from Building
+        /// </summary>
+        /// <param name="Building">TAS Building</param>
+        /// <param name="Index">TAS Building Index</param>
+        /// <returns name="SubstituteElement">Building Substitute Element</returns>
+        /// <search>
+        /// TAS, Building, SubstituteElement, Substitute Element, Get Substitute Element
+        /// </search>
+        public static SubstituteElement GetSubstituteElement(Building Building, int Index)
+        {
+            return new SubstituteElement(Building.pBuilding.GetSubstituteElement(Index));
+        }
+
+        /// <summary>
+        /// Gets calendar for the Building
+        /// </summary>
+        /// <param name="Building">TAS Building</param>
+        /// <returns name="Calendar">TBD Calendar</returns>
+        /// <search>
+        /// TAS, Building, builidng, Calendar, calendar
+        /// </search>
+        public static Calendar Calendar(Building Building)
+        {
+            return new Calendar(Building.pBuilding.GetCalendar());
+        }
+
+        [IsVisibleInDynamoLibrary(false)]
+        public override string ToString()
+        {
+            return string.Format("{0} [{1} : {2}]", GetType(), pName, pGUID);
         }
     }
 }

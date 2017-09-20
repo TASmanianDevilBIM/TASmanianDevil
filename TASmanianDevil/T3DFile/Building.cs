@@ -13,10 +13,15 @@ namespace T3DFile
     public class Building
     {
         private TAS3D.Building pBuilding;
+        private string pName;
+        private string pGUID;
         
         internal Building(TAS3D.Building Building)
         {
             pBuilding = Building;
+            pName = pBuilding.name;
+            pGUID = pBuilding.GUID;
+
         }
 
         /// <summary>
@@ -33,17 +38,17 @@ namespace T3DFile
         }
 
         /// <summary>
-        /// Gets TAS T3D Building Zone
+        /// Gets TAS T3D Building Zone (starting from 0)
         /// </summary>
         /// <param name="Building">TAS T3D Building</param>
-        /// <param name="Index">TAS T3D Building Zone Index</param>
+        /// <param name="Index">TAS T3D Building Zone Index (starting from 1)</param>
         /// <returns name="Zone">Building Zone</returns>
         /// <search>
         /// TAS, Building, Zone, Get Building Zone, getbuildingzone, zoneset, GetZone, getzone
         /// </search>
         public static Zone GetZone(Building Building, int Index)
         {
-            return new Zone(Building.pBuilding.GetZone(Index));
+            return new Zone(Building.pBuilding.GetZone(Index + 1));
         }
 
         /// <summary>
@@ -99,6 +104,7 @@ namespace T3DFile
         public static Building SetName(Building Building, string Name)
         {
             Building.pBuilding.name = Name;
+            Building.pName = Name;
             return Building;
         }
 
@@ -120,7 +126,7 @@ namespace T3DFile
         /// </summary>
         /// <param name="Building">TAS T3D Building</param>
         /// <param name="NorthAngle">North Angle</param>
-        /// <returns name="Angle">Building North Angle</returns>
+        /// <returns name="Building">TAS T3D Building</returns>
         /// <search>
         /// TAS, Building, North Angle, Set Building North Angle, setbuildingnorthangle, northangle, NorthAngle, northangle
         /// </search>
@@ -255,7 +261,7 @@ namespace T3DFile
         /// <param name="Building">TAS T3D Building</param>
         /// <param name="Name">Windows Name</param>
         /// <param name="OpeningType">Opening Type</param>
-        /// <param name="Colour">Windows Colour</param>
+        /// <param name="Color">Windows Color</param>
         /// <param name="Height">Windows Height</param>
         /// <param name="Width">Windows Width</param>
         /// <param name="Level">Windows Level</param>
@@ -263,9 +269,9 @@ namespace T3DFile
         /// <search>
         /// TAS, Building, Name, AddWindow, Window, addwindow, Add Window
         /// </search>
-        public static Window AddWindow(Building Building, string Name, int OpeningType, uint Colour, double Height, double Width, double Level)
+        public static Window AddWindow(Building Building, string Name, int OpeningType, DSCore.Color Color, double Height, double Width, double Level)
         {
-            return new Window(Building.pBuilding.AddWindow(Name, OpeningType, Colour, Height, Width, Level));
+            return new Window(Building.pBuilding.AddWindow(Name, OpeningType, Generic.Utils.ColorToUIntRGB(Color), Height, Width, Level));
         }
 
         /// <summary>
@@ -322,10 +328,10 @@ namespace T3DFile
         }
 
         /// <summary>
-        /// Gets TAS T3D Building Zone Set
+        /// Gets TAS T3D Building Zone Set (starting from 0)
         /// </summary>
         /// <param name="Building">TAS T3D Building</param>
-        /// <param name="Index">TAS T3D Building Zone Set Index</param>
+        /// <param name="Index">TAS T3D Building Zone Set Index (starting from 0)</param>
         /// <returns name="ZoneSet">Building Zone Set</returns>
         /// <search>
         /// TAS, Building, ZoneSet, Get Building Zone Set, getbuildingzoneset, zoneset, GetZoneSet, getzoneset
@@ -359,14 +365,14 @@ namespace T3DFile
         }
 
         /// <summary>
-        /// Gets TAS T3D Building Zone Sets
+        /// Gets TAS T3D Building Zones
         /// </summary>
         /// <param name="Building">TAS T3D Building</param>
         /// <returns name="Zones">Building Zone Sets</returns>
         /// <search>
         /// TAS, Building, Zones, Get Building ZoneSets, getbuildingzones, zones, Getzones, Zones
         /// </search>
-        public static IEnumerable<Zone> Zones(Building Building)
+        public static List<Zone> Zones(Building Building)
         {
             List<Zone> aZoneList = new List<Zone>();
 
@@ -384,7 +390,7 @@ namespace T3DFile
         [IsVisibleInDynamoLibrary(false)]
         public override string ToString()
         {
-            return string.Format("{0} [{1} : {2}]", GetType(), pBuilding.name, pBuilding.GUID);
+            return string.Format("{0} [{1} : {2}]", GetType(), pName, pGUID);
         }
     }
 }

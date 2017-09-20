@@ -427,27 +427,27 @@ namespace TBDFile
         /// TAS Material Type
         /// </summary>
         /// <param name="Material">Material</param>
-        /// <returns name="Type">Material Type</returns>
+        /// <returns name="MaterialTypes">Material Type</returns>
         /// <search>
         /// TAS, Material, material, Type, type
         /// </search>
-        public static int Type(Material Material)
+        public static MaterialTypes Type(Material Material)
         {
-            return Material.pMaterial.type;
+            return (MaterialTypes)(int)Material.pMaterial.type;
         }
 
         /// <summary>
         /// Sets TAS Material Type
         /// </summary>
         /// <param name="Material">Material</param>
-        /// <param name="Type">Material Type</param>
+        /// <param name="MaterialTypes">Material Type</param>
         /// <returns name="Material">Material</returns>
         /// <search>
         /// TAS, Material, material, Type, type, SetType, settype, Set Type, set type
         /// </search>
-        public static Material SetType(Material Material, int Type)
+        public static Material SetType(Material Material, MaterialTypes MaterialTypes)
         {
-            Material.pMaterial.type = Type;
+            Material.pMaterial.type = (int)MaterialTypes;
             return Material;
         }
 
@@ -476,14 +476,14 @@ namespace TBDFile
         public static Material SetVapourDiffusionFactor(Material Material, float Value)
         {
             Material.pMaterial.vapourDiffusionFactor = Value;
-            return Material;  
+            return Material;
         }
 
         /// <summary>
-        /// TAS Material Width
+        /// TAS Material Width [m]
         /// </summary>
         /// <param name="Material">Material</param>
-        /// <returns name="Width">Material Width</returns>
+        /// <returns name="Width">Material Width [m]</returns>
         /// <search>
         /// TAS, Material, material, Width, width
         /// </search>
@@ -493,10 +493,10 @@ namespace TBDFile
         }
 
         /// <summary>
-        /// Sets TAS Material Width
+        /// Sets TAS Material Width [m]
         /// </summary>
         /// <param name="Material">Material</param>
-        /// <param name="Width">Material Width</param>
+        /// <param name="Width">Material Width [m]</param>
         /// <returns name="Material">Material</returns>
         /// <search>
         /// TAS, Material, material, Width, width, SetWidth, setwidth, set width, Set Width
@@ -506,5 +506,20 @@ namespace TBDFile
             Material.pMaterial.width = Width;
             return Material;
         }
+    }
+
+    /// <summary>
+    /// TAS Material Types
+    /// </summary>
+    public enum MaterialTypes
+    {
+        /// <summary>Gas Layer</summary>
+        GasLayer = 4,
+        /// <summary>Opaque Layer</summary>
+        OpaqueLayer = 2,
+        /// <summary>Opaque Material</summary>
+        OpaqueMaterial = 1,
+        /// <summary>Transaprent Layer</summary>
+        TransaprentLayer = 3,
     }
 }

@@ -26,9 +26,9 @@ namespace TBDFile
         /// <search>
         /// TAS, DayType, Day Type, Colour, Color, DayTypeColour, daytypecolour, color, colour
         /// </search>
-        public static uint Color(DayType DayType)
+        public static DSCore.Color Color(DayType DayType)
         {
-            return DayType.pDayType.color;
+            return Generic.Utils.UIntRGBToColor( DayType.pDayType.color);
         }
 
         /// <summary>

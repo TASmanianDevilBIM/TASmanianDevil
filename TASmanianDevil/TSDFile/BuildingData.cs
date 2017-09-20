@@ -81,7 +81,7 @@ namespace TSDFile
         /// <search>
         /// TAS, TBDDocument, TBDDocument, BuildingData, Get Building Data ZoneData, tas, tsddocument, buildingdata, ZonesData, zonesdata, Zones Data, zones data
         /// </search>
-        public static List<ZoneData> GetZonesData(BuildingData BuildingData)
+        public static List<ZoneData> ZonesData(BuildingData BuildingData)
         {
             List<ZoneData> aResult = new List<ZoneData>();
 
@@ -115,14 +115,14 @@ namespace TSDFile
         /// </summary>
         /// <param name="BuildingData">TSD Building Data</param>
         /// <param name="Hour">Hour</param>
-        /// <param name="Index">Index</param>
+        /// <param name="TSDBuildingArray">TSD Building Array</param>
         /// <returns name="Value">Value</returns>
         /// <search>
         /// TAS, TBDDocument, TBDDocument, BuildingData, Get Building Result GUID, tas, tsddocument, tsddocument GUID
         /// </search>
-        public static float HourlyBuildingResult(BuildingData BuildingData, int Hour, int Index)
+        public static float HourlyBuildingResult(BuildingData BuildingData, int Hour, TSDBuildingArray TSDBuildingArray)
         {
-            return BuildingData.pBuildingData.GetHourlyBuildingResult(Hour, Index);
+            return BuildingData.pBuildingData.GetHourlyBuildingResult(Hour, (int)TSDBuildingArray);
         }
     }
 

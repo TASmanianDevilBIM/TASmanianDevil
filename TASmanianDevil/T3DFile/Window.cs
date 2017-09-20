@@ -47,16 +47,16 @@ namespace T3DFile
         }
 
         /// <summary>
-        /// Gets TAS 3D Window colour
+        /// Gets TAS 3D Window color
         /// </summary>
         /// <param name="Window">TAS Window</param>
-        /// <returns name="Colour">Window Colour</returns>
+        /// <returns name="Color">Window Color</returns>
         /// <search>
-        /// TAS, Window, window, colour, Colour
+        /// TAS, Window, window, color, Color, Colour
         /// </search>
-        public static uint Colour(Window Window)
+        public static DSCore.Color Color(Window Window)
         {
-            return Window.pWindow.colour;
+            return Generic.Utils.UIntRGBToColor(Window.pWindow.colour);
         }
 
         /// <summary>
@@ -66,11 +66,11 @@ namespace T3DFile
         /// <param name="Colour">Window Colour</param>
         /// <returns name="Window">Window</returns>
         /// <search>
-        /// TAS, Window, window, SetColour, setcolour, set colour
+        /// TAS, Window, window, SetColour, setcolour, set colour, SetColor, setcolor
         /// </search>
-        public static Window SetColour(Window Window, uint Colour)
+        public static Window SetColor(Window Window, DSCore.Color Color)
         {
-            Window.pWindow.colour = Colour;
+            Window.pWindow.colour = Generic.Utils.ColorToUIntRGB( Color);
             return Window;
         }
 

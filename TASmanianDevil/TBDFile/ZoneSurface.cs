@@ -63,11 +63,26 @@ namespace TBDFile
         /// <param name="ZoneSurface">TAS Zone Surface</param>
         /// <returns name="BuildingElement">Zone Building Element</returns>
         /// <search>
-        /// TAS, ZoneSurface, Zone Surface, zonesurface, zone surface, BuildingElement, Building Element, buildingelement, building element
+        /// TAS, ZoneSurface, Zone Surface, zonesurface, zone surface, GetBuildingElement, Get Building Element, getbuildingelement, get building element
         /// </search>
-        public static BuildingElement BuildingElement(ZoneSurface ZoneSurface)
+        public static BuildingElement GetBuildingElement(ZoneSurface ZoneSurface)
         {
             return new BuildingElement(ZoneSurface.pZoneSurface.buildingElement);
+        }
+
+        /// <summary>
+        /// Sets TAS Zone Surface Building Element
+        /// </summary>
+        /// <param name="ZoneSurface">TAS Zone Surface</param>
+        /// <param name="BuildingElement">TAS Building Element</param>
+        /// <returns name="ZoneSurface">TAS Zone Surface</returns>
+        /// <search>
+        /// TAS, ZoneSurface, Zone Surface, zonesurface, zone surface, SetBuildingElement, Set Building Element, setbuildingelement, set building element
+        /// </search>
+        public static ZoneSurface SetBuildingElement(ZoneSurface ZoneSurface, BuildingElement BuildingElement)
+        {
+            ZoneSurface.pZoneSurface.buildingElement = BuildingElement.pBuildingElement;
+            return ZoneSurface;
         }
 
         /// <summary>

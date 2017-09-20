@@ -11,7 +11,7 @@ namespace TBDFile
     /// </summary>
     public class BuildingElement
     {
-        private TBD.buildingElement pBuildingElement;
+        internal TBD.buildingElement pBuildingElement;
 
         internal BuildingElement(TBD.buildingElement BuildingElement)
         {
@@ -413,6 +413,20 @@ namespace TBDFile
         {
             BuildingElement.pBuildingElement.ghost = Value;
             return BuildingElement;
+        }
+
+        /// <summary>
+        /// Assigns Surface Output Specification to Building Element
+        /// </summary>
+        /// <param name="BuildingElement">Building Element</param>
+        /// <param name="SurfaceOutputSpec">Surface Output Specification</param>
+        /// <returns name="Value">Value</returns>
+        /// <search>
+        /// TAS, BuildingElement, Building Element, AssignSurfaceOutputSpec, Assign Surface Output Spec
+        /// </search>
+        public static int AssignSurfaceOutputSpec(BuildingElement BuildingElement, SurfaceOutputSpec SurfaceOutputSpec)
+        {
+            return BuildingElement.pBuildingElement.AssignSurfaceOutputSpec(SurfaceOutputSpec.pSurfaceOutputSpec);
         }
     }
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Autodesk.DesignScript.Runtime;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,11 +12,16 @@ namespace TBDFile
     /// </summary>
     public class Zone
     {
+        private string pName = string.Empty;
+        private string pGUID = string.Empty;
+
         internal TBD.zone pZone;
 
         internal Zone(TBD.zone Zone)
         {
             pZone = Zone;
+            pName = pZone.name;
+            pGUID = pZone.GUID;
         }
 
         /// <summary>
@@ -69,6 +75,7 @@ namespace TBDFile
         public static Zone SetName(Zone Zone, string Name)
         {
             Zone.pZone.name = Name;
+            Zone.pName = Name;
             return Zone;
         }
 
@@ -432,14 +439,14 @@ namespace TBDFile
         /// Zone External
         /// </summary>
         /// <param name="Zone">TAS Zone</param>
-        /// <param name="Value">Zone External</param>
+        /// <param name="External">Zone External</param>
         /// <returns name="Zone">Zone</returns>
         /// <search>
         /// TAS, Zone, zone, External, external, zone external, SetExternal, setexternal, Set External, set external
         /// </search>
-        public static Zone SetExternal(Zone Zone, int Value)
+        public static Zone SetExternal(Zone Zone, int External)
         {
-            Zone.pZone.external = Value;
+            Zone.pZone.external = External;
             return Zone;
         }
 
@@ -506,6 +513,25 @@ namespace TBDFile
         {
             Zone.pZone.wallFloorAreaRatio = Value;
             return Zone;
+        }
+
+        /// <summary>
+        /// Zone Variable Convection Coefficient
+        /// </summary>
+        /// <param name="Zone">TAS Zone</param>
+        /// <returns name="Profile">Variable Convection Coefficient Profile</returns>
+        /// <search>
+        /// TAS, Zone Variable Convection Coefficient, VariableConvectionCoefficient, variableconvectioncoefficient, variable convection coefficient
+        /// </search>
+        public static Profile VariableConvectionCoefficient(Zone Zone)
+        {
+            return new Profile(Zone.pZone.variableConvectionCoefficient);
+        }
+
+        [IsVisibleInDynamoLibrary(false)]
+        public override string ToString()
+        {
+            return string.Format("{0} [{1} : {2}]", GetType(), pName, pGUID);
         }
     }
 }

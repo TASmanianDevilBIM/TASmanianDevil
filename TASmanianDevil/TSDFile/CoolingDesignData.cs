@@ -92,7 +92,7 @@ namespace TSDFile
         /// <search>
         /// TAS, TBDDocument, TBDDocument, CoolingDesignData, Get Cooling Design Data ZoneData, tas, tsddocument, CoolingDesignData, coolingdesigndata, ZonesData, zonesdata, Zones Data, zones data
         /// </search>
-        public static List<ZoneData> GetZonesData(CoolingDesignData CoolingDesignData)
+        public static List<ZoneData> ZonesData(CoolingDesignData CoolingDesignData)
         {
             List<ZoneData> aResult = new List<ZoneData>();
 
