@@ -9,7 +9,7 @@ namespace TSDFile
     /// <summary>
     /// TAS TSDDocument
     /// </summary>
-    public class TSDDocument : TASmanianDevil.Document
+    public class TSDDocument : Generic.Document
     {
         internal TSDDocument(string FilePath, bool Save)
             : base(FilePath, Save)

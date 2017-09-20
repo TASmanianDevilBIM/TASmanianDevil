@@ -8,7 +8,7 @@ namespace T3DFile
     /// <summary>
     /// TAS T3DDocument
     /// </summary>
-    public class T3DDocument : TASmanianDevil.Document
+    public class T3DDocument : Generic.Document
     {
         private T3DDocument(string FilePath, bool Save)
             : base(FilePath, Save)

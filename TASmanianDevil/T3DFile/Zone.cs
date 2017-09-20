@@ -12,11 +12,16 @@ namespace T3DFile
     /// </summary>
     public class Zone
     {
+        private string pName = string.Empty;
+        private string pGUID = string.Empty;
+
         internal TAS3D.Zone pZone;
 
         internal Zone(TAS3D.Zone Zone)
         {
             pZone = Zone;
+            pName = pZone.name;
+            pGUID = pZone.GUID;
         }
 
         /// <summary>
@@ -68,6 +73,7 @@ namespace T3DFile
         public static Zone SetName(Zone Zone, string Name)
         {
             Zone.pZone.name = Name;
+            Zone.pName = Name;
             return Zone;
         }
 
@@ -206,23 +212,23 @@ namespace T3DFile
         /// <search>
         /// TAS, Zone, zone, ZoneSet, zoneset, Colour
         /// </search>
-        public static uint Colour(Zone Zone)
+        public static DSCore.Color Color(Zone Zone)
         {
-            return Zone.pZone.colour;
+            return Generic.Utils.UIntRGBToColor(Zone.pZone.colour);
         }
 
         /// <summary>
         /// Sets Zone Colour
         /// </summary>
         /// <param name="Zone">TAS Zone</param>
-        /// <param name="Colour">TAS Zone Colour</param>
+        /// <param name="Color">TAS Zone Color</param>
         /// <returns name="Zone">Zone</returns>
         /// <search>
-        /// TAS, Zone, zone, ZoneSet, zoneset, Colour, SetColour
+        /// TAS, Zone, zone, ZoneSet, zoneset, Colour, SetColour, Set Color, setcolor
         /// </search>
-        public static Zone SetColour(Zone Zone, uint Colour)
+        public static Zone SetColor(Zone Zone, DSCore.Color Color)
         {
-            Zone.pZone.colour = Colour;
+            Zone.pZone.colour = Generic.Utils.ColorToUIntRGB(Color);
             return Zone;
         }
 
@@ -276,7 +282,7 @@ namespace T3DFile
         [IsVisibleInDynamoLibrary(false)]
         public override string ToString()
         {
-            return string.Format("{0} [{1} : {2}]", GetType(), pZone.name, pZone.GUID);
+            return string.Format("{0} [{1} : {2}]", GetType(), pName, pGUID);
         }
     }
 }

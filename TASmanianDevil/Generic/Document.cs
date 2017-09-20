@@ -1,7 +1,7 @@
 ﻿using System;
 using Autodesk.DesignScript.Runtime;
 
-namespace TASmanianDevil
+namespace Generic
 {
     [IsVisibleInDynamoLibrary(false)]
     public abstract class Document : IDisposable

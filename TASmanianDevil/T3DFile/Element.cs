@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -82,27 +83,10 @@ namespace T3DFile
         /// <search>
         /// TAS, Element, Colour, Get Element Colour, getelementcolour, colour, color, Color
         /// </search>
-        public static uint Colour(Element Element)
+        public static DSCore.Color Colour(Element Element)
         {
-            return Element.pElement.colour;
+            return Generic.Utils.UIntRGBToColor(Element.pElement.colour);
         }
-
-        ///// <summary>
-        ///// Sets Element Colour
-        ///// </summary>
-        ///// <param name="Element">TAS3D Element</param>
-        ///// <param name="Red">Red</param>
-        ///// <param name="Green">Green</param>
-        ///// <param name="Blue">Blue</param>
-        ///// <returns name="Element">Element</returns>
-        ///// <search>
-        ///// TAS, Element, Colour, Set Element Colour, setelementcolour, colour, color, Color
-        ///// </search>
-        //public static Element SetColour(Element Element, int Red, int Green, int Blue)
-        //{
-        //    Element.pElement.colour = Convert.ToUInt64(System.Drawing.Color.FromArgb(Red, Green, Blue).ToArgb());
-        //    return Element;
-        //}
 
         /// <summary>
         /// Sets Element Colour
@@ -110,14 +94,14 @@ namespace T3DFile
         /// then use node Color to find out integer for this colour
         /// </summary>
         /// <param name="Element">TAS3D Element</param>
-        /// <param name="Colour">Element Colour</param>
+        /// <param name="Color">Element Color</param>
         /// <returns name="Element">Element</returns>
         /// <search>
         /// TAS, Element, Colour, Set Element Colour, setelementcolour, colour, color, Color
         /// </search>
-        public static Element SetColour(Element Element, uint Colour)
+        public static Element SetColour(Element Element, DSCore.Color Color)
         {
-            Element.pElement.colour = Colour;
+            Element.pElement.colour = Generic.Utils.ColorToUIntRGB(Color);
             return Element;
         }
 
