@@ -298,7 +298,7 @@ namespace T3DFile
         }
 
         /// <summary>
-        /// Sets Element Width
+        /// Sets Element Width (in meters)
         /// </summary>
         /// <param name="Element">TAS3D Element</param>
         /// <param name="Width">TAS3D Element Width</param>

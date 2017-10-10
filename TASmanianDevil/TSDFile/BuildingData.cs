@@ -60,7 +60,7 @@ namespace TSDFile
         }
 
         /// <summary>
-        /// Gets zone data from Building Data
+        /// Gets zone data from Building Data  (starting from 1)
         /// </summary>
         /// <param name="BuildingData">TSD Building Data</param>
         /// <param name="Index">Index</param>
