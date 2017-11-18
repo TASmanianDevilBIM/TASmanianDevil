@@ -19,6 +19,34 @@ namespace T3DFile
         }
 
         /// <summary>
+        /// Sets TAS 3D Window Description
+        /// </summary>
+        /// <param name="Window">TAS Window</param>
+        /// <param name="Description">Zone Description</param>
+        /// <returns name="Window">Window</returns>
+        /// <search>
+        /// TAS, Window, window, description, Description, SetDescription, setdescription
+        /// </search>
+        public static Window SetDescription(Window Window, string Description)
+        {
+            Window.pWindow.description = Description;
+            return Window;
+        }
+
+        /// <summary>
+        /// Gets TAS 3D Window Description
+        /// </summary>
+        /// <param name="Window">TAS Window</param>
+        /// <returns name="Name">Window Description</returns>
+        /// <search>
+        /// TAS, Window, window, description, Description
+        /// </search>
+        public static string Description(Window Window)
+        {
+            return Window.pWindow.description;
+        }
+
+        /// <summary>
         /// Gets TAS 3D Window Name
         /// </summary>
         /// <param name="Window">TAS Window</param>
@@ -36,7 +64,7 @@ namespace T3DFile
         /// </summary>
         /// <param name="Window">TAS Window</param>
         /// <param name="Name">Zone Name</param>
-        /// <returns name="Window">Zone Name</returns>
+        /// <returns name="Window">TAS Window</returns>
         /// <search>
         /// TAS, Window, window, name, Name
         /// </search>

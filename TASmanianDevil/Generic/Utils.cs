@@ -10,7 +10,7 @@ using System.Drawing;
 
 namespace Generic
 {
-    [IsVisibleInDynamoLibrary(false)]
+    //[IsVisibleInDynamoLibrary(false)]
     public static class Utils
     {
         //public static uint ColorToUIntRGB(DSCore.Color Color)

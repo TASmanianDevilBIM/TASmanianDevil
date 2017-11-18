@@ -22,20 +22,6 @@ namespace TSDFile
         /// Gets TAS Annual Building Result
         /// </summary>
         /// <param name="BuildingData">TSD Building Data</param>
-        /// <param name="Index">TSD Data Index</param>
-        /// <returns name="Data">TAS Data</returns>
-        /// <search>
-        /// TAS, TBDDocument, TBDDocument, BuildingData, Get Annual Building Result, tas, tsddocument, tsddocument AnnualBuildingResult, annualbuildingresult
-        /// </search>
-        public static object AnnualBuildingResult(BuildingData BuildingData, int Index)
-        {
-            return BuildingData.pBuildingData.GetAnnualBuildingResult(Index);
-        }
-
-        /// <summary>
-        /// Gets TAS Annual Building Result
-        /// </summary>
-        /// <param name="BuildingData">TSD Building Data</param>
         /// <param name="TSDBuildingArray">TSD Building Array</param>
         /// <returns name="Data">TAS Data</returns>
         /// <search>
@@ -44,6 +30,20 @@ namespace TSDFile
         public static object AnnualBuildingResult(BuildingData BuildingData, TSDBuildingArray TSDBuildingArray)
         {
             return BuildingData.pBuildingData.GetAnnualBuildingResult((int)TSDBuildingArray);
+        }
+
+        /// <summary>
+        /// Gets TAS Annual Building Result
+        /// </summary>
+        /// <param name="BuildingData">TSD Building Data</param>
+        /// <param name="Index">TSD Data Index</param>
+        /// <returns name="Data">TAS Data</returns>
+        /// <search>
+        /// TAS, TBDDocument, TBDDocument, BuildingData, Get Annual Building Result, tas, tsddocument, tsddocument AnnualBuildingResult, annualbuildingresult
+        /// </search>
+        public static object AnnualBuildingResult(BuildingData BuildingData, int Index)
+        {
+            return BuildingData.pBuildingData.GetAnnualBuildingResult(Index);
         }
 
         /// <summary>
