@@ -41,9 +41,6 @@ namespace Generic
             }
 
             Create();
-            bool aCOMObject = pObject.GetType().IsCOMObject;
-            Type aType = pObject.GetType();
-
 
             if (!string.IsNullOrEmpty(pFilePath) && System.IO.File.Exists(pFilePath))
                 Open();
@@ -97,7 +94,13 @@ namespace Generic
                     pClosed = true;
                 }
 
-                System.Runtime.InteropServices.Marshal.ReleaseComObject(pObject);
+                int aCount = 0;
+                do
+                {
+                    aCount = System.Runtime.InteropServices.Marshal.FinalReleaseComObject(pObject);
+                }
+                while (aCount > 0);
+
                 pObject = null;
             }
         }
