@@ -1,7 +1,7 @@
 ﻿using System;
 using Autodesk.DesignScript.Runtime;
 
-namespace TASmanianDevil
+namespace Generic
 {
     [IsVisibleInDynamoLibrary(false)]
     public abstract class Document : IDisposable
@@ -35,13 +35,12 @@ namespace TASmanianDevil
                     Close();
                 }
             }
-            catch
+            catch (Exception e)
             {
-
+                string aText = e.Message;
             }
 
             Create();
-
 
             if (!string.IsNullOrEmpty(pFilePath) && System.IO.File.Exists(pFilePath))
                 Open();
@@ -94,6 +93,13 @@ namespace TASmanianDevil
                     Close();
                     pClosed = true;
                 }
+
+                int aCount = 0;
+                do
+                {
+                    aCount = System.Runtime.InteropServices.Marshal.FinalReleaseComObject(pObject);
+                }
+                while (aCount > 0);
 
                 pObject = null;
             }

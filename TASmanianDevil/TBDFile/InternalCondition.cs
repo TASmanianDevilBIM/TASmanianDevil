@@ -178,13 +178,16 @@ namespace TBDFile
         /// <param name="InternalCondition">TAS Internal Condition</param>
         /// <param name="DayType">Day Type</param>
         /// <param name="Add">Add</param>
-        /// <returns name="DayType">Day Type</returns>
+        /// <returns name="InternalCondition">Internal Condition</returns>
         /// <search>
         /// TAS, Internal Condition, InternalCondition, Set Internal Condition Day Type, tas, internalcondition,  set internal condition day type, DayType, SetDayType
         /// </search>
-        public static int SetDayType(InternalCondition InternalCondition, DayType DayType, bool Add)
+        public static InternalCondition SetDayType(InternalCondition InternalCondition, DayType DayType, bool Add)
         {
-            return InternalCondition.pInternalCondition.SetDayType(DayType.pDayType, Add);
+            if (InternalCondition.pInternalCondition.SetDayType(DayType.pDayType, Add) == 1)
+                return InternalCondition;
+            else
+                return null;
         }
 
         /// <summary>

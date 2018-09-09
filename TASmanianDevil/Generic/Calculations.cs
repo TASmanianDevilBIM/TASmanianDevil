@@ -31,7 +31,7 @@ namespace Generic
         /// Gets in formated way TAS Annual Building Result from TSD file and recalculate to Revit units to allow direct connection to Space parameters. Connect Zone, Building array and sorting will be performed according to connected parameters.
         /// </summary>
         /// <param name="FilePath">Connect Path.TSD File Path</param>
-        /// <param name="TSDZoneArray"> Zone Array parameter - peak hour and value will be given based on this parameter all remaing values will be take at this hour</param>
+        /// <param name="TSDZoneArray">Zone Array parameter - peak hour and value will be given based on this parameter all remaing values will be take at this hour</param>
         /// <param name="TSDBuildingArray">Buidling Array - peak building data bassed on given parameter</param>
         /// <param name="ConvertUnits">Convert to Revit Internal units</param>
         /// <param name="BuildingDataOnly">Building Data Only</param>
@@ -60,6 +60,7 @@ namespace Generic
         /// <returns name="LatentAdditionLoad">Latent Addition Load</returns>
         /// <returns name="LatentLoad">Latent Load</returns>
         /// <returns name="LatentRemovalLoad">Latent Removal Load</returns>
+        /// <returns name="LatentTotalGain">Latent Total Gain</returns>
         /// <returns name="MaxBuildingLoad">The total load  over all outputted zones in the building, irrespective of output selection. It is displayed in Watts*10.7639104167097</returns>
         /// <returns name="MaxBuildingIndex">The Index Hour 1-8760 for total load  over all outputted zones in the building</returns>
         /// <returns name="DataType">Data Type for Max Value</returns>
@@ -67,7 +68,7 @@ namespace Generic
         /// <search>
         /// TAS, TBDDocument, TBDDocument, BuildingData, Get Annual Building Result, tas, tsddocument, tsddocument AnnualBuildingResult, annualbuildingresult
         /// </search>
-        [MultiReturn(new[] { "ZoneName", "ZoneNumber", "ZoneGUID", "Indexes", "HeatingLoad", "CoolingLoad", "DryBulbTemp", "ResultantTemp", "SolarGain", "AirMovementGains", "InfVentGain", "OccupantSensibleGain", "LightingGain", "EquipmentSensibleGain", "Infiltration", "BuildingHeatTransfer", "ExternalConductionOpaque", "ExternalConductionGlazing", "EquipmentLatentGain", "OccupancyLatentGain", "HumidityRatio", "RelativeHumidity", "LatentAdditionLoad", "LatentLoad", "LatentRemovalLoad", "MaxBuildingCooling", "MaxBuildingIndexCooling", "DataType" })]
+        [MultiReturn(new[] { "ZoneName", "ZoneNumber", "ZoneGUID", "Indexes", "HeatingLoad", "CoolingLoad", "DryBulbTemp", "ResultantTemp", "SolarGain", "AirMovementGains", "InfVentGain", "OccupantSensibleGain", "LightingGain", "EquipmentSensibleGain", "Infiltration", "BuildingHeatTransfer", "ExternalConductionOpaque", "ExternalConductionGlazing", "EquipmentLatentGain", "OccupancyLatentGain", "HumidityRatio", "RelativeHumidity", "LatentAdditionLoad", "LatentLoad", "LatentRemovalLoad", "LatentTotalGain", "MaxBuildingCooling", "MaxBuildingIndexCooling", "DataType" })]
         public static Dictionary<string, object> GetZoneResults(string FilePath, TSDZoneArray TSDZoneArray, TSDBuildingArray TSDBuildingArray, bool ConvertUnits = false, bool BuildingDataOnly = false)
         {
 
@@ -100,6 +101,7 @@ namespace Generic
             List<string> aIntList_ZoneGUID = new List<string>();
             List<ZoneData> aZoneDataList_Cooling = new List<ZoneData>();
             List<ZoneData> aZoneDataList_Building = new List<ZoneData>();
+            float aVolume = 0;
             for (int i = 1; i <= aCount; i++)
             {
                 ZoneData aZoneData = CoolingDesignData.GetZoneData(aCoolingDesignData, i);
@@ -107,6 +109,8 @@ namespace Generic
 
                 aZoneData = BuildingData.GetZoneData(aBuildingData, i);
                 aZoneDataList_Building.Add(aZoneData);
+
+                aVolume += ZoneData.Volume(aZoneData);
 
                 aStringList_ZoneName.Add(ZoneData.Name(aZoneData));
                 aIntList_ZoneNumber.Add(ZoneData.Number(aZoneData));
@@ -159,6 +163,7 @@ namespace Generic
             List<float> aLatentAdditionLoadList = new List<float>();
             List<float> aLatentRemovalLoadList = new List<float>();
             List<float> aLatentLoadList = new List<float>();
+            List<float> aLatentTotalGainList = new List<float>();
 
             List<DataType> aDataTypeList = new List<DataType>();
 
@@ -258,6 +263,15 @@ namespace Generic
                 aValue = Functions.GetAtIndex(aZoneData, aIndex, TSD.tsdZoneArray.latentRemovalLoad);
                 aValue = Convert.ToSingle(Math.Round(aValue * aPowerConversion, 2));
                 aLatentRemovalLoadList.Add(aValue);
+
+                int aIndex_Temp = aIndex;
+                if (aIndex_Temp < 2)
+                    aIndex_Temp++;
+
+                float aVal_1 = Functions.GetAtIndex(aZoneData, aIndex_Temp, TSD.tsdZoneArray.humidityRatio);
+                float aVal_2 = Functions.GetAtIndex(aZoneData, aIndex_Temp - 1, TSD.tsdZoneArray.humidityRatio);
+                float aVal_3 = Functions.GetAtIndex(aZoneData, aIndex_Temp, TSD.tsdZoneArray.latentLoad);
+                aLatentTotalGainList.Add((float)(1.2 * aVolume * (aVal_1 - aVal_2) / 3600 * 2257 * 1000 - aVal_3));
             }
 
             TSDDocument.Close(aTSDDocument);
@@ -289,14 +303,77 @@ namespace Generic
                     { "LatentAdditionLoad", aLatentAdditionLoadList},
                     { "LatentLoad", aLatentLoadList},
                     { "LatentRemovalLoad", aLatentRemovalLoadList},
+                    { "LatentTotalGain", aLatentTotalGainList},
                     { "MaxBuildingCooling", aMax_CoolingProfile},
                     { "MaxBuildingIndexCooling", aIndex_CoolingProfile},
                     { "DataType", aDataTypeList}
             };
         }
 
-        [MultiReturn(new[] { "TSDBuildingArray", "BuildingResult", "BuildingIndex",
-            "ZoneDataGroup",
+        /// <summary>
+        /// ???
+        /// </summary>
+        /// <param name="BuildingData">???</param>
+        /// <param name="ZoneDataGroups">???</param>
+        /// <param name="ConvertUnits">???</param>
+        /// <returns name="TSDBuildingArray">???</returns>
+        /// <returns name="BuildingResult">???</returns>
+        /// <returns name="BuildingIndex">???</returns>
+        /// <returns name="ZoneDataGroup">???</returns>
+        /// <returns name="Max_CoolingLoad">???</returns>
+        /// <returns name="LatentLoad_CoolingLoad">???</returns>
+        /// <returns name="Index_CoolingLoad">???</returns>
+        /// <returns name="Max_HumidityRatio_Local_CoolingLoad">???</returns>
+        /// <returns name="ZoneData_HumidityRatio_Max_CoolingLoad">???</returns>
+        /// <returns name="Infiltration_CoolingLoad">???</returns>
+        /// <returns name="ExternalTemperature_CoolingLoad">???</returns>
+        /// <returns name="ExternalHumidity_CoolingLoad">???</returns>
+        /// <returns name="Max_HeatingLoad">???</returns>
+        /// <returns name="LatentLoad_HeatingLoad">???</returns>
+        /// <returns name="Index_HeatingLoad">???</returns>
+        /// <returns name="Min_HumidityRatio_Local_HeatingLoad">???</returns>
+        /// <returns name="ZoneData_HumidityRatio_Min_HeatingLoad">???</returns>
+        /// <returns name="Infiltration_HeatingLoad">???</returns>
+        /// <returns name="ExternalTemperature_HeatingLoad">???</returns>
+        /// <returns name="ExternalHumidity_HeatingLoad">???</returns>
+        /// <returns name="Max_LatentRemovalLoad">???</returns>
+        /// <returns name="CoolingLoad_LatentRemovalLoad">???</returns>
+        /// <returns name="LatentLoad_LatentRemovalLoad">???</returns>
+        /// <returns name="Index_LatentRemovalLoad">???</returns>
+        /// <returns name="Max_HumidityRatio_Local_LatentRemovalLoad">???</returns>
+        /// <returns name="ZoneData_HumidityRatio_Max_LatentRemovalLoad">???</returns>
+        /// <returns name="Infiltration_LatentRemovalLoad">???</returns>
+        /// <returns name="ExternalTemperature_LatentRemovalLoad">???</returns>
+        /// <returns name="ExternalHumidity_LatentRemovalLoad">???</returns>
+        /// <returns name="Max_LatentAdditionLoad">???</returns>
+        /// <returns name="HeatingLoad_LatentAdditionLoad">???</returns>
+        /// <returns name="LatentLoad_LatentAdditionLoad">???</returns>
+        /// <returns name="Index_LatentAdditionLoad">???</returns>
+        /// <returns name="Min_HumidityRatio_Local_LatentAdditionLoad">???</returns>
+        /// <returns name="ZoneData_HumidityRatio_Min_LatentAdditionLoad">???</returns>
+        /// <returns name="Infiltration_LatentAdditionLoad">???</returns>
+        /// <returns name="ExternalTemperature_LatentAdditionLoad">???</returns>
+        /// <returns name="ExternalHumidity_LatentAdditionLoad">???</returns>
+        /// <returns name="Sum_Max_CoolingLoad">???</returns>
+        /// <returns name="Sum_Index_CoolingLoad">???</returns>
+        /// <returns name="aExternalTemperature_CoolingLoad">???</returns>
+        /// <returns name="aExternalHumidity_CoolingLoad">???</returns>
+        /// <returns name="Sum_Max_HeatingLoad">???</returns>
+        /// <returns name="Sum_Index_HeatingLoad">???</returns>
+        /// <returns name="aExternalTemperature_HeatingLoad">???</returns>
+        /// <returns name="aExternalHumidity_HeatingLoad">???</returns>
+        /// <returns name="Sum_Max_LatentRemovalLoad">???</returns>
+        /// <returns name="Sum_Index_LatentRemovalLoad">???</returns>
+        /// <returns name="aExternalTemperature_LatentRemovalLoad">???</returns>
+        /// <returns name="aExternalHumidity_LatentRemovalLoad">???</returns>
+        /// <returns name="Sum_Max_LatentAdditionLoad">???</returns>
+        /// <returns name="Sum_Index_LatentAdditionLoad">???</returns>
+        /// <returns name="aExternalTemperature_LatentAdditionalLoad">???</returns>
+        /// <returns name="aExternalHumidity_LatentAdditionalLoad">???</returns>
+        /// <search>
+        /// TAS, TBDDocument, TBDDocument, BuildingData, GetGroupResults, Get Group Results
+        /// </search>
+        [MultiReturn(new[] { "TSDBuildingArray", "BuildingResult", "BuildingIndex","ZoneDataGroup",
             "Max_CoolingLoad", "LatentLoad_CoolingLoad", "Index_CoolingLoad", "Max_HumidityRatio_Local_CoolingLoad", "ZoneData_HumidityRatio_Max_CoolingLoad", "Infiltration_CoolingLoad", "ExternalTemperature_CoolingLoad", "ExternalHumidity_CoolingLoad" ,
             "Max_HeatingLoad", "LatentLoad_HeatingLoad", "Index_HeatingLoad", "Min_HumidityRatio_Local_HeatingLoad", "ZoneData_HumidityRatio_Min_HeatingLoad", "Infiltration_HeatingLoad", "ExternalTemperature_HeatingLoad", "ExternalHumidity_HeatingLoad",
             "Max_LatentRemovalLoad", "CoolingLoad_LatentRemovalLoad", "LatentLoad_LatentRemovalLoad", "Index_LatentRemovalLoad", "Max_HumidityRatio_Local_LatentRemovalLoad", "ZoneData_HumidityRatio_Max_LatentRemovalLoad","Infiltration_LatentRemovalLoad", "ExternalTemperature_LatentRemovalLoad", "ExternalHumidity_LatentRemovalLoad",
@@ -380,6 +457,9 @@ namespace Generic
 
                 List<float> aValueList;
 
+                float aVolume = 0;
+                aZoneDataList.ForEach(x => aVolume += ZoneData.Volume(x));
+
                 //CoolingLoad
                 aValueList = new List<float>();
                 aResultList = Functions.GetAnnualZoneResultList(aZoneDataList, TSD.tsdZoneArray.coolingLoad);
@@ -387,7 +467,9 @@ namespace Generic
                 aCalc = aResultList.Max();
                 aValueList.Add(aCalc * aPowerConversion);
                 int aIndex_CoolingLoad = aResultList.IndexOf(aCalc);
-                aValueList.Add((Functions.GetAtIndex(aZoneDataList, aIndex_CoolingLoad, TSD.tsdZoneArray.occupancyLatentGain) + Functions.GetAtIndex(aZoneDataList, aIndex_CoolingLoad, TSD.tsdZoneArray.equipmentLatentGain)) * aPowerConversion);
+
+                aValueList.Add(Functions.GetTotalLatentGain(aZoneDataList, aIndex_CoolingLoad, aVolume) * aPowerConversion);
+                //aValueList.Add((Functions.GetAtIndex(aZoneDataList, aIndex_CoolingLoad, TSD.tsdZoneArray.occupancyLatentGain) + Functions.GetAtIndex(aZoneDataList, aIndex_CoolingLoad, TSD.tsdZoneArray.equipmentLatentGain)) * aPowerConversion);
                 aValueList.Add(Functions.GetAtIndex(aZoneDataList, aIndex_CoolingLoad, TSD.tsdZoneArray.infiltration));
                 aValueList.Add(Functions.GetAnnualBuildingResultList(BuildingData, TSD.tsdBuildingArray.externalTemperature)[aIndex_CoolingLoad] + aTempertureConversion);
                 aValueList.Add(Functions.GetAnnualBuildingResultList(BuildingData, TSD.tsdBuildingArray.externalHumidity)[aIndex_CoolingLoad]);
@@ -402,7 +484,9 @@ namespace Generic
                 aCalc = aResultList.Max();
                 aValueList.Add(aCalc * aPowerConversion);
                 int aIndex_HeatingLoad = aResultList.IndexOf(aCalc);
-                aValueList.Add((Functions.GetAtIndex(aZoneDataList, aIndex_HeatingLoad, TSD.tsdZoneArray.occupancyLatentGain) + Functions.GetAtIndex(aZoneDataList, aIndex_HeatingLoad, TSD.tsdZoneArray.equipmentLatentGain)) * aPowerConversion);
+
+                aValueList.Add(Functions.GetTotalLatentGain(aZoneDataList, aIndex_HeatingLoad, aVolume) * aPowerConversion);
+                //aValueList.Add((Functions.GetAtIndex(aZoneDataList, aIndex_HeatingLoad, TSD.tsdZoneArray.occupancyLatentGain) + Functions.GetAtIndex(aZoneDataList, aIndex_HeatingLoad, TSD.tsdZoneArray.equipmentLatentGain)) * aPowerConversion);
                 aValueList.Add(Functions.GetAtIndex(aZoneDataList, aIndex_HeatingLoad, TSD.tsdZoneArray.infiltration));
                 aValueList.Add(Functions.GetAnnualBuildingResultList(BuildingData, TSD.tsdBuildingArray.externalTemperature)[aIndex_HeatingLoad] + aTempertureConversion);
                 aValueList.Add(Functions.GetAnnualBuildingResultList(BuildingData, TSD.tsdBuildingArray.externalHumidity)[aIndex_HeatingLoad]);
@@ -417,7 +501,8 @@ namespace Generic
                 aCalc = aResultList.Max();
                 aValueList.Add(aCalc * aPowerConversion);
                 int aIndex_LatentRemovalLoad = aResultList.IndexOf(aCalc);
-                aValueList.Add((Functions.GetAtIndex(aZoneDataList, aIndex_LatentRemovalLoad, TSD.tsdZoneArray.occupancyLatentGain) + Functions.GetAtIndex(aZoneDataList, aIndex_LatentRemovalLoad, TSD.tsdZoneArray.equipmentLatentGain)) * aPowerConversion);
+                aValueList.Add(Functions.GetTotalLatentGain(aZoneDataList, aIndex_LatentRemovalLoad, aVolume) * aPowerConversion);
+                //aValueList.Add((Functions.GetAtIndex(aZoneDataList, aIndex_LatentRemovalLoad, TSD.tsdZoneArray.occupancyLatentGain) + Functions.GetAtIndex(aZoneDataList, aIndex_LatentRemovalLoad, TSD.tsdZoneArray.equipmentLatentGain)) * aPowerConversion);
                 aValueList.Add(Functions.GetAtIndex(aZoneDataList, aIndex_LatentRemovalLoad, TSD.tsdZoneArray.infiltration));
                 aValueList.Add(Functions.GetAtIndex(aZoneDataList, aIndex_LatentRemovalLoad, TSD.tsdZoneArray.coolingLoad) * aPowerConversion);
                 aValueList.Add(Functions.GetAnnualBuildingResultList(BuildingData, TSD.tsdBuildingArray.externalTemperature)[aIndex_LatentRemovalLoad] + aTempertureConversion);
@@ -433,7 +518,8 @@ namespace Generic
                 aCalc = aResultList.Max();
                 aValueList.Add(aCalc * aPowerConversion);
                 int aIndex_LatentAdditionLoad = aResultList.IndexOf(aCalc);
-                aValueList.Add((Functions.GetAtIndex(aZoneDataList, aIndex_LatentAdditionLoad, TSD.tsdZoneArray.occupancyLatentGain) + Functions.GetAtIndex(aZoneDataList, aIndex_LatentAdditionLoad, TSD.tsdZoneArray.equipmentLatentGain) * aPowerConversion));
+                aValueList.Add(Functions.GetTotalLatentGain(aZoneDataList, aIndex_LatentAdditionLoad, aVolume) * aPowerConversion);
+                //aValueList.Add((Functions.GetAtIndex(aZoneDataList, aIndex_LatentAdditionLoad, TSD.tsdZoneArray.occupancyLatentGain) + Functions.GetAtIndex(aZoneDataList, aIndex_LatentAdditionLoad, TSD.tsdZoneArray.equipmentLatentGain) * aPowerConversion));
                 aValueList.Add(Functions.GetAtIndex(aZoneDataList, aIndex_LatentAdditionLoad, TSD.tsdZoneArray.infiltration));
                 aValueList.Add(Functions.GetAtIndex(aZoneDataList, aIndex_LatentAdditionLoad, TSD.tsdZoneArray.heatingLoad) * aPowerConversion);
                 aValueList.Add(Functions.GetAnnualBuildingResultList(BuildingData, TSD.tsdBuildingArray.externalTemperature)[aIndex_LatentAdditionLoad] + aTempertureConversion);
@@ -540,6 +626,68 @@ namespace Generic
             };
         }
 
+        /// <summary>
+        /// ???
+        /// </summary>
+        /// <param name="FilePath">???</param>
+        /// <param name="ConvertUnits">???</param>
+        /// <returns name="TSDBuildingArray">???</returns>
+        /// <returns name="BuildingResult">???</returns>
+        /// <returns name="BuildingIndex">???</returns>
+        /// <returns name="ZoneDataGroup">???</returns>
+        /// <returns name="Max_CoolingLoad">???</returns>
+        /// <returns name="LatentLoad_CoolingLoad">???</returns>
+        /// <returns name="Index_CoolingLoad">???</returns>
+        /// <returns name="Max_HumidityRatio_Local_CoolingLoad">???</returns>
+        /// <returns name="ZoneData_HumidityRatio_Max_CoolingLoad">???</returns>
+        /// <returns name="Infiltration_CoolingLoad">???</returns>
+        /// <returns name="ExternalTemperature_CoolingLoad">???</returns>
+        /// <returns name="ExternalHumidity_CoolingLoad">???</returns>
+        /// <returns name="Max_HeatingLoad">???</returns>
+        /// <returns name="LatentLoad_HeatingLoad">???</returns>
+        /// <returns name="Index_HeatingLoad">???</returns>
+        /// <returns name="Min_HumidityRatio_Local_HeatingLoad">???</returns>
+        /// <returns name="ZoneData_HumidityRatio_Min_HeatingLoad">???</returns>
+        /// <returns name="Infiltration_HeatingLoad">???</returns>
+        /// <returns name="ExternalTemperature_HeatingLoad">???</returns>
+        /// <returns name="ExternalHumidity_HeatingLoad">???</returns>
+        /// <returns name="Max_LatentRemovalLoad">???</returns>
+        /// <returns name="CoolingLoad_LatentRemovalLoad">???</returns>
+        /// <returns name="LatentLoad_LatentRemovalLoad">???</returns>
+        /// <returns name="Index_LatentRemovalLoad">???</returns>
+        /// <returns name="Max_HumidityRatio_Local_LatentRemovalLoad">???</returns>
+        /// <returns name="ZoneData_HumidityRatio_Max_LatentRemovalLoad">???</returns>
+        /// <returns name="Infiltration_LatentRemovalLoad">???</returns>
+        /// <returns name="ExternalTemperature_LatentRemovalLoad">???</returns>
+        /// <returns name="ExternalHumidity_LatentRemovalLoad">???</returns>
+        /// <returns name="Max_LatentAdditionLoad">???</returns>
+        /// <returns name="HeatingLoad_LatentAdditionLoad">???</returns>
+        /// <returns name="LatentLoad_LatentAdditionLoad">???</returns>
+        /// <returns name="Index_LatentAdditionLoad">???</returns>
+        /// <returns name="Min_HumidityRatio_Local_LatentAdditionLoad">???</returns>
+        /// <returns name="ZoneData_HumidityRatio_Min_LatentAdditionLoad">???</returns>
+        /// <returns name="Infiltration_LatentAdditionLoad">???</returns>
+        /// <returns name="ExternalTemperature_LatentAdditionLoad">???</returns>
+        /// <returns name="ExternalHumidity_LatentAdditionLoad">???</returns>
+        /// <returns name="Sum_Max_CoolingLoad">???</returns>
+        /// <returns name="Sum_Index_CoolingLoad">???</returns>
+        /// <returns name="aExternalTemperature_CoolingLoad">???</returns>
+        /// <returns name="aExternalHumidity_CoolingLoad">???</returns>
+        /// <returns name="Sum_Max_HeatingLoad">???</returns>
+        /// <returns name="Sum_Index_HeatingLoad">???</returns>
+        /// <returns name="aExternalTemperature_HeatingLoad">???</returns>
+        /// <returns name="aExternalHumidity_HeatingLoad">???</returns>
+        /// <returns name="Sum_Max_LatentRemovalLoad">???</returns>
+        /// <returns name="Sum_Index_LatentRemovalLoad">???</returns>
+        /// <returns name="aExternalTemperature_LatentRemovalLoad">???</returns>
+        /// <returns name="aExternalHumidity_LatentRemovalLoad">???</returns>
+        /// <returns name="Sum_Max_LatentAdditionLoad">???</returns>
+        /// <returns name="Sum_Index_LatentAdditionLoad">???</returns>
+        /// <returns name="aExternalTemperature_LatentAdditionalLoad">???</returns>
+        /// <returns name="aExternalHumidity_LatentAdditionalLoad">???</returns>
+        /// <search>
+        /// TAS, TBDDocument, TBDDocument, BuildingData, GetGroupResults, Get Group Results
+        /// </search>
         [MultiReturn(new[] { "TSDBuildingArray", "BuildingResult", "BuildingIndex",
             "ZoneDataGroup",
             "Max_CoolingLoad", "LatentLoad_CoolingLoad", "Index_CoolingLoad", "Max_HumidityRatio_Local_CoolingLoad", "ZoneData_HumidityRatio_Max_CoolingLoad", "Infiltration_CoolingLoad", "ExternalTemperature_CoolingLoad", "ExternalHumidity_CoolingLoad" ,
@@ -586,7 +734,7 @@ namespace Generic
             List<float> aHourList = new List<float>();
             List<List<float>> aHourAbvList = new List<List<float>>();
             
-            List<ZoneData> ZoneDataList = BuildingData.GetZonesData(BuildingData);
+            List<ZoneData> ZoneDataList = BuildingData.ZonesData(BuildingData);
 
             foreach (ZoneData aZoneData in ZoneDataList)
             {
@@ -808,6 +956,18 @@ namespace Generic
         {
             for (int i = 0; i < ListFloat.Count; i++)
                 ListFloat[i] += ListFloatToAdd[i];
+        }
+
+        internal static float GetTotalLatentGain(List<ZoneData> ZoneDataList, int Index, float Volume)
+        {
+            int aIndex_Temp = Index;
+            if (aIndex_Temp < 2)
+                aIndex_Temp++;
+
+            float aVal_1 = GetAtIndex(ZoneDataList, aIndex_Temp, TSD.tsdZoneArray.humidityRatio);
+            float aVal_2 = GetAtIndex(ZoneDataList, aIndex_Temp - 1, TSD.tsdZoneArray.humidityRatio);
+            float aVal_3 = GetAtIndex(ZoneDataList, aIndex_Temp, TSD.tsdZoneArray.latentLoad);
+            return (float)(1.2 * Volume * (aVal_1 - aVal_2) / 3600 * 2257 * 1000 - aVal_3);
         }
     }
 }

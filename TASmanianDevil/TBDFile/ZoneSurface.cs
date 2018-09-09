@@ -63,11 +63,42 @@ namespace TBDFile
         /// <param name="ZoneSurface">TAS Zone Surface</param>
         /// <returns name="BuildingElement">Zone Building Element</returns>
         /// <search>
-        /// TAS, ZoneSurface, Zone Surface, zonesurface, zone surface, BuildingElement, Building Element, buildingelement, building element
+        /// TAS, ZoneSurface, Zone Surface, zonesurface, zone surface, GetBuildingElement, Get Building Element, getbuildingelement, get building element
         /// </search>
-        public static BuildingElement BuildingElement(ZoneSurface ZoneSurface)
+        public static BuildingElement GetBuildingElement(ZoneSurface ZoneSurface)
         {
             return new BuildingElement(ZoneSurface.pZoneSurface.buildingElement);
+        }
+
+        /// <summary>
+        /// Sets TAS Zone Surface Building Element
+        /// </summary>
+        /// <param name="ZoneSurface">TAS Zone Surface</param>
+        /// <param name="BuildingElement">TAS Building Element</param>
+        /// <returns name="ZoneSurface">TAS Zone Surface</returns>
+        /// <search>
+        /// TAS, ZoneSurface, Zone Surface, zonesurface, zone surface, SetBuildingElement, Set Building Element, setbuildingelement, set building element
+        /// </search>
+        public static ZoneSurface SetBuildingElement(ZoneSurface ZoneSurface, BuildingElement BuildingElement)
+        {
+            ZoneSurface.pZoneSurface.buildingElement = BuildingElement.pBuildingElement;
+            return ZoneSurface;
+        }
+
+
+        /// <summary>
+        /// Sets TAS Zone Surface Type
+        /// </summary>
+        /// <param name="ZoneSurface">TAS Zone Surface</param>
+        /// <param name="SurfaceType">TAS Surface Type</param>
+        /// <returns name="ZoneSurface">TAS Zone Surface</returns>
+        /// <search>
+        /// TAS, ZoneSurface, Zone Surface, zonesurface, zone surface, SetSurfaceType, Set Surface Type, setsurfacetype, set surface type
+        /// </search>
+        public static ZoneSurface SetSurfaceType(ZoneSurface ZoneSurface, SurfaceType SurfaceType)
+        {
+            ZoneSurface.pZoneSurface.type = (TBD.SurfaceType)(int)SurfaceType;
+            return ZoneSurface;
         }
 
         /// <summary>
@@ -84,7 +115,7 @@ namespace TBDFile
         }
 
         /// <summary>
-        /// Gets TAS Zone Surface Inclination
+        /// Gets TAS Zone Surface Internal Area
         /// </summary>
         /// <param name="ZoneSurface">TAS Zone Surface</param>
         /// <returns name="InternalArea">Zone Internal Area</returns>

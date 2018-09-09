@@ -19,6 +19,34 @@ namespace T3DFile
         }
 
         /// <summary>
+        /// Sets TAS 3D Window Description
+        /// </summary>
+        /// <param name="Window">TAS Window</param>
+        /// <param name="Description">Zone Description</param>
+        /// <returns name="Window">Window</returns>
+        /// <search>
+        /// TAS, Window, window, description, Description, SetDescription, setdescription
+        /// </search>
+        public static Window SetDescription(Window Window, string Description)
+        {
+            Window.pWindow.description = Description;
+            return Window;
+        }
+
+        /// <summary>
+        /// Gets TAS 3D Window Description
+        /// </summary>
+        /// <param name="Window">TAS Window</param>
+        /// <returns name="Name">Window Description</returns>
+        /// <search>
+        /// TAS, Window, window, description, Description
+        /// </search>
+        public static string Description(Window Window)
+        {
+            return Window.pWindow.description;
+        }
+
+        /// <summary>
         /// Gets TAS 3D Window Name
         /// </summary>
         /// <param name="Window">TAS Window</param>
@@ -36,7 +64,7 @@ namespace T3DFile
         /// </summary>
         /// <param name="Window">TAS Window</param>
         /// <param name="Name">Zone Name</param>
-        /// <returns name="Window">Zone Name</returns>
+        /// <returns name="Window">TAS Window</returns>
         /// <search>
         /// TAS, Window, window, name, Name
         /// </search>
@@ -47,16 +75,16 @@ namespace T3DFile
         }
 
         /// <summary>
-        /// Gets TAS 3D Window colour
+        /// Gets TAS 3D Window color
         /// </summary>
         /// <param name="Window">TAS Window</param>
-        /// <returns name="Colour">Window Colour</returns>
+        /// <returns name="Color">Window Color</returns>
         /// <search>
-        /// TAS, Window, window, colour, Colour
+        /// TAS, Window, window, color, Color, Colour
         /// </search>
-        public static uint Colour(Window Window)
+        public static DSCore.Color Color(Window Window)
         {
-            return Window.pWindow.colour;
+            return Generic.Utils.UIntRGBToColor(Window.pWindow.colour);
         }
 
         /// <summary>
@@ -66,11 +94,11 @@ namespace T3DFile
         /// <param name="Colour">Window Colour</param>
         /// <returns name="Window">Window</returns>
         /// <search>
-        /// TAS, Window, window, SetColour, setcolour, set colour
+        /// TAS, Window, window, SetColour, setcolour, set colour, SetColor, setcolor
         /// </search>
-        public static Window SetColour(Window Window, uint Colour)
+        public static Window SetColor(Window Window, DSCore.Color Color)
         {
-            Window.pWindow.colour = Colour;
+            Window.pWindow.colour = Generic.Utils.ColorToUIntRGB( Color);
             return Window;
         }
 

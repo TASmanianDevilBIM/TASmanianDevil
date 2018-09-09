@@ -56,7 +56,7 @@ namespace TBDFile
         public static Profile SetProfiles(Profile Profile, Profiles Profiles)
         {
             Profile.pProfile.profile = (TBD.Profiles)(int)Profiles;
-            return Profile; 
+            return Profile;
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace TBDFile
         public static Profile SetName(Profile Profile, string Name)
         {
             Profile.pProfile.name = Name;
-            return Profile; 
+            return Profile;
         }
 
         /// <summary>
@@ -336,7 +336,7 @@ namespace TBDFile
         public static Profile SetValue(Profile Profile, float Value)
         {
             Profile.pProfile.value = Value;
-            return Profile; 
+            return Profile;
         }
 
         /// <summary>
@@ -366,7 +366,7 @@ namespace TBDFile
         public static Profile SetYearlyValues(Profile Profile, int Index, float Value)
         {
             Profile.pProfile.yearlyValues[Index] = Value;
-            return Profile; 
+            return Profile;
         }
 
         /// <summary>
@@ -403,47 +403,47 @@ namespace TBDFile
     /// </summary>
     public enum Profiles
     {
-        /// <summary>tic UL</summary>
+        /// <summary>Upper Limit</summary>
         ticUL = 1,
-        /// <summary>tic LL</summary>
+        /// <summary>Lower Limit</summary>
         ticLL = 2,
-        /// <summary>tic HC</summary>
+        /// <summary>Heating Factor</summary>
         ticHC = 3,
-        /// <summary>tic CC</summary>
+        /// <summary>Cooling Factor</summary>
         ticCC = 4,
-        /// <summary>tic HUL</summary>
+        /// <summary>Humidity Upper Limit</summary>
         ticHUL = 5,
-        /// <summary>tic HLL</summary>
+        /// <summary>Humidity Lower Limit</summary>
         ticHLL = 6,
-        /// <summary>tic I</summary>
+        /// <summary>Infiltration</summary>
         ticI = 7,
-        /// <summary>tic V</summary>
+        /// <summary>Ventilation</summary>
         ticV = 8,
-        /// <summary>tic LG</summary>
+        /// <summary>Lighting Gain"</summary>
         ticLG = 9,
-        /// <summary>tic OSG</summary>
+        /// <summary>Occupancy Sensible Gain</summary>
         ticOSG = 10,
-        /// <summary>tic OLG</summary>
+        /// <summary>Occupancy Latent Gain</summary>
         ticOLG = 11,
-        /// <summary>tic ESG</summary>
+        /// <summary>Equipment Sensible Gain</summary>
         ticESG = 12,
-        /// <summary>tic ELG</summary>
+        /// <summary>Equipment Latent Gain</summary>
         ticELG = 13,
-        /// <summary>tbd FS proportion</summary>
+        /// <summary>FS proportion</summary>
         tbdFSproportion = 14,
-        /// <summary>tbd SE proportion</summary>
+        /// <summary>SE proportion</summary>
         tbdSEproportion = 15,
-        /// <summary>tbd AT opening</summary>
+        /// <summary>AT opening</summary>
         tbdATopening = 16,
-        /// <summary>tbd IZAM air Movement</summary>
+        /// <summary>Iner Zone Air Movement</summary>
         tbdIZAMairMovement = 17,
-        /// <summary>tic COG</summary>
+        /// <summary>Pollutant Generation</summary>
         ticCOG = 18,
-        /// <summary>tic ASG</summary>
+        /// <summary>Aux. Sensible Gain</summary>
         ticASG = 19,
-        /// <summary>tic ALG</summary>
+        /// <summary>Aux. Latent Gain</summary>
         ticALG = 20,
-        /// <summary>tbd Ext Pollutant</summary>
+        /// <summary>External Pollutant</summary>
         tbdExtPollutant = 21
     }
 
@@ -452,17 +452,46 @@ namespace TBDFile
     /// </summary>
     public enum ProfileType
     {
-        /// <summary>tic Value Profile</summary>
+        /// <summary>Value Profile</summary>
         ticValueProfile = 1,
-        /// <summary>tic Hourly Profile</summary>
+        /// <summary>Hourly Profile</summary>
         ticHourlyProfile = 2,
-        /// <summary>tic Yearly Profile</summary>
+        /// <summary>Yearly Profile</summary>
         ticYearlyProfile = 3,
-        /// <summary>tic Function Profile</summary>
+        /// <summary>Function Profile</summary>
         ticFunctionProfile = 4,
-        /// <summary>tic Yearly Function Profile</summary>
+        /// <summary>Yearly Function Profile</summary>
         ticYearlyFunctionProfile = 5,
-        /// <summary>tic Hourly Function Profile</summary>
+        /// <summary>Hourly Function Profile</summary>
         ticHourlyFunctionProfile = 6
+    }
+
+    /// <summary>
+    /// TAS Aperture Control Types
+    /// </summary>
+    public enum ApertureControlTypes
+    {
+        /// <summary>???</summary>
+        ticGDWOM,
+        /// <summary>???</summary>
+        ticMDWOM,
+        /// <summary>???</summary>
+        ticODWOM,
+        /// <summary>???</summary>
+        ticRDWOM,
+        /// <summary>???</summary>
+        ticZDCCM,
+        /// <summary>???</summary>
+        ticZDCEM,
+        /// <summary>???</summary>
+        ticZDWNN,
+        /// <summary>???</summary>
+        ticZDWOM,
+        /// <summary>???</summary>
+        ticZDWON,
+        /// <summary>???</summary>
+        ticZRWNN,
+        /// <summary>???</summary>
+        ticZRWON,
     }
 }

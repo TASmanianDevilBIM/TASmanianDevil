@@ -37,7 +37,7 @@ namespace TSDFile
         /// </summary>
         /// <param name="ZoneData">TSD Zone Data</param>
         /// <param name="Index">TSD Data Index</param>
-        /// <returns name="Data">TAS Data</returns>
+        /// <returns name="Result">Annual Zone Result</returns>
         /// <search>
         /// TAS, TBDDocument, TBDDocument, ZoneData, Get Annual Zone Result, tas, tsddocument, tsddocument AnnualZoneResult, annualzoneresult
         /// </search>
@@ -142,14 +142,14 @@ namespace TSDFile
         /// </summary>
         /// <param name="ZoneData">TSD Zone Data</param>
         /// <param name="Day">Day</param>
-        /// <param name="Index">Index</param>
+        /// <param name="TSDZoneArray">TSD Zone Array</param>
         /// <returns name="Result">Daily Zone Result for Zone Data</returns>
         /// <search>
         /// TAS, TBDDocument, TBDDocument, ZoneData, tas, tsddocument, GetDailyZoneResult, Get Daily Zone Result, get daily zone result, get daily zone result
         /// </search>
-        public static object GetDailyZoneResult(ZoneData ZoneData, int Day, int Index)
+        public static object GetDailyZoneResult(ZoneData ZoneData, int Day, TSDZoneArray TSDZoneArray)
         {
-            return ZoneData.pZoneData.GetDailyZoneResult(Day, Index);
+            return ZoneData.pZoneData.GetDailyZoneResult(Day, (int)TSDZoneArray);
         }
 
         /// <summary>
@@ -157,14 +157,14 @@ namespace TSDFile
         /// </summary>
         /// <param name="ZoneData">TSD Zone Data</param>
         /// <param name="Hour">Hour</param>
-        /// <param name="Index">Index</param>
+        /// <param name="TSDZoneArray">TSD Zone Array</param>
         /// <returns name="Result">Hourly Zone Result for Zone Data</returns>
         /// <search>
         /// TAS, TBDDocument, TBDDocument, ZoneData, tas, tsddocument, GetHourlyZoneResult, Get Hourly Zone Result, get hourly zone result, get hourly zone result
         /// </search>
-        public static float GetHourlyZoneResult(ZoneData ZoneData, int Hour, int Index)
+        public static float GetHourlyZoneResult(ZoneData ZoneData, int Hour, TSDZoneArray TSDZoneArray)
         {
-            return ZoneData.pZoneData.GetHourlyZoneResult(Hour, Index);
+            return ZoneData.pZoneData.GetHourlyZoneResult(Hour, (int)TSDZoneArray);
         }
 
         /// <summary>
@@ -189,7 +189,7 @@ namespace TSDFile
         /// <search>
         /// TAS, Surface Data, Zone Data, zonedata, zone data, surfacedata, surface data
         /// </search>
-        public static List<SurfaceData> SurfaceData(ZoneData ZoneData)
+        public static List<SurfaceData> SurfacesData(ZoneData ZoneData)
         {
             List<SurfaceData> aSurfaceDataList = new List<SurfaceData>();
 
@@ -202,6 +202,19 @@ namespace TSDFile
                 aSurfaceData = ZoneData.pZoneData.GetSurfaceData(aIndex);
             }
             return aSurfaceDataList;
+        }
+
+        /// <summary>
+        /// Gets TAS Annual Zone Volume
+        /// </summary>
+        /// <param name="ZoneData">TSD Zone Data</param>
+        /// <returns name="Volume">TAS Zone Data Volume</returns>
+        /// <search>
+        /// TAS, tas, TBDDocument, tbddocument, ZoneData, zonedata, Zone Data, zone data, Volume, volume, SurfacesData, Surfaces Data
+        /// </search>
+        public static float Volume(ZoneData ZoneData)
+        {
+            return ZoneData.pZoneData.volume;
         }
     }
 

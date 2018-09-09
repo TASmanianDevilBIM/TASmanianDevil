@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Autodesk.DesignScript.Runtime;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -92,7 +93,7 @@ namespace TSDFile
         /// <search>
         /// TAS, TBDDocument, TBDDocument, CoolingDesignData, Get Cooling Design Data ZoneData, tas, tsddocument, CoolingDesignData, coolingdesigndata, ZonesData, zonesdata, Zones Data, zones data
         /// </search>
-        public static List<ZoneData> GetZonesData(CoolingDesignData CoolingDesignData)
+        public static List<ZoneData> ZonesData(CoolingDesignData CoolingDesignData)
         {
             List<ZoneData> aResult = new List<ZoneData>();
 
@@ -106,6 +107,98 @@ namespace TSDFile
             }
 
             return aResult;
+        }
+
+        /// <summary>
+        /// Gets peak zone gains
+        /// </summary>
+        /// <param name="CoolingDesignData">TSD Cooling Design Data</param>
+        /// <param name="TSDZoneArray">TSD Zone Array</param>
+        /// <returns name="Values">Values</returns>
+        /// <search>
+        /// TAS, TSDDocument, TSDDocument, CoolingDesignData, Get Peak Zone Gains, tas, tsddocument, tsddocument, GetPeakZoneGains, Get Peak Zone Gains
+        /// </search>
+        public static object GetPeakZoneGains(CoolingDesignData CoolingDesignData, TSDZoneArray TSDZoneArray)
+        {
+            return CoolingDesignData.pCoolingDesignData.GetPeakZoneGains(new TSDZoneArray[] { TSDZoneArray });
+        }
+
+        /// <summary>
+        /// Get Peak Zone Group Gain
+        /// </summary>
+        /// <param name="CoolingDesignData">TSD Cooling Design Data</param>
+        /// <param name="TSDZoneArray">TSD Zone Array</param>
+        /// <param name="ZonesData">TSD Zones Data</param>
+        /// <returns name="Values">Values</returns>
+        /// <search>
+        /// TAS, TSDDocument, TSDDocument, CoolingDesignData, tas, tsddocument, tsddocument, GetPeakZoneGroupGain, Get Peak Zone Group Gain
+        /// </search>
+        public static float GetPeakZoneGroupGain(CoolingDesignData CoolingDesignData, TSDZoneArray TSDZoneArray, IEnumerable<ZoneData> ZonesData)
+        {
+            string[] aGuids = new string[ZonesData.Count()];
+            for (int i = 0; i < aGuids.Length; i++)
+                aGuids[i] = ZoneData.GUID(ZonesData.ElementAt(i));
+
+            return CoolingDesignData.pCoolingDesignData.GetPeakZoneGroupGain(aGuids, new TSDZoneArray[] { TSDZoneArray });
+        }
+
+        /// <summary>
+        /// Get Peak Zone Group Gain
+        /// </summary>
+        /// <param name="CoolingDesignData">TSD Cooling Design Data</param>
+        /// <param name="TSDZoneArray">TSD Zone Array</param>
+        /// <param name="ZoneDataGroup">TSD Zone Data Group</param>
+        /// <returns name="Values">Values</returns>
+        /// <search>
+        /// TAS, TSDDocument, TSDDocument, CoolingDesignData, tas, tsddocument, tsddocument, GetPeakZoneGroupGain, Get Peak Zone Group Gain
+        /// </search>
+        public static float GetPeakZoneGroupGain(CoolingDesignData CoolingDesignData, TSDZoneArray TSDZoneArray, ZoneDataGroup ZoneDataGroup)
+        {
+            List<ZoneData> aZoneDataList = ZoneDataGroup.GetZonesData(ZoneDataGroup);
+            return CoolingDesignData.pCoolingDesignData.GetPeakZoneGroupGain(aZoneDataList.ConvertAll(x => ZoneData.GUID(x)).ToArray(), new TSDZoneArray[] { TSDZoneArray });
+        }
+
+        /// <summary>
+        /// Get Peak Zone Group Gains
+        /// </summary>
+        /// <param name="CoolingDesignData">TSD Cooling Design Data</param>
+        /// <param name="TSDZoneArray">TSD Zone Array</param>
+        /// <param name="ZoneDataGroups">TSD Zone Data Groups</param>
+        /// <returns name="ZoneDataGroupNames">Zone Data Group Names</returns>
+        /// <returns name="Gains">Sum of gains</returns>
+        /// <returns name="Indexes">Indexes</returns>
+        /// <search>
+        /// TAS, TSDDocument, TSDDocument, CoolingDesignData, tas, tsddocument, tsddocument, GetPeakZoneGroupGains, Get Peak Zone Group Gains
+        /// </search>
+        [MultiReturn(new[] { "ZoneDataGroupNames", "Gains", "Indexes" })]
+        public static Dictionary<string, object> GetPeakZoneGroupGains(CoolingDesignData CoolingDesignData, TSDZoneArray TSDZoneArray, List<ZoneDataGroup> ZoneDataGroups)
+        {
+            List<string> aValues = new List<string>();
+            foreach (ZoneDataGroup aZoneDataGroup in ZoneDataGroups)
+            {
+                string aValue = ZoneDataGroup.Name(aZoneDataGroup);
+                foreach (ZoneData aZoneData in ZoneDataGroup.GetZonesData(aZoneDataGroup))
+                    aValue += ":" + ZoneData.GUID(aZoneData);
+
+                aValues.Add(aValue);
+            }
+
+            object[,] aResults = CoolingDesignData.pCoolingDesignData.GetPeakZoneGroupGains(aValues.ToArray(), new TSDZoneArray[] { TSDZoneArray }) as object[,];
+            List<List<object>> aListList = new List<List<object>>();
+            for (int i = 0; i < aResults.GetLength(0); i++)
+            {
+                List<object> aList = new List<object>();
+                for (int j = 0; j < aResults.GetLength(1); j++)
+                    aList.Add(aResults[i, j]);
+                aListList.Add(aList);
+            }
+
+            return new Dictionary<string, object>
+            {
+                { "ZoneDataGroupNames", aListList[0]},
+                { "Gains", aListList[1]},
+                { "Indexes", aListList[2]}
+            };
         }
     }
 }

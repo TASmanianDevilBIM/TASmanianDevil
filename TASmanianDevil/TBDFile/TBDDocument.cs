@@ -9,7 +9,7 @@ namespace TBDFile
     /// <summary>
     /// TAS TBDDocument
     /// </summary>
-    public class TBDDocument : TASmanianDevil.Document
+    public class TBDDocument : Generic.Document
     {
 
         internal TBDDocument(string FilePath, bool Save)
@@ -162,6 +162,20 @@ namespace TBDFile
         public static Building Building(TBDDocument TBDDocument)
         {
             return new Building(Document.Building);
+        }
+
+        /// <summary>
+        /// Shows TAS Visualization
+        /// </summary>
+        /// <param name="TBDDocument">TBD Document</param>
+        /// <returns name="TBDDocument">TAS TBD Document</returns>
+        /// <search>
+        /// TAS, TBDDocument, TBDDocument, ShowVisualisation, Show Visualisation, showvisualisation
+        /// </search>
+        public static TBDDocument ShowVisualisation(TBDDocument TBDDocument)
+        {
+            Document.ShowVisualisation();
+            return TBDDocument;
         }
 
         /// <summary>

@@ -190,14 +190,14 @@ namespace TBDFile
         /// Internal Gain Profile
         /// </summary>
         /// <param name="InternalGain">TAS Internal Gain</param>
-        /// <param name="Index">Profile Index</param>
+        /// <param name="Profiles">Profiles</param>
         /// <returns name="Profile">Profile</returns>
         /// <search>
         /// TAS, Internal Gain, Profile, InternalGain, getprofile, get profile
         /// </search>
-        public static Profile GetProfile(InternalGain InternalGain, int Index)
+        public static Profile GetProfile(InternalGain InternalGain, Profiles Profiles)
         {
-            return new Profile(InternalGain.pInternalGain.GetProfile(Index));
+            return new Profile(InternalGain.pInternalGain.GetProfile((int)Profiles));
         }
 
         /// <summary>
@@ -210,19 +210,19 @@ namespace TBDFile
         /// </search>
         public static List<Profile> Profiles(InternalGain InternalGain)
         {
-            List<int> enumList = new List<int>();
-            enumList.Add((int)TBD.Profiles.ticI);       // Infiltration
-            enumList.Add((int)TBD.Profiles.ticV);       // Ventilation
-            enumList.Add((int)TBD.Profiles.ticLG);      // Lighting Gain
-            enumList.Add((int)TBD.Profiles.ticOSG);     // Occupancy Sensible Gain
-            enumList.Add((int)TBD.Profiles.ticOLG);     // Occupancy Latent Gain
-            enumList.Add((int)TBD.Profiles.ticESG);     // Equipment Sensible Gain
-            enumList.Add((int)TBD.Profiles.ticELG);     // Equipment Latent Gain
-            enumList.Add((int)TBD.Profiles.ticCOG);     // Polutant Generation
+            List<int> aEnumList = new List<int>();
+            aEnumList.Add((int)TBD.Profiles.ticI);       // Infiltration
+            aEnumList.Add((int)TBD.Profiles.ticV);       // Ventilation
+            aEnumList.Add((int)TBD.Profiles.ticLG);      // Lighting Gain
+            aEnumList.Add((int)TBD.Profiles.ticOSG);     // Occupancy Sensible Gain
+            aEnumList.Add((int)TBD.Profiles.ticOLG);     // Occupancy Latent Gain
+            aEnumList.Add((int)TBD.Profiles.ticESG);     // Equipment Sensible Gain
+            aEnumList.Add((int)TBD.Profiles.ticELG);     // Equipment Latent Gain
+            aEnumList.Add((int)TBD.Profiles.ticCOG);     // Polutant Generation
 
             List<Profile> aProfileList = new List<Profile>();
             TBD.profile aProfile = null;
-            foreach (int index in enumList)
+            foreach (int index in aEnumList)
             {
                 aProfile = InternalGain.pInternalGain.GetProfile(index);
                 if (aProfile != null)
