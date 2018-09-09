@@ -85,6 +85,22 @@ namespace TBDFile
             return ZoneSurface;
         }
 
+
+        /// <summary>
+        /// Sets TAS Zone Surface Type
+        /// </summary>
+        /// <param name="ZoneSurface">TAS Zone Surface</param>
+        /// <param name="SurfaceType">TAS Surface Type</param>
+        /// <returns name="ZoneSurface">TAS Zone Surface</returns>
+        /// <search>
+        /// TAS, ZoneSurface, Zone Surface, zonesurface, zone surface, SetSurfaceType, Set Surface Type, setsurfacetype, set surface type
+        /// </search>
+        public static ZoneSurface SetSurfaceType(ZoneSurface ZoneSurface, SurfaceType SurfaceType)
+        {
+            ZoneSurface.pZoneSurface.type = (TBD.SurfaceType)(int)SurfaceType;
+            return ZoneSurface;
+        }
+
         /// <summary>
         /// Gets TAS Zone Surface Inclination
         /// </summary>
@@ -99,7 +115,7 @@ namespace TBDFile
         }
 
         /// <summary>
-        /// Gets TAS Zone Surface Inclination
+        /// Gets TAS Zone Surface Internal Area
         /// </summary>
         /// <param name="ZoneSurface">TAS Zone Surface</param>
         /// <returns name="InternalArea">Zone Internal Area</returns>
