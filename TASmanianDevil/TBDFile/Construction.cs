@@ -95,7 +95,7 @@ namespace TBDFile
         /// <search>
         /// TAS, Building, Construction, Get Construction External Blind, builidng, construction, get construction external blind, ExternalBlind, externalblind
         /// </search>
-        public static int ExternalBlind(Construction Construction)
+        public static bool ExternalBlind(Construction Construction)
         {
             return Construction.pConstruction.externalBlind;
         }
@@ -188,7 +188,7 @@ namespace TBDFile
         /// <search>
         /// TAS, Building, Construction, Get Construction Internal Blind, builidng, construction, get construction internal blind, InternalBlind, internalblind 
         /// </search>
-        public static int InternalBlind(Construction Construction)
+        public static bool InternalBlind(Construction Construction)
         {
             return Construction.pConstruction.internalBlind;
         }

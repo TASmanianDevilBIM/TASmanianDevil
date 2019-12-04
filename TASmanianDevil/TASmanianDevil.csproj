@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>TASmanianDevil</RootNamespace>
     <AssemblyName>TASmanianDevil</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -35,13 +35,24 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug2020|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug2020\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DocumentationFile>bin\Debug\TASmanianDevil.xml</DocumentationFile>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DSCoreNodes">
-      <HintPath>C:\Program Files\Dynamo\Dynamo Core\1.3\DSCoreNodes.dll</HintPath>
+    <Reference Include="DSCoreNodes" Condition="'$(Configuration)' == 'Release2020' OR '$(Configuration)' == 'Debug2020'">
+      <HintPath>C:\Program Files\Autodesk\Revit 2020\AddIns\DynamoForRevit\DSCoreNodes.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="DynamoServices">
-      <HintPath>C:\Program Files\Dynamo\Dynamo Core\1.3\DynamoServices.dll</HintPath>
+    <Reference Include="DynamoServices" Condition="'$(Configuration)' == 'Release2020' OR '$(Configuration)' == 'Debug2020'">
+      <HintPath>C:\Program Files\Autodesk\Revit 2020\AddIns\DynamoForRevit\DynamoServices.dll</HintPath>
       <Private>False</Private>
       <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
