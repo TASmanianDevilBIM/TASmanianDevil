@@ -40,7 +40,7 @@ namespace Generic
         /// </search>
         public static string LibraryVersion()
         {
-            return "TASmanianDevil ver 0.0.2\vTASmanianDevil is a free and open source\vplugin for Dynamo to help engineers \vand designers using TAS to perform \vthermal and daylight simulation.\vIt was  build and tested on\vDynamo (ver 1.3.1.1736) with\vRevit 2017.2.2 (Build 20170816_0615(x64)) or later includign 2018.1 \vand TAS (9.4.1 build 10374). \vIt can be used without Revit and \vit help automate and control \vprocesses from Dynamo environment.";
+            return "TASmanianDevil ver 0.0.2\vTASmanianDevil is a free and open source\vplugin for Dynamo to help engineers \vand designers using TAS to perform \vthermal and daylight simulation.\vIt was  build and tested on\vDynamo (ver 2.4.1.6394) with\vRevit 2020.2 (Build 20191031_1115(x64)) \vand TAS (9.5.0 build 13706). \vIt can be used without Revit and \vit help automate and control \vprocesses from Dynamo environment.";
         }
 
 
@@ -53,7 +53,7 @@ namespace Generic
         /// </search>
         public static string Agreement()
         {
-            return "Copyright (C) 2016, Michal Dengusiak\vThis program is free software; you can\vredistribute it and/or modify it under the terms\vof the GNU General Public License as published by\v the Free Software Foundation; either version 3\vof the License, or (at your option) any late\vversion. This program is distributed in the hope\vthat it will be useful, but WITHOUT ANY WARRANTY;\vwithout even the implied warranty of\vMERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\v See the GNU General Public License for more details.";
+            return "Copyright (C) 2019, Michal Dengusiak\vThis program is free software; you can\vredistribute it and/or modify it under the terms\vof the GNU General Public License as published by\v the Free Software Foundation; either version 3\vof the License, or (at your option) any late\vversion. This program is distributed in the hope\vthat it will be useful, but WITHOUT ANY WARRANTY;\vwithout even the implied warranty of\vMERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\v See the GNU General Public License for more details.";
         }
     }
 }

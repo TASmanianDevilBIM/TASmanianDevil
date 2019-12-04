@@ -12,7 +12,6 @@ namespace TBDFile
     public class Day
     {
         private TBD.day pDay;
-
         internal Day(TBD.day Day)
         {
             pDay = Day;

@@ -13,7 +13,7 @@ Licence
 ========================================
 TASmanianDevil: A Dynamo Plugin for Thermal Analysis (GPL) started by Michal Dengusiak and joined by Jakub Ziolkowski
  
-Copyright (c) 2016, Michal Dengusiak
+Copyright (c) 2019, Michal Dengusiak
 
 TASmanianDevil BIM is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 3 of the License, or (at your option) any later version. 
  

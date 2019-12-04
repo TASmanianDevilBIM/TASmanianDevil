@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>TASmanianDevil</RootNamespace>
     <AssemblyName>TASmanianDevil</AssemblyName>
-    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -35,26 +35,30 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug2020|AnyCPU'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\Debug2020\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DocumentationFile>bin\Debug\TASmanianDevil.xml</DocumentationFile>
-    <DebugType>full</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DSCoreNodes" Condition="'$(Configuration)' == 'Release2020' OR '$(Configuration)' == 'Debug2020'">
-      <HintPath>C:\Program Files\Autodesk\Revit 2020\AddIns\DynamoForRevit\DSCoreNodes.dll</HintPath>
+    <Reference Include="Analysis, Version=2.4.0.6186, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DynamoVisualProgramming.DynamoCoreNodes.2.4.0.6186\lib\net47\Analysis.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="DynamoServices" Condition="'$(Configuration)' == 'Release2020' OR '$(Configuration)' == 'Debug2020'">
-      <HintPath>C:\Program Files\Autodesk\Revit 2020\AddIns\DynamoForRevit\DynamoServices.dll</HintPath>
+    <Reference Include="DSCoreNodes, Version=2.4.0.6186, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DynamoVisualProgramming.DynamoCoreNodes.2.4.0.6186\lib\net47\DSCoreNodes.dll</HintPath>
       <Private>False</Private>
-      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="DynamoServices, Version=2.4.0.6186, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DynamoVisualProgramming.DynamoServices.2.4.0.6186\lib\net47\DynamoServices.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DynamoUnits, Version=2.4.0.6186, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DynamoVisualProgramming.ZeroTouchLibrary.2.4.0.6186\lib\net47\DynamoUnits.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="GeometryColor, Version=2.4.0.6186, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DynamoVisualProgramming.DynamoCoreNodes.2.4.0.6186\lib\net47\GeometryColor.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ProtoGeometry, Version=2.3.0.5132, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DynamoVisualProgramming.ZeroTouchLibrary.2.4.0.6186\lib\net47\ProtoGeometry.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -182,6 +186,9 @@
       <Isolated>False</Isolated>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

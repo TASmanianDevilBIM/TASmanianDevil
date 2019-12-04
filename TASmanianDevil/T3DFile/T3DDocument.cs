@@ -299,7 +299,6 @@ namespace T3DFile
             int aIncludeExternalZones = 0;
             if (IncludeExternalZones)
                 aIncludeExternalZones = 1;
-
             return Document.ExportNew(DayFirst, DayLast, DayStep, ZoneSets, Merge, aIncludeExternalZones, OutputPath, AutoAssignConstructions, AutoAssignsICs, 0);
         }
 
@@ -434,7 +433,7 @@ namespace T3DFile
         /// Imports GBXML File to TAS T3D Document
         /// </summary>
         /// <param name="T3DDocument">T3D Document</param>
-        /// <param name="Path">File Path</param>
+        /// <param name="PathgbXML">File Path</param>
         /// <param name="Overwrite">Overwrite</param>
         /// <param name="ReverseIncorrectSurfaces">Reverse Incorrect Surfaces</param>
         /// <param name="ZonesFromSpaces">ZonesFromSpaces</param>
@@ -444,7 +443,7 @@ namespace T3DFile
         /// TAS, T3DDocument, T3DDocument, ImportGBXML, Import GBXML, import gbxml
         /// </search>
         [MultiReturn(new[] { "T3DDocument", "Succeeded"})]
-        public static Dictionary<string, object> ImportGBXML(T3DDocument T3DDocument, string Path, bool Overwrite, bool ReverseIncorrectSurfaces, bool ZonesFromSpaces)
+        public static Dictionary<string, object> ImportGBXML(T3DDocument T3DDocument, string PathgbXML, bool Overwrite = true, bool ReverseIncorrectSurfaces = true, bool ZonesFromSpaces = true)
         {
             bool aSucceeded = false;
 
@@ -462,7 +461,7 @@ namespace T3DFile
 
             try
             {
-                if (Document.ImportGBXML(Path, aOverwrite, aReverseIncorrectSurfaces, aZonesFromSpaces))
+                if (Document.ImportGBXML(PathgbXML, aOverwrite, aReverseIncorrectSurfaces, aZonesFromSpaces))
                     aSucceeded = true;
             }
             catch
