@@ -40,7 +40,7 @@ namespace Generic
         /// </search>
         public static string LibraryVersion()
         {
-            return "TASmanianDevil ver 0.0.2\vTASmanianDevil is a free and open source\vplugin for Dynamo to help engineers \vand designers using TAS to perform \vthermal and daylight simulation.\vIt was  build and tested on\vDynamo (ver 2.4.1.6394) with\vRevit 2020.2 (Build 20191031_1115(x64)) \vand TAS (9.5.0 build 13706). \vIt can be used without Revit and \vit help automate and control \vprocesses from Dynamo environment.";
+            return "TASmanianDevil ver 0.0.3\vTASmanianDevil is a free and open source\vplugin for Dynamo to help engineers \vand designers using TAS to perform \vthermal and daylight simulation.\vIt was  build and tested on\vDynamo (ver 2.6.1.8786) with\vRevit 2021.1) \vand TAS (9.5.0 build 13739). \vIt can be used without Revit and \vit help automate and control \vprocesses from Dynamo environment.";
         }
 
 
